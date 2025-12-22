@@ -1,0 +1,17 @@
+# Entornos virtuales
+venv/
+.conda/
+decor/
+
+# Datos y Pesos (Pesan mucho)
+data/
+models/*.pth
+models/*.pt
+
+# Python
+__pycache__/
+*.py[cod]
+
+# VS Code y Sistema
+.vscode/
+.DS_Store
