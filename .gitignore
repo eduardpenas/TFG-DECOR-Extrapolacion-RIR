@@ -15,3 +15,7 @@ __pycache__/
 # VS Code y Sistema
 .vscode/
 .DS_Store
+
+main.*
+!main.tex
+!main.pdf
