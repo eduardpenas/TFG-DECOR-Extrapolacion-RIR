@@ -16,6 +16,7 @@ __pycache__/
 .vscode/
 .DS_Store
 
+# Ficheros temporales de LaTeX (pero no main.tex ni main.pdf)
 main.*
 !main.tex
 !main.pdf
