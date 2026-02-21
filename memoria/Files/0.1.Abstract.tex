@@ -1,0 +1,12 @@
+\chapter*{Resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+
+Este Trabajo de Fin de Grado presenta el desarrollo y validación de un marco de aprendizaje profundo diseñado para la extrapolación y predicción rápida de la respuesta al impulso de sala (RIR). Los métodos convencionales de simulación acústica, como el trazado de rayos o los métodos basados en ondas, presentan una dicotomía crítica entre coste computacional y precisión espectral. Para abordar esta limitación y siguiendo la propuesta de \cite{muhammad2025}, se propone una arquitectura capaz de aprender la relación no lineal entre la geometría de la sala y la dinámica de propagación sonora.
+
+La metodología se fundamenta en un enfoque de dos etapas. En primer lugar, se explora la capacidad de las redes de Memoria a Largo Plazo (LSTM) y mecanismos de atención para predecir las Curvas de Decaimiento de Energía (EDC) \cite{muhammad2025}, una representación que captura de forma estable el decaimiento temporal. En segundo lugar, inspirándose en el concepto de \textit{RIR completion} propuesto por \cite{Lin25}, se aborda la síntesis de la reverberación tardía a partir de los segmentos iniciales de la respuesta, permitiendo una generación eficiente de la "cola" de la señal. 
+
+Para elevar la robustez del modelo, se integran conceptos de sistemas dinámicos mediante el uso de \textit{embeddings} de Koopman y arquitecturas \textit{Transformer} \cite{GENEVA25}, optimizando la captura de dependencias temporales de largo alcance. Asimismo, se considera la inclusión de Redes Neuronales Informadas por la Física (PINNs) para asegurar que la reconstrucción respete las leyes de la acústica ondulatoria \cite{krak25article}. El sistema se valida utilizando datasets masivos de referencia como BIRD \cite{Grondin25} y simulaciones de alta fidelidad. 
+
+Los resultados demuestran una alta correlación en parámetros clave (T20, EDT) y una precisión perceptual que valida el uso de estas herramientas en aplicaciones de realidad virtual y audio inmersivo. Este trabajo concluye que la combinación de aprendizaje profundo y principios físicos permite superar las barreras computacionales de la acústica arquitectónica tradicional.
+
+\vspace{1cm}

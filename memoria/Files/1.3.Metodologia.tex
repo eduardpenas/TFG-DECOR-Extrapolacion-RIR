@@ -1,0 +1,38 @@
+\chapter{Metodología}
+
+La metodología de este proyecto se basa en un enfoque híbrido que combina la simulación acústica clásica con el aprendizaje profundo para resolver el problema de la extrapolación de respuestas impulsionales.
+
+\section{Fases del Desarrollo}
+
+El trabajo se estructura en cuatro etapas correlativas que permiten pasar de la definición física de la sala a la generación de la RIR completa.
+
+\begin{table}[H]
+	\centering
+	\caption{Resumen de las fases metodológicas}
+	\begin{tabular}{|p{3.5cm}|p{6cm}|p{4cm}|}
+		\hline
+		\textbf{Fase} & \textbf{Actividad Principal} & \textbf{Referencia Técnica} \\ \hline
+		1. Generación del Dataset & Simulación de 6.000 salaEs con distintas geometrías y materiales. & \cite{muhammad2025} \\ \hline
+		2. Extracción de Características & Procesado de los primeros 50 ms de la RIR y cálculo de las EDCs. & \cite{Lin25, muhammad2025} \\ \hline
+		3. Entrenamiento del Modelo & Implementación de redes LSTM y mecanismos de atención. & \cite{muhammad2025, GENEVA25} \\ \hline
+		4. Validación Acústica & Evaluación de errores en T20, EDT y parámetros de claridad C50. & \cite{muhammad2025, Lin25} \\ \hline
+	\end{tabular}
+\end{table}
+
+
+
+\section{Implementación Técnica}
+
+Para asegurar la validez de los resultados, se han seguido los siguientes criterios técnicos:
+
+\begin{itemize}
+	\item \textbf{Simulación:} Se utiliza el método de fuentes virtuales (\textit{Image Source Method}) a través de la librería Pyroomacoustics para obtener datos de entrenamiento fiables.
+	\item \textbf{Arquitectura de Red:} Se emplea una red LSTM (Long Short-Term Memory) debido a su eficacia para modelar el decaimiento temporal del sonido. Además, se integran capas de atención para capturar dependencias de largo alcance en la señal.
+	\item \textbf{Función de Pérdida:} Se utiliza una pérdida basada en el espectrograma (MSTFT) para optimizar la señal tanto en tiempo como en frecuencia.
+	\item \textbf{Reconstrucción:} Se aplica el método \textit{Random Sign-Sticky} para garantizar que la fase de la señal reconstruida sea físicamente plausible \cite{muhammad2025}.
+\end{itemize}
+
+\section{Herramientas de Software}
+
+El desarrollo se realiza íntegramente en Python, utilizando PyTorch como motor de aprendizaje profundo y NumPy para el análisis estadístico de los datos acústicos obtenidos.
+

@@ -1,0 +1,23 @@
+\chapter{Antecedentes y revisión del estado de la cuestión}
+
+La caracterización acústica de recintos mediante la Respuesta al Impulso de la Sala (RIR) ha sido históricamente un desafío computacional. Esta sección revisa las metodologías actuales, desde los modelos puramente basados en datos hasta las arquitecturas informadas por la física que definen el estado del arte actual.
+
+\section{Simulación Acústica y Aprendizaje Profundo}
+
+Tradicionalmente, la obtención de RIRs en salas no construidas se ha basado en la acústica geométrica, como el método de fuentes virtuales o el trazado de rayos. Sin embargo, estos métodos presentan un coste computacional que escala linealmente con la duración de la respuesta deseada. El auge del \textit{Deep Learning} ha permitido proponer modelos sustitutos (\textit{surrogates}) que aceleran este proceso.
+
+Un avance significativo en este campo es el trabajo de \cite{muhammad2025}, quienes proponen un marco basado en redes neuronales para predecir Curvas de Decaimiento de Energía (EDC) a partir de parámetros geométricos y coeficientes de absorción. Su enfoque utiliza redes de Memoria a Largo Plazo (LSTM) para modelar la naturaleza secuencial del sonido, permitiendo una reconstrucción posterior de la RIR que mantiene la validez perceptual.
+
+\section{El paradigma de la Extrapolación: RIR Completion}
+
+La idea central de este proyecto se alinea con la tarea recientemente denominada \textit{"RIR completion"}. Según postulan \cite{Lin25}, el sonido directo y las reflexiones tempranas (los primeros 50 ms) encapsulan información suficiente sobre la geometría y la absorción del recinto. Su modelo, DECOR, utiliza una estructura de codificador-decodificador para sintetizar la reverberación tardía a partir de este segmento inicial, demostrando que es posible generar colas de reverberación realistas con una fracción del coste computacional de los simuladores clásicos.
+
+\section{Modelado Físico-Sintético y Grandes Datasets}
+
+Para que estos modelos de aprendizaje profundo generalicen correctamente, es crucial el uso de bases de datos diversas y extensas. En este sentido, el \textit{Big Impulse Response Dataset} (BIRD) \cite{Grondin25} representa un pilar fundamental, proporcionando miles de respuestas impulsionales que permiten entrenar redes en una amplia variedad de condiciones acústicas.
+
+Por otro lado, la tendencia más reciente se aleja de los modelos puramente "caja negra" para adoptar Redes Neuronales Informadas por la Física (PINNs). Como demuestran \cite{krak25article}, integrar la ecuación de onda directamente en el entrenamiento de la red permite una reconstrucción del campo sonoro mucho más precisa, especialmente en bajas frecuencias donde los métodos geométricos suelen fallar. Además, el repositorio RIRPINN \cite{krak25web} proporciona las herramientas necesarias para implementar estos modelos en entornos de investigación abiertos.
+
+\section{Transformers y Sistemas Dinámicos}
+
+Finalmente, la evolución de las arquitecturas ha llevado al uso de \textit{Transformers} para modelar fenómenos físicos. Aunque su origen se encuentra en el procesamiento del lenguaje natural, \cite{GENEVA25} han demostrado que la auto-atención, combinada con \textit{embeddings} de Koopman, es capaz de capturar dependencias temporales de largo alcance en sistemas dinámicos complejos. Esta capacidad de los \textit{Transformers} para entender la "física latente" es lo que permite que la extrapolación de la RIR en este trabajo no sea solo una predicción estadística, sino una representación coherente de la propagación acústica en el tiempo.

@@ -1,0 +1,33 @@
+\chapter{Introducción}
+
+\section{Objeto}
+
+El objeto de este Trabajo de Fin de Grado es el diseño, implementación y validación de un modelo basado en aprendizaje profundo capaz de realizar la extrapolación de respuestas impulsionales de recintos acústicos (\textit{Room Impulse Responses}, RIR). Específicamente, se busca desarrollar un sistema que, a partir de un segmento inicial de la respuesta (los primeros 50 ms), sea capaz de sintetizar la reverberación tardía con alta fidelidad física y perceptual. 
+
+Este trabajo pretende demostrar que la integración de arquitecturas avanzadas, como las redes de Memoria a Largo Plazo (LSTM) \cite{muhammad2025} y mecanismos de atención inspirados en transformadores físicos \cite{GENEVA25}, permite superar las limitaciones de coste computacional de los métodos de simulación acústica tradicionales.
+
+\section{Alcance}
+
+Para alcanzar el objetivo propuesto, el proyecto comprende los siguientes paquetes de trabajo y entregables:
+\begin{itemize}
+	\item \textbf{Revisión del estado del arte:} Análisis de las técnicas actuales en \textit{Deep Learning} aplicado a la acústica, incluyendo redes informadas por la física (PINNs) \cite{krak25article} y métodos de completitud de RIR \cite{Lin25}.
+	\item \textbf{Generación de datos:} Creación de un dataset sintético masivo mediante simulaciones geométricas para el entrenamiento y validación del modelo.
+	\item \textbf{Diseño de la arquitectura:} Implementación de una red neuronal que combine el análisis de curvas de decaimiento energético (EDC) y la síntesis de señales temporales.
+	\item \textbf{Evaluación de resultados:} Comparativa mediante métricas acústicas estándar (T20, EDT, C50) y funciones de pérdida multiresolución (MSTFT).
+\end{itemize}
+
+\section{Requerimientos}
+
+El sistema desarrollado debe cumplir con las siguientes especificaciones y restricciones:
+\begin{itemize}
+	\item \textbf{Precisión temporal:} La RIR generada debe mantener la coherencia con el segmento inicial proporcionado.
+	\item \textbf{Eficiencia computacional:} El tiempo de inferencia de la red debe ser significativamente inferior al tiempo requerido por un simulador de trazado de rayos convencional.
+	\item \textbf{Generalización:} El modelo debe ser robusto ante diferentes geometrías y coeficientes de absorción no vistos durante el entrenamiento, utilizando representaciones escalables como los \textit{embeddings} de Koopman \cite{GENEVA25}.
+	\item \textbf{Entorno de desarrollo:} Implementación en Python utilizando librerías estándar de aprendizaje profundo (PyTorch/TensorFlow) y simulación acústica (Pyroomacoustics).
+\end{itemize}
+
+\section{Justificación}
+
+La caracterización acústica de recintos es fundamental para el desarrollo de tecnologías inmersivas como la Realidad Virtual (VR), la Realidad Aumentada (AR) y el diseño arquitectónico asistido por ordenador. Una sala queda definida por su RIR, la cual describe cómo se propaga el sonido desde una fuente hasta un receptor. Sin embargo, obtener RIRs de alta calidad en salas no construidas plantea un desafío crítico: los métodos basados en la física de ondas son extremadamente lentos, mientras que los métodos geométricos fallan en la captura de fenómenos complejos a bajas frecuencias.
+
+Recientemente, el auge del \textit{Deep Learning} ha abierto nuevas vías. Trabajos como el de \cite{muhammad2025} han demostrado que es posible predecir el decaimiento energético con redes neuronales, mientras que \cite{Lin25} ha introducido el concepto de \textit{RIR completion} como una solución eficiente para generar colas reverberantes realistas. Este TFG se justifica en la necesidad de unir estas corrientes, explorando cómo modelos informados por la física \cite{krak25article} pueden proporcionar una alternativa rápida y precisa a los simuladores tradicionales, permitiendo la creación de entornos sonoros dinámicos en tiempo real.
