@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class EncoderBlock(nn.Module):
     """
     Bloque fundamental del Encoder: Conv1D -> BatchNorm -> PReLU.
@@ -22,9 +23,11 @@ class EncoderBlock(nn.Module):
 class DecorEncoder(nn.Module):
     def __init__(self, latent_dim=128):
         super().__init__()
-        
+
         # Arquitectura de 9 bloques según especificaciones de Aalto University
         # La dimensión temporal se reduce a la mitad en cada bloque (stride=2)
+        # Esta pila es totalmente convolucional, por lo que puede operar con
+        # ventanas de longitud variable.
         self.encoder_stack = nn.Sequential(
             EncoderBlock(1, 16),      # 2400 -> 1200
             EncoderBlock(16, 32),     # 1200 -> 600
@@ -36,15 +39,22 @@ class DecorEncoder(nn.Module):
             EncoderBlock(512, 512),   # 19 -> 10
             EncoderBlock(512, 512)    # 10 -> 5
         )
-        
-        # Capa de proyección al espacio latente Z
-        # 512 canales * 5 muestras finales = 2560 neuronas de entrada
-        self.flatten = nn.Flatten()
-        self.fc = nn.Linear(512 * 5, latent_dim)
+
+        # Pooling adaptativo para obtener representación temporal compacta
+        # independiente de la longitud de entrada (fully convolutional).
+        self.global_pool = nn.AdaptiveAvgPool1d(1)
+
+        # Proyección 1x1 al espacio latente z, manteniendo la naturaleza
+        # fully convolutional de la arquitectura.
+        self.latent_projection = nn.Conv1d(512, latent_dim, kernel_size=1)
 
     def forward(self, x):
-        # x: (Batch, 1, 2400)
+        # x: (Batch, 1, Length)
+        # Este diseño evita capas densas rígidas y permite procesar señales
+        # de 50 ms, 100 ms o cualquier longitud sin fallos de dimensiones.
         x = self.encoder_stack(x)
-        x = self.flatten(x)
-        z = self.fc(x)
+        x = self.global_pool(x)
+        z = self.latent_projection(x)
+        z = z.squeeze(-1)
+        # z: (Batch, latent_dim)
         return z
