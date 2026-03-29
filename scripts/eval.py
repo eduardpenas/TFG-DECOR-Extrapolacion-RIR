@@ -141,6 +141,8 @@ def compute_drr_from_edc_db(edc_db: torch.Tensor, head_samples: int = 2400) -> t
     e_direct = torch.clamp(e_total - e_reverb, min=1e-12)
 
     drr_db = 10.0 * torch.log10(e_direct / (e_reverb + 1e-12))
+    # Evita que outliers extremos dominen el MSE de DRR.
+    drr_db = torch.clamp(drr_db, min=-60.0, max=60.0)
     return drr_db
 
 
@@ -181,6 +183,11 @@ def evaluate(encoder, decoder, dataloader, device, mrstft_criterion):
 
             z = encoder(head)
             edc_pred = decoder(z, target_length=edc_target.shape[-1])
+
+            # La EDC normalizada del dataset está en [0,1].
+            # Acotar predicción/target estabiliza métricas en dB (T60/DRR).
+            edc_pred = torch.clamp(edc_pred, 0.0, 1.0)
+            edc_target = torch.clamp(edc_target, 0.0, 1.0)
 
             bs = head.size(0)
             accum["count"] += bs
