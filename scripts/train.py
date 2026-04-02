@@ -94,6 +94,7 @@ def main():
 	parser.add_argument("--val-ratio", type=float, default=0.1, help="Proporción para validación.")
 	parser.add_argument("--seed", type=int, default=42, help="Semilla aleatoria.")
 	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta para guardar el mejor modelo.")
+	parser.add_argument("--resume", type=str, default=None, help="Ruta de un checkpoint para reanudar el entrenamiento.")
 	parser.add_argument("--grad-clip", type=float, default=1.0, help="Norma máxima para gradient clipping (0 = desactivado).")
 	args = parser.parse_args()
 
@@ -105,6 +106,9 @@ def main():
 	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	print(f"Dispositivo: {device}")
 
+	if device.type == "cuda":
+		torch.backends.cudnn.benchmark = True
+
 	dataset = BirdDataset(root_dir=args.data_root, folds=None)
 
 	train_subset, val_subset = build_train_val_subsets(dataset, val_ratio=args.val_ratio, seed=args.seed)
@@ -115,6 +119,7 @@ def main():
 		shuffle=True,
 		num_workers=args.num_workers,
 		pin_memory=(device.type == "cuda"),
+		persistent_workers=(args.num_workers > 0),
 	)
 
 	val_loader = None
@@ -125,6 +130,7 @@ def main():
 			shuffle=False,
 			num_workers=args.num_workers,
 			pin_memory=(device.type == "cuda"),
+			persistent_workers=(args.num_workers > 0),
 		)
 
 	encoder = DecorEncoder(latent_dim=args.latent_dim).to(device)
@@ -137,9 +143,23 @@ def main():
 		lr=args.lr,
 	)
 
-	best_train_loss = float("inf")
+	start_epoch = 1
+	best_val_loss = float("inf")
 
-	for epoch in range(1, args.epochs + 1):
+	if args.resume is not None:
+		ckpt_path = Path(args.resume)
+		if not ckpt_path.is_file():
+			raise FileNotFoundError(f"Checkpoint no encontrado: {ckpt_path}")
+		print(f"Reanudando desde {ckpt_path} ...")
+		ckpt = torch.load(ckpt_path, map_location=device)
+		encoder.load_state_dict(ckpt["encoder_state_dict"])
+		decoder.load_state_dict(ckpt["decoder_state_dict"])
+		optimizer.load_state_dict(ckpt["optimizer_state_dict"])
+		start_epoch = ckpt["epoch"] + 1
+		best_val_loss = ckpt.get("best_val_loss", ckpt.get("best_train_loss", float("inf")))
+		print(f"  Reanudando desde época {start_epoch}/{args.epochs}  |  mejor val_loss conocida: {best_val_loss:.6f}")
+
+	for epoch in range(start_epoch, args.epochs + 1):
 		encoder.train()
 		decoder.train()
 
@@ -185,24 +205,29 @@ def main():
 		epoch_train_edc_l1 = running_edc_l1 / max(1, len(train_loader))
 		print(f"[Epoch {epoch}] Train Loss: {epoch_train_loss:.6f} | Train EDC-L1: {epoch_train_edc_l1:.6f}")
 
-		if epoch_train_loss < best_train_loss:
-			best_train_loss = epoch_train_loss
+		if val_loader is not None:
+			val_loss, val_edc_l1 = run_validation(encoder, decoder, criterion, val_loader, device)
+			print(f"[Epoch {epoch}] Val Loss: {val_loss:.6f} | Val EDC-L1: {val_edc_l1:.6f}")
+			checkpoint_loss = val_loss
+		else:
+			checkpoint_loss = epoch_train_loss
+
+		if checkpoint_loss < best_val_loss:
+			best_val_loss = checkpoint_loss
+			criterio = "val" if val_loader is not None else "train"
 			torch.save(
 				{
 					"epoch": epoch,
 					"encoder_state_dict": encoder.state_dict(),
 					"decoder_state_dict": decoder.state_dict(),
 					"optimizer_state_dict": optimizer.state_dict(),
-					"best_train_loss": best_train_loss,
+					"best_val_loss": best_val_loss,
+					"train_loss": epoch_train_loss,
 					"config": vars(args),
 				},
 				args.checkpoint,
 			)
-			print(f"Nuevo mejor modelo guardado en {args.checkpoint} (loss={best_train_loss:.6f})")
-
-		if val_loader is not None:
-			val_loss, val_edc_l1 = run_validation(encoder, decoder, criterion, val_loader, device)
-			print(f"[Epoch {epoch}] Val Loss: {val_loss:.6f} | Val EDC-L1: {val_edc_l1:.6f}")
+			print(f"Nuevo mejor modelo guardado en {args.checkpoint} (mejor {criterio}_loss={best_val_loss:.6f})")
 
 
 if __name__ == "__main__":
