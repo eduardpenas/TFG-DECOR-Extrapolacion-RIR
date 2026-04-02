@@ -4,57 +4,66 @@ import torch.nn as nn
 
 class EncoderBlock(nn.Module):
     """
-    Bloque fundamental del Encoder: Conv1D -> BatchNorm -> PReLU.
-    Mantiene la estabilidad del gradiente y permite aprendizaje no lineal complejo.
+    Bloque de codificación con conexión skip:
+    rama principal (Conv1D estriada) + rama residual proyectada.
     """
-    def __init__(self, in_channels, out_channels, kernel_size=13, stride=2):
+    def __init__(self, in_channels, out_channels, kernel_size=15, stride=2):
         super().__init__()
-        # Usamos padding para mantener el control sobre la reducción temporal
         padding = (kernel_size - 1) // 2
-        self.block = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding),
+        self.main = nn.Sequential(
+            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding, bias=False),
             nn.BatchNorm1d(out_channels),
-            nn.PReLU()
         )
+        self.skip = nn.Sequential(
+            nn.Conv1d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+            nn.BatchNorm1d(out_channels),
+        )
+        self.act = nn.PReLU()
 
     def forward(self, x):
-        return self.block(x)
+        x_main = self.main(x)
+        x_skip = self.skip(x)
+        return self.act(x_main + x_skip)
 
 class DecorEncoder(nn.Module):
     def __init__(self, latent_dim=128):
         super().__init__()
 
-        # Arquitectura de 9 bloques según especificaciones de Aalto University
-        # La dimensión temporal se reduce a la mitad en cada bloque (stride=2)
-        # Esta pila es totalmente convolucional, por lo que puede operar con
-        # ventanas de longitud variable.
+        # Catorce bloques de codificación con downsampling progresivo (stride=2).
+        # Campo receptivo >100,000 timesteps (~2.4 s a 48 kHz).
         self.encoder_stack = nn.Sequential(
-            EncoderBlock(1, 16),      # 2400 -> 1200
-            EncoderBlock(16, 32),     # 1200 -> 600
-            EncoderBlock(32, 64),     # 600 -> 300
-            EncoderBlock(64, 128),    # 300 -> 150
-            EncoderBlock(128, 256),   # 150 -> 75
-            EncoderBlock(256, 512),   # 75 -> 38
-            EncoderBlock(512, 512),   # 38 -> 19
-            EncoderBlock(512, 512),   # 19 -> 10
-            EncoderBlock(512, 512)    # 10 -> 5
+            EncoderBlock(1, 16),      # bloque 1
+            EncoderBlock(16, 32),     # bloque 2
+            EncoderBlock(32, 64),     # bloque 3
+            EncoderBlock(64, 128),    # bloque 4
+            EncoderBlock(128, 256),   # bloque 5
+            EncoderBlock(256, 512),   # bloque 6
+            EncoderBlock(512, 512),   # bloque 7
+            EncoderBlock(512, 512),   # bloque 8
+            EncoderBlock(512, 512),   # bloque 9
+            EncoderBlock(512, 512),   # bloque 10
+            EncoderBlock(512, 512),   # bloque 11
+            EncoderBlock(512, 512),   # bloque 12
+            EncoderBlock(512, 512),   # bloque 13
+            EncoderBlock(512, 512),   # bloque 14
         )
 
-        # Pooling adaptativo para obtener representación temporal compacta
-        # independiente de la longitud de entrada (fully convolutional).
+        # Pooling adaptativo para compactar la dimensión temporal.
         self.global_pool = nn.AdaptiveAvgPool1d(1)
 
-        # Proyección 1x1 al espacio latente z, manteniendo la naturaleza
-        # fully convolutional de la arquitectura.
-        self.latent_projection = nn.Conv1d(512, latent_dim, kernel_size=1)
+        # MLP de tres capas para obtener el embedding z de dimensión k.
+        self.latent_projection = nn.Sequential(
+            nn.Linear(512, 512),
+            nn.PReLU(),
+            nn.Linear(512, 256),
+            nn.PReLU(),
+            nn.Linear(256, latent_dim),
+        )
 
     def forward(self, x):
         # x: (Batch, 1, Length)
-        # Este diseño evita capas densas rígidas y permite procesar señales
-        # de 50 ms, 100 ms o cualquier longitud sin fallos de dimensiones.
         x = self.encoder_stack(x)
         x = self.global_pool(x)
-        z = self.latent_projection(x)
-        z = z.squeeze(-1)
-        # z: (Batch, latent_dim)
+        x = x.squeeze(-1)
+        z = self.latent_projection(x)  # z: (Batch, latent_dim)
         return z

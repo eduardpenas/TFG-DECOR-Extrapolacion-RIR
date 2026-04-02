@@ -171,12 +171,14 @@ class BirdDataset(Dataset):
         tail = waveform[head_samples:]
 
         head = self._pad_or_truncate(head, self.fixed_head_samples)
-        target = schroeder_integration(tail, normalize_range=self.normalize_range)
-        target = self._pad_or_truncate(target, self.fixed_target_samples)
+        tail = self._pad_or_truncate(tail, self.fixed_target_samples)
+        target_edc = schroeder_integration(tail, normalize_range=self.normalize_range)
+        target_edc = self._pad_or_truncate(target_edc, self.fixed_target_samples)
 
         return {
             "input": head.unsqueeze(0),
-            "target": target.unsqueeze(0),
+            "target": tail.unsqueeze(0),
+            "target_edc": target_edc.unsqueeze(0),
         }
 
 
@@ -217,7 +219,8 @@ def main():
     sample = dataset[0]
 
     input_tensor = sample["input"]
-    target_tensor = sample["target"]
+    target_tail_tensor = sample["target"]
+    target_edc_tensor = sample["target_edc"]
 
     print(
         "input:",
@@ -227,11 +230,18 @@ def main():
         f"max={float(input_tensor.max()):.6f}",
     )
     print(
-        "target:",
-        f"shape={tuple(target_tensor.shape)}",
-        f"dtype={target_tensor.dtype}",
-        f"min={float(target_tensor.min()):.6f}",
-        f"max={float(target_tensor.max()):.6f}",
+        "target_tail:",
+        f"shape={tuple(target_tail_tensor.shape)}",
+        f"dtype={target_tail_tensor.dtype}",
+        f"min={float(target_tail_tensor.min()):.6f}",
+        f"max={float(target_tail_tensor.max()):.6f}",
+    )
+    print(
+        "target_edc:",
+        f"shape={tuple(target_edc_tensor.shape)}",
+        f"dtype={target_edc_tensor.dtype}",
+        f"min={float(target_edc_tensor.min()):.6f}",
+        f"max={float(target_edc_tensor.max()):.6f}",
     )
 
 

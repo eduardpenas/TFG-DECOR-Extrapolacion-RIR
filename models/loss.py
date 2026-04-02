@@ -15,9 +15,9 @@ def _validate_edc_shape(x: torch.Tensor, name: str) -> None:
 class MultiResolutionSTFTLoss(nn.Module):
 	def __init__(
 		self,
-		fft_sizes: Sequence[int] = (512, 1024, 2048),
-		hop_sizes: Sequence[int] = (128, 256, 512),
-		win_lengths: Sequence[int] = (512, 1024, 2048),
+		fft_sizes: Sequence[int] = (64, 512, 2048, 8192),
+		hop_sizes: Sequence[int] = (32, 256, 1024, 4096),
+		win_lengths: Sequence[int] = (64, 512, 2048, 8192),
 		eps: float = 1e-7,
 	):
 		super().__init__()
@@ -57,6 +57,19 @@ class MultiResolutionSTFTLoss(nn.Module):
 		mag = torch.abs(spec)
 		return mag
 
+	def _spectral_convergence_loss(self, pred_mag: torch.Tensor, target_mag: torch.Tensor) -> torch.Tensor:
+		diff = pred_mag - target_mag
+		# Frobenius norm per sample and average over batch.
+		numerator = torch.linalg.norm(diff.reshape(diff.size(0), -1), ord=2, dim=1)
+		denominator = torch.linalg.norm(target_mag.reshape(target_mag.size(0), -1), ord=2, dim=1)
+		return (numerator / (denominator + self.eps)).mean()
+
+	def _spectral_log_magnitude_loss(self, pred_mag: torch.Tensor, target_mag: torch.Tensor) -> torch.Tensor:
+		return F.l1_loss(
+			torch.log(pred_mag + self.eps),
+			torch.log(target_mag + self.eps),
+		)
+
 	def forward(self, pred: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
 		_validate_edc_shape(pred, "pred")
 		_validate_edc_shape(target, "target")
@@ -69,24 +82,21 @@ class MultiResolutionSTFTLoss(nn.Module):
 			pred_mag = self._stft_magnitude(pred_1d, n_fft=n_fft, hop_length=hop, win_length=win_len)
 			target_mag = self._stft_magnitude(target_1d, n_fft=n_fft, hop_length=hop, win_length=win_len)
 
-			mag_loss = F.l1_loss(pred_mag, target_mag)
-			log_mag_loss = F.l1_loss(
-				torch.log(pred_mag + self.eps),
-				torch.log(target_mag + self.eps),
-			)
-			total_loss = total_loss + 0.5 * (mag_loss + log_mag_loss)
+			sc_loss = self._spectral_convergence_loss(pred_mag, target_mag)
+			sm_loss = self._spectral_log_magnitude_loss(pred_mag, target_mag)
+			total_loss = total_loss + sc_loss + sm_loss
 
-		return total_loss / len(self.resolutions)
+		return total_loss
 
 
 class DecorLoss(nn.Module):
 	def __init__(
 		self,
-		alpha: float = 1.0,
+		alpha: float = 0.0,
 		beta: float = 1.0,
-		fft_sizes: Sequence[int] = (512, 1024, 2048),
-		hop_sizes: Sequence[int] = (128, 256, 512),
-		win_lengths: Sequence[int] = (512, 1024, 2048),
+		fft_sizes: Sequence[int] = (64, 512, 2048, 8192),
+		hop_sizes: Sequence[int] = (32, 256, 1024, 4096),
+		win_lengths: Sequence[int] = (64, 512, 2048, 8192),
 		eps: float = 1e-7,
 	):
 		super().__init__()

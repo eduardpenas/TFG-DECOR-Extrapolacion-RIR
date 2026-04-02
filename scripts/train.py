@@ -6,6 +6,7 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
+from pytorch_optimizer import Ranger21
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
 	sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.bird_loader import BirdDataset
+from scripts.bird_loader import schroeder_integration
 from models.encoder import DecorEncoder
 from models.decoder import DecorDecoder
 from models.loss import DecorLoss
@@ -42,22 +44,41 @@ def build_train_val_subsets(dataset, val_ratio: float, seed: int):
 	return Subset(dataset, train_indices), Subset(dataset, val_indices)
 
 
+def batch_schroeder_integration(tails: torch.Tensor) -> torch.Tensor:
+	if tails.dim() != 3 or tails.size(1) != 1:
+		raise ValueError("tails debe tener forma (Batch, 1, Length).")
+
+	edc_batch = []
+	for i in range(tails.size(0)):
+		edc = schroeder_integration(tails[i, 0])
+		edc_batch.append(edc)
+
+	return torch.stack(edc_batch, dim=0).unsqueeze(1)
+
+
 def run_validation(encoder, decoder, criterion, val_loader, device):
 	encoder.eval()
 	decoder.eval()
 	total_val_loss = 0.0
+	total_val_edc_l1 = 0.0
 
 	with torch.no_grad():
 		for batch in val_loader:
 			head = batch["input"].to(device)
-			edc_target = batch["target"].to(device)
+			tail_target = batch["target"].to(device)
+			edc_target = batch["target_edc"].to(device)
 
 			z = encoder(head)
-			edc_pred = decoder(z, target_length=edc_target.shape[-1])
-			loss_dict = criterion(edc_pred, edc_target)
+			tail_pred = decoder(z, target_length=tail_target.shape[-1])
+			loss_dict = criterion(tail_pred, tail_target)
 			total_val_loss += loss_dict["loss"].item()
 
-	return total_val_loss / max(1, len(val_loader))
+			edc_pred = batch_schroeder_integration(tail_pred)
+			total_val_edc_l1 += torch.mean(torch.abs(edc_pred - edc_target)).item()
+
+	mean_val_loss = total_val_loss / max(1, len(val_loader))
+	mean_val_edc_l1 = total_val_edc_l1 / max(1, len(val_loader))
+	return mean_val_loss, mean_val_edc_l1
 
 
 def main():
@@ -65,12 +86,15 @@ def main():
 	parser.add_argument("--data-root", type=str, default="data/BIRD", help="Ruta raíz del dataset BIRD.")
 	parser.add_argument("--epochs", type=int, default=20, help="Número de épocas de entrenamiento.")
 	parser.add_argument("--batch-size", type=int, default=32, help="Tamaño de batch.")
-	parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate para Adam.")
+	parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate para Ranger21.")
 	parser.add_argument("--latent-dim", type=int, default=128, help="Dimensión del espacio latente.")
+	parser.add_argument("--loss-alpha", type=float, default=0.0, help="Peso de L1 temporal en la loss total.")
+	parser.add_argument("--loss-beta", type=float, default=1.0, help="Peso de MSTFT en la loss total.")
 	parser.add_argument("--num-workers", type=int, default=0, help="Número de workers para DataLoader.")
 	parser.add_argument("--val-ratio", type=float, default=0.1, help="Proporción para validación.")
 	parser.add_argument("--seed", type=int, default=42, help="Semilla aleatoria.")
 	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta para guardar el mejor modelo.")
+	parser.add_argument("--grad-clip", type=float, default=1.0, help="Norma máxima para gradient clipping (0 = desactivado).")
 	args = parser.parse_args()
 
 	random.seed(args.seed)
@@ -104,9 +128,14 @@ def main():
 		)
 
 	encoder = DecorEncoder(latent_dim=args.latent_dim).to(device)
-	decoder = DecorDecoder(in_channels=args.latent_dim, target_length=48000).to(device)
-	criterion = DecorLoss(alpha=1.0, beta=1.0).to(device)
-	optimizer = torch.optim.Adam(list(encoder.parameters()) + list(decoder.parameters()), lr=args.lr)
+	decoder = DecorDecoder(in_channels=args.latent_dim, target_length=45600).to(device)
+	criterion = DecorLoss(alpha=args.loss_alpha, beta=args.loss_beta).to(device)
+	num_iterations = max(1, args.epochs * len(train_loader))
+	optimizer = Ranger21(
+		list(encoder.parameters()) + list(decoder.parameters()),
+		num_iterations=num_iterations,
+		lr=args.lr,
+	)
 
 	best_train_loss = float("inf")
 
@@ -115,31 +144,46 @@ def main():
 		decoder.train()
 
 		running_loss = 0.0
+		running_edc_l1 = 0.0
 		progress_bar = tqdm(train_loader, desc=f"Época {epoch}/{args.epochs}", leave=True)
 
 		for batch in progress_bar:
 			head = batch["input"].to(device)
-			edc_target = batch["target"].to(device)
+			tail_target = batch["target"].to(device)
+			edc_target = batch["target_edc"].to(device)
 
 			optimizer.zero_grad()
 
 			z = encoder(head)
-			edc_pred = decoder(z, target_length=edc_target.shape[-1])
-			loss_dict = criterion(edc_pred, edc_target)
+			tail_pred = decoder(z, target_length=tail_target.shape[-1])
+			loss_dict = criterion(tail_pred, tail_target)
 			loss = loss_dict["loss"]
 
 			loss.backward()
+			all_params = list(encoder.parameters()) + list(decoder.parameters())
+			grad_norm = torch.nn.utils.clip_grad_norm_(
+				all_params,
+				max_norm=args.grad_clip if args.grad_clip > 0 else float("inf"),
+			).item()
 			optimizer.step()
 
+			with torch.no_grad():
+				edc_pred = batch_schroeder_integration(tail_pred)
+				edc_l1 = torch.mean(torch.abs(edc_pred - edc_target))
+
 			running_loss += loss.item()
+			running_edc_l1 += edc_l1.item()
 			progress_bar.set_postfix(
 				loss=f"{loss.item():.5f}",
 				l1=f"{loss_dict['l1_loss'].item():.5f}",
 				mrstft=f"{loss_dict['mrstft_loss'].item():.5f}",
+				edc_l1=f"{edc_l1.item():.5f}",
+				gnorm=f"{grad_norm:.2f}",
 			)
 
 		epoch_train_loss = running_loss / max(1, len(train_loader))
-		print(f"[Epoch {epoch}] Train Loss: {epoch_train_loss:.6f}")
+		epoch_train_edc_l1 = running_edc_l1 / max(1, len(train_loader))
+		print(f"[Epoch {epoch}] Train Loss: {epoch_train_loss:.6f} | Train EDC-L1: {epoch_train_edc_l1:.6f}")
 
 		if epoch_train_loss < best_train_loss:
 			best_train_loss = epoch_train_loss
@@ -157,8 +201,8 @@ def main():
 			print(f"Nuevo mejor modelo guardado en {args.checkpoint} (loss={best_train_loss:.6f})")
 
 		if val_loader is not None:
-			val_loss = run_validation(encoder, decoder, criterion, val_loader, device)
-			print(f"[Epoch {epoch}] Val Loss: {val_loss:.6f}")
+			val_loss, val_edc_l1 = run_validation(encoder, decoder, criterion, val_loader, device)
+			print(f"[Epoch {epoch}] Val Loss: {val_loss:.6f} | Val EDC-L1: {val_edc_l1:.6f}")
 
 
 if __name__ == "__main__":
