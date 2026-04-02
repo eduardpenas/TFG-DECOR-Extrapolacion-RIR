@@ -29,8 +29,8 @@ class DecorEncoder(nn.Module):
     def __init__(self, latent_dim=128):
         super().__init__()
 
-        # Catorce bloques de codificación con downsampling progresivo (stride=2).
-        # Campo receptivo >100,000 timesteps (~2.4 s a 48 kHz).
+        # Nueve bloques de codificación con downsampling progresivo (stride=2).
+        # Alineado con el paper DECOR (Lin et al., 2025).
         self.encoder_stack = nn.Sequential(
             EncoderBlock(1, 16),      # bloque 1
             EncoderBlock(16, 32),     # bloque 2
@@ -41,24 +41,14 @@ class DecorEncoder(nn.Module):
             EncoderBlock(512, 512),   # bloque 7
             EncoderBlock(512, 512),   # bloque 8
             EncoderBlock(512, 512),   # bloque 9
-            EncoderBlock(512, 512),   # bloque 10
-            EncoderBlock(512, 512),   # bloque 11
-            EncoderBlock(512, 512),   # bloque 12
-            EncoderBlock(512, 512),   # bloque 13
-            EncoderBlock(512, 512),   # bloque 14
         )
 
         # Pooling adaptativo para compactar la dimensión temporal.
         self.global_pool = nn.AdaptiveAvgPool1d(1)
 
-        # MLP de tres capas para obtener el embedding z de dimensión k.
-        self.latent_projection = nn.Sequential(
-            nn.Linear(512, 512),
-            nn.PReLU(),
-            nn.Linear(512, 256),
-            nn.PReLU(),
-            nn.Linear(256, latent_dim),
-        )
+        # Capa lineal única para obtener el embedding z de dimensión k.
+        # Alineado con el paper DECOR (Lin et al., 2025).
+        self.latent_projection = nn.Linear(512, latent_dim)
 
     def forward(self, x):
         # x: (Batch, 1, Length)
