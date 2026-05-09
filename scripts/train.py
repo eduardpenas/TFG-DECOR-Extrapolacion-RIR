@@ -24,6 +24,34 @@ def build_folds(num_folds: int = 89):
 	return [f"fold{i:03d}" for i in range(1, num_folds + 1)]
 
 
+def build_fold_based_split(data_root: str, val_ratio: float = 0.1, seed: int = 42):
+	"""
+	Asigna folds enteros a train/val para evitar fuga de datos entre
+	configuraciones acústicas de la misma sala (paper §3.3).
+	Si solo hay 1 fold disponible, retorna (None, None) para usar split aleatorio.
+	"""
+	root = Path(data_root)
+	bird_sub = root / "Bird"
+	search_dir = bird_sub if (bird_sub.exists() and bird_sub.is_dir()) else root
+
+	folds = sorted(
+		d.name for d in search_dir.iterdir()
+		if d.is_dir() and d.name.lower().startswith("fold")
+	)
+
+	if len(folds) < 2:
+		return None, None  # fallback a split aleatorio
+
+	rng = random.Random(seed)
+	shuffled = folds.copy()
+	rng.shuffle(shuffled)
+
+	val_size = max(1, int(len(shuffled) * val_ratio))
+	train_folds = shuffled[:-val_size]
+	val_folds = shuffled[-val_size:]
+	return sorted(train_folds), sorted(val_folds)
+
+
 def build_train_val_subsets(dataset, val_ratio: float, seed: int):
 	num_samples = len(dataset)
 	indices = list(range(num_samples))
@@ -109,9 +137,22 @@ def main():
 	if device.type == "cuda":
 		torch.backends.cudnn.benchmark = True
 
-	dataset = BirdDataset(root_dir=args.data_root, folds=None)
+	# Split por folds para evitar fuga de datos entre salas (paper §3.3).
+	# Si solo hay 1 fold descargado, se cae a split aleatorio.
+	train_folds, val_folds = build_fold_based_split(args.data_root, args.val_ratio, args.seed)
 
-	train_subset, val_subset = build_train_val_subsets(dataset, val_ratio=args.val_ratio, seed=args.seed)
+	if train_folds is not None:
+		print(f"Split por folds: {len(train_folds)} train / {len(val_folds)} val")
+		dataset_train = BirdDataset(root_dir=args.data_root, folds=train_folds, augment=True)
+		dataset_val   = BirdDataset(root_dir=args.data_root, folds=val_folds,   augment=False)
+		train_subset  = dataset_train
+		val_subset    = dataset_val if len(dataset_val) > 0 else None
+	else:
+		print("Solo 1 fold disponible — split aleatorio dentro del fold.")
+		dataset_base  = BirdDataset(root_dir=args.data_root, folds=None, augment=False)
+		train_subset, val_subset = build_train_val_subsets(dataset_base, val_ratio=args.val_ratio, seed=args.seed)
+		dataset_aug   = BirdDataset(root_dir=args.data_root, folds=None, augment=True)
+		train_subset  = Subset(dataset_aug, list(train_subset.indices))
 
 	train_loader = DataLoader(
 		train_subset,

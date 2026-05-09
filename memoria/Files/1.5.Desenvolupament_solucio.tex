@@ -1,4 +1,128 @@
-\chapter{Desenvolupament de la solució o les solucions escollides}
+\chapter{Desarrollo de la solución}
 
-El nom d’aquest apartat s'ha de triar en funció del treball que es porti a terme. Aquest apartat pot constar de diversos apartats i subapartats, depenent del criteri de l‘autor o autora i de les consideracions de la tesi que es desenvolupa.
+Este capítulo describe en detalle cada componente del sistema DECOR implementado, la pipeline de datos y el procedimiento de entrenamiento.
 
+% ─────────────────────────────────────────────────────────────
+\section{Pipeline de datos}
+
+\subsection{Dataset BIRD}
+
+El dataset BIRD (\textit{Big Impulse Response Dataset}) \cite{Grondin25} está organizado en 89 carpetas tipo \texttt{fold001}…\texttt{fold089}, cada una con grabaciones de RIR en formato WAV a 48~kHz ($f_s = 48\,000$~Hz). El cargador \texttt{BirdDataset} (\texttt{scripts/bird\_loader.py}) realiza las siguientes operaciones sobre cada fichero:
+
+\begin{enumerate}
+	\item \textbf{Segmentación cabeza/cola:} Los primeros 2400 muestras (50~ms) constituyen la \textit{cabeza}, entrada al codificador. Las siguientes 48000 muestras (1~s) forman la \textit{cola}, objetivo del decodificador. Ambos segmentos se ajustan a longitud fija mediante truncado o relleno con ceros.
+	\item \textbf{Normalización:} La cabeza se normaliza por su valor máximo absoluto. La cola comparte el mismo factor.
+	\item \textbf{EDC de la cola:} Se calcula mediante integración de Schroeder (ec.~\ref{eq:schroeder}), obteniéndose una curva normalizada en $[0,1]$ que se usa como métrica de validación acústica durante el entrenamiento, sin participar en la función de pérdida principal.
+\end{enumerate}
+
+\begin{equation}
+	\mathrm{EDC}(t) = \frac{\int_t^{\infty} h^2(\tau)\,d\tau}{\int_0^{\infty} h^2(\tau)\,d\tau}
+	\label{eq:schroeder}
+\end{equation}
+
+\subsection{Dataset sintético}
+
+De forma complementaria se generó un dataset propio de 6000 salas rectangulares con el método de fuentes imagen (ISM) implementado en Pyroomacoustics. Los parámetros de cada sala (dimensiones, posición de fuente/receptor y coeficientes de absorción) se muestrean aleatoriamente dentro de rangos físicamente plausibles. La pipeline de generación (\texttt{scripts/generate\_synthetic\_rir\_dataset.py}) almacena:
+
+\begin{itemize}
+	\item \texttt{rirs/sample\_XXXXX.npy} — RIR completa normalizada en \texttt{float32}.
+	\item \texttt{head/sample\_XXXXX.npy} — Primeros 50~ms.
+	\item \texttt{tail/sample\_XXXXX.npy} —  Muestra de la cola.
+	\item \texttt{edc\_tail/sample\_XXXXX.npy} — EDC de la cola.
+	\item \texttt{metadata.csv} — Parámetros de sala, RT60 estimado, dimensiones.
+\end{itemize}
+
+El script de validación (\texttt{scripts/validate\_generated\_dataset.py}) comprueba rangos físicos, coherencia de dimensiones y sanidad del RT60 calculado.
+
+% ─────────────────────────────────────────────────────────────
+\section{Arquitectura del modelo}
+
+El sistema DECOR sigue una arquitectura codificador–decodificador descrita a continuación.
+
+\subsection{Codificador (\texttt{DecorEncoder})}
+
+El codificador transforma la cabeza de la RIR $\mathbf{h} \in \mathbb{R}^{1 \times 2400}$ en un vector latente $\mathbf{z} \in \mathbb{R}^{128}$. Está compuesto por:
+
+\begin{itemize}
+	\item \textbf{14 bloques \texttt{EncoderBlock}:} Cada bloque aplica una convolución 1D con stride~2 (rama principal, kernel $k=15$) sumada a una proyección residual con convolución $1\times1$ también de stride~2. Un \textit{BatchNorm} y una activación PReLU cierran cada bloque. El stride acumulado $2^{14}$ proporciona un campo receptivo teórico superior a 100.000 muestras.
+	\item \textbf{Global Average Pooling} adaptativo que elimina la dimensión espacial residual.
+	\item \textbf{MLP de tres capas} (512 → 256 → 128) con PReLU para obtener el embedding final $\mathbf{z}$.
+\end{itemize}
+
+El número total de parámetros del codificador es aproximadamente 6,6~M.
+
+\subsection{Decodificador (\texttt{DecorDecoder})}
+
+El decodificador sintetiza la cola de la RIR $\hat{\mathbf{r}} \in {\mathbb{R}}^{1 \times 48000}$ mediante un modelo físico paramétrico de decaimiento por bandas:
+
+\begin{equation}
+	\hat{r}(t) = \sum_{m=1}^{M} \left( \sum_{k=1}^{K} A_{m,k} \cdot e^{-b_k (t_0 + t/f_s)} \right) w_m(t)
+	\label{eq:decoder}
+\end{equation}
+
+donde $M=10$ son las bandas de octava ISO~266, $K=20$ son las tasas de decaimiento aprendibles $b_k$, $t_0 = 0{,}05$~s es el instante de inicio de la cola y $w_m(t)$ es ruido blanco filtrado por la banda $m$.
+
+Los componentes del decodificador son:
+
+\begin{enumerate}
+	\item \textbf{MLP compartido} (7 capas ocultas de 512 neuronas, LeakyReLU $\alpha=0{,}2$): proyecta $\mathbf{z}$ a un espacio de características de alta dimensión.
+	\item \textbf{Cabezas $\mathbf{A}$ y $\mathbf{C}$:} Predicen respectivamente amplitudes $A^{\prime}_{m,k}$ y máscaras de activación $C_{m,k} = \sigma(C^{\prime}_{m,k})$. La amplitud efectiva es $A_{m,k} = A^{\prime}_{m,k} \cdot C_{m,k}$.
+	\item \textbf{Base de decaimiento:} $K$ exponenciales $e^{-b_k t}$ con tasas inicializadas en una escala log-uniforme entre RT60~mín (0{,}05~s) y RT60~máx (3~s); $b_k$ son parámetros aprendibles.
+	\item \textbf{Banco de filtros FIR:} 10 filtros de banda de octava (orden 1023) inicializados analíticamente con la función \texttt{firwin} de \texttt{scipy}, que colorean el ruido blanco generado aleatoriamente en cada inferencia.
+	\item \textbf{Mezclador de bandas:} Una convolución $1\times1$ con 10 canales de entrada y 1 de salida aprende la mezcla final de las bandas.
+\end{enumerate}
+
+\subsection{Función de pérdida (MSTFT + L1)}
+
+La función de pérdida (\texttt{models/loss.py}) combina:
+
+\begin{equation}
+	\mathcal{L} = \alpha \cdot \mathcal{L}_{\mathrm{L1}} + \beta \sum_{r \in \mathcal{R}} \left( \mathcal{L}_{\mathrm{SC}}^{(r)} + \mathcal{L}_{\mathrm{SM}}^{(r)} \right)
+	\label{eq:loss}
+\end{equation}
+
+donde $\mathcal{R} = \{(64,32), (512,256), (2048,1024), (8192,4096)\}$ son los pares (ventana STFT, salto), $\mathcal{L}_{\mathrm{SC}}$ es la pérdida de convergencia espectral (norma de Frobenius relativa) y $\mathcal{L}_{\mathrm{SM}}$ es la pérdida de log-magnitud espectral (MAE en escala logarítmica). Los pesos por defecto son $\alpha=0$ y $\beta=1$, utilizando únicamente la componente MSTFT.
+
+% ─────────────────────────────────────────────────────────────
+\section{Entrenamiento}
+
+\subsection{Configuración}
+
+El entrenamiento (\texttt{scripts/train.py}) sigue el protocolo:
+
+\begin{table}[H]
+	\centering
+	\caption{Hiperparámetros de entrenamiento}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Parámetro} & \textbf{Valor por defecto} \\ \hline
+		Épocas & 20 \\ \hline
+		Tamaño de batch & 32 \\ \hline
+		Learning rate & $10^{-4}$ \\ \hline
+		Optimizador & Ranger21 \\ \hline
+		Gradient clipping & Norma máxima 1{,}0 \\ \hline
+		Dimensión latente & 128 \\ \hline
+		Ratio validación & 10\% \\ \hline
+		Semilla & 42 \\ \hline
+	\end{tabular}
+\end{table}
+
+Se utiliza el optimizador \textbf{Ranger21} de la librería \texttt{pytorch-optimizer}, que combina RAdam, Lookahead y otras técnicas de regularización en un único optimizador robusto. Ranger21 requiere conocer el número total de iteraciones en el momento de la inicialización, calculado como $N_{iter} = \max(1,\; E \times |\mathcal{D}_{train}|)$, donde $E$ es el número de épocas.
+
+\subsection{Ciclo de entrenamiento}
+
+En cada época, el bucle:
+
+\begin{enumerate}
+	\item Carga un batch $\{(\mathbf{h}_i, \mathbf{r}_i)\}_{i=1}^{B}$ del \texttt{DataLoader}.
+	\item Calcula el embedding $\mathbf{z}_i = \texttt{Encoder}(\mathbf{h}_i)$.
+	\item Sintetiza la cola $\hat{\mathbf{r}}_i = \texttt{Decoder}(\mathbf{z}_i)$.
+	\item Calcula $\mathcal{L}(\hat{\mathbf{r}}, \mathbf{r})$ y retropropaga.
+	\item Aplica \textit{gradient clipping} y actualiza los pesos.
+\end{enumerate}
+
+Al final de cada época se evalúa sobre el conjunto de validación reportando: pérdida MSTFT de validación y error L1 en la EDC (métrica acústica secundaria).
+
+\subsection{Checkpointing y reanudación}
+
+El sistema guarda automáticamente un checkpoint (\texttt{checkpoint.pth}) con el estado del modelo que minimiza la pérdida de validación. El checkpoint contiene el estado del codificador, el decodificador, el optimizador y la época actual, permitiendo reanudar el entrenamiento con \texttt{--resume}.

@@ -1,3 +1,55 @@
-\chapter{Plantejament i decisió sobre solucions alternatives}
+\chapter[Planteamiento]{Planteamiento y decisión sobre las soluciones alternativas}
 
-El nom d’aquest apartat s'ha de triar en funció del treball que es porti a terme. Aquest apartat pot constar de diversos apartats i subapartats, depenent del criteri de l‘autor o autora i de les consideracions de la tesi que es desenvolupa.
+La etapa de diseño del sistema DECOR requirió evaluar varias alternativas arquitectónicas antes de fijar la solución definitiva. En este capítulo se describen las opciones consideradas para cada componente del sistema y se justifica la elección adoptada.
+
+\section[Alternativas para la extrapolación]{Alternativas para la extrapolación de la reverberación tardía}
+
+La cola de una RIR comparte tres características físicas universales: decaimiento exponencial, coloración espectral dependiente de los materiales y un componente estocástico de alta frecuencia. Esto abre dos familias de enfoques:
+
+\begin{itemize}
+	\item \textbf{Regresión directa de la señal temporal:} El modelo predice directamente las muestras de audio. Permite el uso de cualquier función de pérdida temporal o espectral, pero supone un objetivo de alta dimensionalidad (48000 muestras) con elevada varianza aleatoria, haciendo el aprendizaje inestable.
+	\item \textbf{Modelo físico paramétrico:} El modelo predice parámetros de un modelo analítico de decaimiento (p. ej., coeficientes de decaimiento exponencial por banda de octava) que luego sintetizan la señal. Reduce el espacio de salida a unas pocas decenas de números, garantizando plausibilidad física por construcción.
+\end{itemize}
+
+Se optó por el \textbf{modelo físico paramétrico} por su estabilidad durante el entrenamiento y su interpretabilidad, siguiendo el marco propuesto en \cite{muhammad2025}.
+
+\section[Alternativas para el codificador]{Alternativas para el codificador de la cabeza}
+
+Para extraer el vector latente a partir de los primeros 50~ms de la RIR se consideraron tres arquitecturas:
+
+\begin{table}[H]
+	\centering
+	\caption{Comparativa de arquitecturas de codificador consideradas}
+	\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
+		\hline
+		\textbf{Arquitectura} & \textbf{Ventajas} & \textbf{Inconvenientes} \\ \hline
+		LSTM bidireccional & Modela dependencias temporales nativas & Secuencial, difícil de paralelizar; costoso en señales largas \\ \hline
+		Transformer & Atención global, altamente paralelizable & Coste cuadrático en longitud de secuencia sin optimizaciones \\ \hline
+		CNN residual (elegida) & Paralelizable, campo receptivo controlado, estable con BN & Requiere un número elevado de bloques para cubrir toda la cabeza \\ \hline
+	\end{tabular}
+\end{table}
+
+Se eligió la \textbf{CNN residual con stride} (\texttt{DecorEncoder}) porque combina campo receptivo suficientemente amplio ($>100.000$ muestras con 14 bloques de stride 2), paralelización completa en GPU y estabilidad de entrenamiento gracias a \textit{BatchNorm} y conexiones residuales.
+
+\section{Alternativas para la función de pérdida}
+
+La pérdida es un factor crítico para la calidad perceptual. Las alternativas estudiadas fueron:
+
+\begin{itemize}
+	\item \textbf{MSE en tiempo:} Simple pero ciega a la percepción espectral; penaliza errores de fase irrelevantes perceptualmente.
+	\item \textbf{MAE en EDC:} Favorece la corrección de la envolvente energética; no penaliza errores espectrales de coloración.
+	\item \textbf{MSTFT (elegida):} Combina pérdida de convergencia espectral y pérdida de log-magnitud en cuatro resoluciones temporales/frecuenciales, siendo la más alineada con la percepción humana y con el estado del arte \cite{Lin25}.
+\end{itemize}
+
+La implementación final (\texttt{models/loss.py}) utiliza resoluciones FFT de $\{64, 512, 2048, 8192\}$ con saltos $\{32, 256, 1024, 4096\}$, cubriendo desde detalles de ataque hasta la macro-envolvente del decaimiento.
+
+\section{Decisión sobre el dataset de entrenamiento}
+
+Se evaluaron dos fuentes de datos:
+
+\begin{enumerate}
+	\item \textbf{Dataset sintético propio:} 6000 salas rectangulares generadas con Pyroomacoustics (ISM). Ventaja: configuración controlada, trazabilidad total. Inconveniente: distribución acotada a geometrías simples.
+	\item \textbf{BIRD \cite{Grondin25}:} Dataset real con 89 splits y miles de RIR medidas en recintos reales de todo tipo. Mayor diversidad geométrica y de materiales.
+\end{enumerate}
+
+Se adoptó \textbf{BIRD como fuente principal} de entrenamiento por su diversidad, reservando el dataset sintético para estudios de ablación y validación de la pipeline de datos.

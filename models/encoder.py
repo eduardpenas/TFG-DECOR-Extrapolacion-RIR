@@ -41,7 +41,7 @@ class DecorEncoder(nn.Module):
             EncoderBlock(512, 512),   # bloque 7
             EncoderBlock(512, 512),   # bloque 8
             EncoderBlock(512, 512),   # bloque 9
-        )
+        )  # 9 bloques: reducción 2^9=512 → ~4.7 frames a 48 kHz antes del adaptive pool
 
         # Pooling adaptativo para compactar la dimensión temporal.
         self.global_pool = nn.AdaptiveAvgPool1d(1)

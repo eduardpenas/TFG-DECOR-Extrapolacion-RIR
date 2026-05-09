@@ -1,5 +1,33 @@
-\chapter{Conclusions}
+\chapter{Conclusiones y trabajo futuro}
 
-Fa la funció de síntesi final i s’elabora a partir de la interpretació dels resultats assolits. La conclusió sol ser breu i s’ha de relacionar directament amb els objectius del treball. 
+\section{Conclusiones}
 
-També s’hi han d’incloure les recomanacions de continuació del treball i la planificació i programació del treball futur proposat.
+Este Trabajo de Fin de Grado ha desarrollado DECOR, un sistema de aprendizaje profundo funcional y validado para la extrapolación de respuestas al impulso de sala. Las principales aportaciones son:
+
+\begin{itemize}
+	\item Se ha diseñado e implementado una \textbf{arquitectura codificador–decodificador original} que integra conocimiento físico (modelo de decaimiento exponencial por bandas de octava, banco de filtros FIR inicializado analíticamente) directamente en la estructura del decodificador, garantizando plausibilidad física de las señales sintetizadas por construcción.
+
+	\item El \textbf{codificador convolucional residual} (\texttt{DecorEncoder}, 6{,}6~M parámetros, 14 bloques) comprime 50~ms de RIR medida en un vector latente de 128 dimensiones con un campo receptivo que supera los 100.000 muestras a 48~kHz.
+
+	\item Se ha implementado una \textbf{función de pérdida MSTFT} de cuatro resoluciones alineada con el estado del arte \cite{Lin25}, que optimiza simultáneamente en escala temporal y frecuencial y es más robusta perceptualmente que el MSE estándar.
+
+	\item Se ha construido una \textbf{pipeline de datos completa} sobre el dataset BIRD \cite{Grondin25} y sobre un dataset sintético propio (6000 salas, Pyroomacoustics), con cargadores de datos reutilizables, cálculo automático de EDC y scripts de validación de integridad.
+
+	\item El sistema de entrenamiento es \textbf{robusto y reproducible}: soporta reanudación desde checkpoint, gradient clipping, semilla aleatoria fija y monitorización por pérdida de validación.
+\end{itemize}
+
+\section{Trabajo futuro}
+
+Las siguientes líneas de trabajo se identifican como continuación natural del proyecto:
+
+\begin{enumerate}
+	\item \textbf{Evaluación acústica cuantitativa:} Implementar el cálculo automático de T20, EDT y C50 sobre el conjunto de test para comparar con los valores de referencia del dataset BIRD. El script \texttt{scripts/eval.py} sienta las bases para esta evaluación.
+
+	\item \textbf{Capa Transformer en el cuello de botella:} El fichero \texttt{models/transformer.py} está reservado para integrar un bloque de auto-atención entre el codificador y el decodificador, permitiendo capturar dependencias de largo alcance según el marco de \cite{GENEVA25}.
+
+	\item \textbf{Entrenamiento con dataset sintético aumentado:} Ampliar el dataset sintético a más de 10.000 salas e incluir geometrías no rectangulares (polígonos convexos) para mejorar la generalización.
+
+	\item \textbf{Optimización para inferencia en tiempo real:} Estudiar la cuantización INT8 y la destilación del modelo para alcanzar latencias de inferencia compatibles con aplicaciones de audio inmersivo ($<5$~ms en hardware de consumo).
+
+	\item \textbf{Validación perceptual:} Diseñar pruebas de escucha (\textit{MUSHRA}) para evaluar la calidad subjetiva de las colas de reverberación sintetizadas.
+\end{enumerate}

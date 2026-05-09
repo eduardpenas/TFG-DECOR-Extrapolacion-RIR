@@ -1,5 +1,5 @@
 """
-Evaluación DECOR con las 5 métricas del paper (Lin et al., 2025):
+Evaluación DECOR con las 5 métricas del paper :
   1. MSTFT (↓)  — Multi-Resolution STFT Loss
   2. EDF MAE (dB, ↓) — Error absoluto medio de la EDC en dB
   3. EDF RMSE (dB, ↓) — Raíz del error cuadrático medio de la EDC en dB
@@ -23,6 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.bird_loader import BirdDataset, schroeder_integration
+from scripts.train import batch_schroeder_integration
 from models.encoder import DecorEncoder
 from models.decoder import DecorDecoder
 from models.loss import MultiResolutionSTFTLoss
@@ -178,37 +179,41 @@ def evaluate(encoder, decoder, dataloader, device, mrstft_criterion):
 
     with torch.no_grad():
         for batch in tqdm(dataloader, desc="Evaluando"):
-            head = batch["input"].to(device)
-            edc_target = batch["target"].to(device)
+            head = batch["input"].to(device)              # (B, 1, 2400)
+            tail_target = batch["target"].to(device)      # (B, 1, 45600) — RIR cruda
+            edc_target = batch["target_edc"].to(device)   # (B, 1, 45600) — EDC normalizada [0,1]
 
+            # Forward: encoder → z → decoder → RIR cruda predicha
             z = encoder(head)
-            edc_pred = decoder(z, target_length=edc_target.shape[-1])
+            tail_pred = decoder(z, target_length=tail_target.shape[-1])  # (B, 1, 45600)
 
-            # La EDC normalizada del dataset está en [0,1].
-            # Acotar predicción/target estabiliza métricas en dB (T60/DRR).
+            # EDC predicha a partir de la cola RIR predicha
+            edc_pred = batch_schroeder_integration(tail_pred)  # (B, 1, 45600)
+
+            # Acotar a [0,1] para estabilizar métricas en dB (T60/DRR)
             edc_pred = torch.clamp(edc_pred, 0.0, 1.0)
             edc_target = torch.clamp(edc_target, 0.0, 1.0)
 
             bs = head.size(0)
             accum["count"] += bs
 
-            # 1. MSTFT
-            accum["mstft"] += mrstft_criterion(edc_pred, edc_target).item() * bs
+            # 1. MSTFT — sobre la RIR cruda (tail)
+            accum["mstft"] += mrstft_criterion(tail_pred, tail_target).item() * bs
 
-            # 2. EDF MAE (dB)
+            # 2. EDF MAE (dB) — sobre la EDC
             accum["edf_mae_db"] += compute_edf_mae_db(edc_pred, edc_target).item() * bs
 
-            # 3. EDF RMSE (dB) — acumular suma de cuadrados
+            # 3. EDF RMSE (dB) — acumular suma de cuadrados sobre la EDC
             pred_db = _edc_norm_to_db(edc_pred)
             target_db = _edc_norm_to_db(edc_target)
             accum["edf_rmse_sq"] += ((pred_db - target_db) ** 2).sum().item() / (
                 edc_pred.size(-1) * edc_pred.size(1)
             )
 
-            # 4. T60 MAPE (%)
+            # 4. T60 MAPE (%) — sobre la EDC
             accum["t60_mape"] += compute_t60_mape(edc_pred, edc_target).item() * bs
 
-            # 5. DRR MSE (dB)
+            # 5. DRR MSE (dB) — sobre la EDC
             accum["drr_mse"] += compute_drr_mse_db(edc_pred, edc_target).item() * bs
 
     n = accum["count"]
@@ -241,11 +246,12 @@ def main():
         sys.exit(1)
 
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
-    print(f"Checkpoint cargado: época {ckpt.get('epoch', '?')}, train loss {ckpt.get('best_train_loss', '?'):.6f}")
+    best_loss = ckpt.get('best_val_loss', ckpt.get('train_loss', float('nan')))
+    print(f"Checkpoint cargado: época {ckpt.get('epoch', '?')}, best loss {best_loss:.6f}")
 
     # Modelos
     encoder = DecorEncoder(latent_dim=args.latent_dim).to(device)
-    decoder = DecorDecoder(in_channels=args.latent_dim, target_length=48000).to(device)
+    decoder = DecorDecoder(in_channels=args.latent_dim, target_length=45600).to(device)
     encoder.load_state_dict(ckpt["encoder_state_dict"])
     decoder.load_state_dict(ckpt["decoder_state_dict"])
 
