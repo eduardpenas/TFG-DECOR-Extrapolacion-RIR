@@ -1,0 +1,20 @@
+\chapter{Conclusiones y Trabajo Futuro}
+
+\section{Conclusiones}
+
+El presente Trabajo de Fin de Grado ha resuelto de forma satisfactoria el problema de la extrapolación de la respuesta al impulso tardía a partir de una observación parcial de 50~ms. La evidencia experimental obtenida confirma que la información contenida en el tramo temprano, cuando se procesa mediante una arquitectura físicamente informada, resulta suficiente para reconstruir con consistencia la dinámica energética de la cola reverberante en recintos no observados durante el aprendizaje.
+
+El balance crítico de resultados permite establecer una conclusión de fondo: la arquitectura paramétrica propuesta, DECOR, demuestra que el Procesamiento de Señal Diferenciable (DDSP) introduce un sesgo inductivo termodinámico esencial para el problema abordado. Aunque enfoques puramente generativos del estado del arte pueden optimizar con mayor facilidad distancias espectrales agregadas como MSTFT, su comportamiento evidencia limitaciones estructurales al representar magnitudes físicas del recinto. En contraste, alcanzar un error del 8.1\% en la estimación de $T_{60}$ y preservar de manera robusta la Curva de Decaimiento de Energía (EDC) valida la hipótesis central del proyecto: en extrapolación de reverberación tardía, la coherencia acústica constituye un criterio de mayor relevancia que la similitud espectrogramática cruda.
+
+Desde una perspectiva metodológica, también se han consolidado aportaciones de carácter transversal. La estabilización de gradientes mediante técnicas de recorte (\textit{gradient clipping}), junto con una estrategia de aprendizaje por currículo, resultó determinante para alcanzar convergencia en una superficie de pérdida marcadamente no convexa. Esta combinación permitió absorber transitorios de alta inestabilidad durante las fases de acoplamiento físico de la función de coste y condujo a un régimen final de optimización estable, reproducible y físicamente interpretable.
+
+\section{Trabajo futuro}
+
+Como primera línea de investigación, se propone abordar de forma explícita la síntesis de microestructura estocástica de la cola reverberante, aspecto donde el análisis cualitativo ha identificado limitaciones en factor de cresta y rugosidad fina. Una vía prometedora consiste en acoplar modelos generativos complementarios, tales como Redes Adversarias Generativas o Modelos de Difusión, condicionados por los parámetros físicos estimados por el bloque DDSP. Este esquema híbrido permitiría recuperar detalle microscópico sin comprometer la envolvente macroscópica ni la consistencia energética global.
+
+De forma complementaria, se considera especialmente relevante explorar la extrapolación directa mediante arquitecturas Transformer. Su mecanismo de autoatención podría capturar dependencias temporales de largo alcance entre reflexiones tempranas y cola reverberante, permitiendo modelar con mayor flexibilidad la evolución espectro-temporal sin perder coherencia física cuando se incorporen restricciones acústicas en la función objetivo.
+
+Una segunda línea prioritaria se orienta a la expansión espacial y multicanal del marco actual. En particular, la adaptación a representaciones inmersivas tridimensionales, como Ambisonics o formulaciones basadas en HRTF, abriría la posibilidad de extrapolar no solo la evolución temporal de la energía, sino también la direccionalidad del campo difuso. Esta extensión incrementaría de forma sustancial el alcance aplicado del método en escenarios de Realidad Virtual, auralización interactiva y reproducción espacial avanzada.
+
+Finalmente, se propone profundizar en la optimización de inferencia con el objetivo de viabilizar su despliegue en tiempo real. Entre las estrategias más relevantes se encuentran la destilación del modelo hacia arquitecturas de menor coste computacional y la traslación de componentes críticos a implementaciones de bajo nivel. Este esfuerzo permitiría aproximar el uso de DECOR a plataformas embebidas y sistemas con restricciones estrictas de latencia, favoreciendo su transferencia efectiva a entornos de producción.
+

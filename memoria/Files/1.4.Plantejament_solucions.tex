@@ -1,55 +1,105 @@
-\chapter[Planteamiento]{Planteamiento y decisión sobre las soluciones alternativas}
+\chapter{Diseño y Arquitectura del Modelo DECOR}
 
-La etapa de diseño del sistema DECOR requirió evaluar varias alternativas arquitectónicas antes de fijar la solución definitiva. En este capítulo se describen las opciones consideradas para cada componente del sistema y se justifica la elección adoptada.
+Este capítulo presenta la formulación matemática y el diseño arquitectónico del modelo DECOR \cite{Lin25}, concebido como una solución eficiente para la extrapolación de respuestas al impulso de recinto a partir de observaciones parciales de corta duración.
 
-\section[Alternativas para la extrapolación]{Alternativas para la extrapolación de la reverberación tardía}
+\section{Formulación}
 
-La cola de una RIR comparte tres características físicas universales: decaimiento exponencial, coloración espectral dependiente de los materiales y un componente estocástico de alta frecuencia. Esto abre dos familias de enfoques:
+La señal acústica continua se discretiza a frecuencia de muestreo $f_s=48$ kHz, obteniéndose la secuencia temporal discreta $h[n]$. El problema de completación de RIR se formula bajo el supuesto de observación parcial del tramo temprano de la respuesta. En particular, se define un índice de truncamiento fijo $N_{head}=2400$ muestras, correspondiente a una ventana temporal de 50 ms.
 
-\begin{itemize}
-	\item \textbf{Regresión directa de la señal temporal:} El modelo predice directamente las muestras de audio. Permite el uso de cualquier función de pérdida temporal o espectral, pero supone un objetivo de alta dimensionalidad (48000 muestras) con elevada varianza aleatoria, haciendo el aprendizaje inestable.
-	\item \textbf{Modelo físico paramétrico:} El modelo predice parámetros de un modelo analítico de decaimiento (p. ej., coeficientes de decaimiento exponencial por banda de octava) que luego sintetizan la señal. Reduce el espacio de salida a unas pocas decenas de números, garantizando plausibilidad física por construcción.
-\end{itemize}
+Bajo esta partición, el vector de entrada se define como $\mathbf{x}\in\mathbb{R}^{2400}$, conteniendo el sonido directo y las reflexiones tempranas. El objetivo supervisado se define como el vector de cola reverberante $\mathbf{y}\in\mathbb{R}^{45600}$, asociado a los 950 ms restantes de la respuesta discreta.
 
-Se optó por el \textbf{modelo físico paramétrico} por su estabilidad durante el entrenamiento y su interpretabilidad, siguiendo el marco propuesto en \cite{muhammad2025}.
+El sistema DECOR se modela como un mapeo parametrizado
+$\mathcal{F}_{\Theta}:\mathbb{R}^{2400}\rightarrow\mathbb{R}^{45600}$,
+donde $\Theta$ denota el conjunto de parámetros entrenables. Su estructura interna se descompone en un codificador $\mathcal{E}_{\psi}$ y un decodificador $\mathcal{D}_{\phi}$:
 
-\section[Alternativas para el codificador]{Alternativas para el codificador de la cabeza}
+\begin{equation}
+\mathbf{z}=\mathcal{E}_{\psi}(\mathbf{x}),
+\qquad
+\hat{\mathbf{y}}=\mathcal{D}_{\phi}(\mathbf{z})=\mathcal{D}_{\phi}(\mathcal{E}_{\psi}(\mathbf{x})),
+\qquad
+\Theta=\{\psi,\phi\}.
+\end{equation}
 
-Para extraer el vector latente a partir de los primeros 50~ms de la RIR se consideraron tres arquitecturas:
-
-\begin{table}[H]
-	\centering
-	\caption{Comparativa de arquitecturas de codificador consideradas}
-	\begin{tabular}{|p{3cm}|p{5cm}|p{5cm}|}
-		\hline
-		\textbf{Arquitectura} & \textbf{Ventajas} & \textbf{Inconvenientes} \\ \hline
-		LSTM bidireccional & Modela dependencias temporales nativas & Secuencial, difícil de paralelizar; costoso en señales largas \\ \hline
-		Transformer & Atención global, altamente paralelizable & Coste cuadrático en longitud de secuencia sin optimizaciones \\ \hline
-		CNN residual (elegida) & Paralelizable, campo receptivo controlado, estable con BN & Requiere un número elevado de bloques para cubrir toda la cabeza \\ \hline
-	\end{tabular}
+\begin{table}[htbp]
+\centering
+\caption{Dimensiones tensoriales de las variables principales del modelo DECOR.}
+\label{tab:dimensiones}
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Símbolo Matemático} & \textbf{Dimensionalidad Tensorial} \\
+\midrule
+Cabeza de la RIR (Entrada) & $\mathbf{x}$ & $(1 \times 2400)$ \\
+Vector Latente & $\mathbf{z}$ & $(1 \times 128)$ \\
+Cola Sintetizada (Salida) & $\hat{\mathbf{y}}$ & $(1 \times 45600)$ \\
+\bottomrule
+\end{tabular}
 \end{table}
 
-Se eligió la \textbf{CNN residual con stride} (\texttt{DecorEncoder}) porque combina campo receptivo suficientemente amplio ($>100.000$ muestras con 14 bloques de stride 2), paralelización completa en GPU y estabilidad de entrenamiento gracias a \textit{BatchNorm} y conexiones residuales.
+\section{El Codificador}
 
-\section{Alternativas para la función de pérdida}
+La unidad elemental del codificador corresponde a un bloque convolucional residual. Para una entrada $\mathbf{h}_{in}$, la salida del bloque se define como
 
-La pérdida es un factor crítico para la calidad perceptual. Las alternativas estudiadas fueron:
+\begin{equation}
+\mathbf{h}_{out}=\sigma\left(\mathcal{F}_{main}(\mathbf{h}_{in})+\mathcal{F}_{skip}(\mathbf{h}_{in})\right).
+\end{equation}
 
-\begin{itemize}
-	\item \textbf{MSE en tiempo:} Simple pero ciega a la percepción espectral; penaliza errores de fase irrelevantes perceptualmente.
-	\item \textbf{MAE en EDC:} Favorece la corrección de la envolvente energética; no penaliza errores espectrales de coloración.
-	\item \textbf{MSTFT (elegida):} Combina pérdida de convergencia espectral y pérdida de log-magnitud en cuatro resoluciones temporales/frecuenciales, siendo la más alineada con la percepción humana y con el estado del arte \cite{Lin25}.
-\end{itemize}
+En esta expresión, $\mathcal{F}_{main}$ denota una convolución unidimensional con tamaño de núcleo 15, salto 2 y relleno simétrico orientado a conservar coherencia dimensional local, seguida de normalización por lotes (\textit{Batch Normalization}). Por su parte, $\mathcal{F}_{skip}$ representa la rama residual con convolución $1\times1$ y el mismo salto, con el fin de alinear la dimensionalidad de los tensores antes de la suma elemento a elemento. La no linealidad $\sigma$ se implementa mediante una activación Parametric ReLU (PReLU).
 
-La implementación final (\texttt{models/loss.py}) utiliza resoluciones FFT de $\{64, 512, 2048, 8192\}$ con saltos $\{32, 256, 1024, 4096\}$, cubriendo desde detalles de ataque hasta la macro-envolvente del decaimiento.
+La arquitectura completa de \textit{DecorEncoder} se organiza como una cascada de 9 bloques residuales. La jerarquía de canales sigue la progresión
 
-\section{Decisión sobre el dataset de entrenamiento}
+\begin{equation}
+1 \rightarrow 16 \rightarrow 32 \rightarrow 64 \rightarrow 128 \rightarrow 256 \rightarrow 512 \rightarrow 512 \rightarrow 512 \rightarrow 512.
+\end{equation}
 
-Se evaluaron dos fuentes de datos:
+La aplicación sucesiva de salto 2 en cada bloque produce un factor de reducción temporal global igual a $2^9=512$. En consecuencia, la entrada original $\mathbf{x}\in\mathbb{R}^{1\times2400}$ experimenta una compresión pronunciada sobre el eje temporal, mientras la información acústica se redistribuye en la profundidad de los mapas de características.
 
-\begin{enumerate}
-	\item \textbf{Dataset sintético propio:} 6000 salas rectangulares generadas con Pyroomacoustics (ISM). Ventaja: configuración controlada, trazabilidad total. Inconveniente: distribución acotada a geometrías simples.
-	\item \textbf{BIRD \cite{Grondin25}:} Dataset real con 89 splits y miles de RIR medidas en recintos reales de todo tipo. Mayor diversidad geométrica y de materiales.
-\end{enumerate}
+Tras el último bloque convolucional, la salida se somete a una agrupación promedio global adaptativa (\textit{Adaptive Average Pooling}), operación que colapsa la dimensión temporal residual y entrega un vector denso de 512 componentes. Finalmente, una transformación lineal proyecta dicho vector al embedding latente
 
-Se adoptó \textbf{BIRD como fuente principal} de entrenamiento por su diversidad, reservando el dataset sintético para estudios de ablación y validación de la pipeline de datos.
+\begin{equation}
+\mathbf{z}\in\mathbb{R}^{128},
+\end{equation}
+
+el cual recoge la firma acústica de las reflexiones tempranas en una representación compacta apta para la etapa de síntesis de cola reverberante.
+
+\section{Decodificador}
+
+La síntesis de la cola reverberante estimada se rige por el siguiente modelo físico:
+
+\begin{equation}
+\hat{r}(t)=\sum_{m=1}^{M}\left(\sum_{k=1}^{K}A_{m,k}\cdot e^{-b_{k}(t_{0}+t)}\right)w_{m}(t)
+\end{equation}
+
+donde $M=10$ denota el número de bandas de octava bajo la norma ISO 266, $K=20$ el número de tasas de decaimiento linealmente combinadas, $t_{0}=0.05$~s el instante de transición temporal correspondiente al inicio de la cola, y $w_{m}(t)$ el ruido blanco gaussiano filtrado asociado a la banda espectral $m$.
+
+El estimador paramétrico inicial opera sobre el vector latente $\mathbf{z}\in\mathbb{R}^{128}$ mediante un perceptrón multicapa compuesto por 7 capas densas encadenadas, cada una con 512 unidades y activación LeakyReLU con pendiente de zona muerta $\alpha=0.2$. La etapa de salida adopta un esquema ramificado (\textit{multi-head}): una rama produce amplitudes base $A'_{m,k}$ y la otra produce coeficientes de enmascaramiento $C'_{m,k}$. La activación efectiva se obtiene por producto de Hadamard, con enmascaramiento sigmoidal, según
+$A_{m,k}=A'_{m,k}\odot\sigma(C'_{m,k})$.
+
+Las tasas de amortiguamiento $b_k$ se establecen sobre una escala log-uniforme vinculada a tiempos de reverberación $T_{60}$ dentro del intervalo físico $[0.05,3.0]$~s. Este criterio impone una restricción acústica inicial coherente con recintos reales y, al mismo tiempo, conserva flexibilidad, puesto que los $b_k$ se tratan como parámetros libres optimizables durante el aprendizaje del modelo.
+
+La etapa de coloración espectral utiliza un banco de 10 filtros FIR de fase lineal y orden 1023, calculados de forma analítica mediante diseño por ventanas con la función \texttt{firwin} de SciPy. Dicho banco separa la señal estocástica en bandas de octava normalizadas. Finalmente, una convolución unidimensional de tamaño de núcleo $1$ recibe los 10 canales filtrados y ejecuta una suma ponderada optimizable, equivalente a una transformación lineal $1\times1$, para reducir la representación multibanda a un único canal mono que constituye la cola extendida final.
+
+\section{Pérdida}
+
+La optimización directa sobre la forma de onda mediante Error Cuadrático Medio (MSE) resulta subóptima en tareas de síntesis de audio reverberante. En particular, el MSE presenta elevada sensibilidad ante desajustes de fase que pueden ser perceptualmente poco relevantes, y no representa con fidelidad la respuesta auditiva humana, que depende de la distribución espectral de energía en el tiempo con mayor peso que del error puntual muestra a muestra.
+
+Con el objetivo de ajustar el aprendizaje a criterios más cercanos a la percepción, se establece la pérdida de Transformada de Fourier a Corto Plazo multirresolución (MSTFT). Para una respuesta predicha $\hat{h}$ y una respuesta de referencia $h$, la pérdida total se define como
+
+\begin{equation}
+\mathcal{L}_{\mathrm{MSTFT}}(\hat{h},h)=\sum_{r=1}^{R}\left(L_{sc}^{(r)}+L_{sm}^{(r)}\right).
+\end{equation}
+
+El término de convergencia espectral en la resolución $r$ se expresa mediante norma de Frobenius como
+
+\begin{equation}
+L_{sc}^{(r)}=\frac{\left\|\left|\mathrm{STFT}_r(\hat{h})\right|-\left|\mathrm{STFT}_r(h)\right|\right\|_F}{\left\|\left|\mathrm{STFT}_r(h)\right|\right\|_F+\epsilon}.
+\end{equation}
+
+El término de log-magnitud espectral se formula como
+
+\begin{equation}
+L_{sm}^{(r)}=\left\|\log\left(\left|\mathrm{STFT}_r(\hat{h})\right|+\epsilon\right)-\log\left(\left|\mathrm{STFT}_r(h)\right|+\epsilon\right)\right\|_1.
+\end{equation}
+
+En estas expresiones, $\epsilon$ es un término de estabilidad numérica. La presencia del logaritmo en $L_{sm}^{(r)}$ aproxima la sensibilidad psicoacústica a variaciones relativas de presión sonora, lo que favorece un ajuste más coherente con la percepción auditiva.
+
+En el modelo presentado se emplean $R=4$ resoluciones, con ventanas de Hann de tamaños $W\in\{64,512,2048,8192\}$ y saltos proporcionales $H\in\{32,256,1024,4096\}$. Esta selección combina escalas temporales cortas, adecuadas para transitorios rápidos, con escalas largas que mejoran la precisión frecuencial en el modelado de modos estacionarios y del decaimiento macroscópico de la reverberación tardía.

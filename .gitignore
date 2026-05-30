@@ -8,6 +8,7 @@ decor/
 data/
 models/*.pth
 models/*.pt
+checkpoint.pth
 
 # Python
 __pycache__/

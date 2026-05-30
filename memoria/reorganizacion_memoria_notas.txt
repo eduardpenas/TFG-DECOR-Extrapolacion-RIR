@@ -1,0 +1,70 @@
+REORGANIZACION DE MEMORIA (GUIA BREVE)
+
+1. Introduccion
+1.1 Objeto y Alcance
+- Definir problema, objetivo principal y limites del trabajo.
+- Explicar brevemente la estructura del documento.
+
+1.2 Justificacion e Impacto
+- Motivar relevancia cientifica y aplicada.
+- Indicar impacto tecnico, acustico y potencial industrial.
+
+1.3 Requerimientos del Sistema
+- Requisitos de entrada/salida.
+- Requisitos de calidad acustica.
+- Requisitos de reproducibilidad y rendimiento.
+
+2. Fundamentos Teoricos
+2.1 Acustica de Salas
+- RIR, campo directo/reverberante, tiempo de mezcla.
+- Definicion de EDC y conexion con T60/EDT/claridad.
+
+2.2 Redes neuronales para audio
+- Mapeo a espacio latente.
+- Sintesis paramatrica condicionada.
+- Motivo de usar perdidas espectrales multirresolucion.
+
+3. Estado de la Cuestion
+- Mantener contenido actual, solo ajustar enlaces si hace falta.
+
+4. Diseno y Arquitectura del Modelo DECOR
+4.1 Formulacion matematica
+- Definir espacios de entrada y salida con notacion formal.
+
+4.2 Codificador (DecorEncoder)
+- Flujo tensorial y diagrama de bloques con dimensiones.
+
+4.3 Decodificador informado (DecorDecoder)
+- Banco FIR ISO 266 y decaimiento log-uniforme.
+
+4.4 Funcion de perdida
+- Formula completa de MSTFT y explicacion perceptual.
+
+5. Marco Experimental y Datasets
+5.1 Corpus de datos
+- BIRD + dataset sintetico, calidad y limitaciones.
+
+5.2 Pipeline de procesamiento
+- Preprocesado, head/tail, EDC e instrumentacion.
+
+5.3 Protocolo de entrenamiento
+- Hiperparametros, Ranger21, split por folds, checkpoint.
+
+6. Resultados y Discusion
+6.1 Rendimiento del entrenamiento
+- Graficas de convergencia train/val y grad_norm.
+
+6.2 Evaluacion objetiva
+- Tabla con metricas de scripts/eval.py:
+  MSTFT, EDF_MAE_dB, EDF_RMSE_dB, T60_MAPE_%, DRR_MSE_dB.
+
+6.3 Analisis de casos
+- RIR real vs predicha en tiempo y frecuencia.
+- EDC real vs EDC predicha en casos representativos.
+
+6.4 Ablaciones
+- Comparar decisiones de arquitectura, perdida y datos.
+
+7. Conclusiones y Trabajo Futuro
+- Conclusiones apoyadas en resultados.
+- Limites y propuestas concretas de continuacion.

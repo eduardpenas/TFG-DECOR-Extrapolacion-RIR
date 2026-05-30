@@ -1,38 +1,30 @@
-\chapter{Metodología}
+\chapter{Fundamentos Teóricos}
 
-La metodología de este proyecto se basa en un enfoque híbrido que combina la simulación acústica clásica con el aprendizaje profundo para resolver el problema de la extrapolación de respuestas impulsionales.
+\section{Acústica desalas}
 
-\section{Fases del Desarrollo}
+La Respuesta al Impulso de la Sala, denotada como $h(t)$, constituye la caracterización completa del comportamiento acústico de un recinto cuando este se modela como un sistema Lineal Invariante en el Tiempo (LTI). Bajo dicho marco, $h(t)$ representa la salida del sistema ante una excitación impulsiva ideal y, en consecuencia, encapsula tanto los mecanismos de propagación directa como los procesos de reflexión en fronteras materiales. Desde una perspectiva fenomenológica, la respuesta temporal se descompone en tres contribuciones: sonido directo, reflexiones tempranas (\textit{early reflections}) y reverberación tardía (\textit{late reverberation}).
 
-El trabajo se estructura en cuatro etapas correlativas que permiten pasar de la definición física de la sala a la generación de la RIR completa.
+El concepto de tiempo de mezcla, $t_{mix}$, establece el umbral físico a partir del cual la densidad temporal de reflexiones se vuelve suficientemente alta como para que el campo acústico transite hacia un régimen difuso y de naturaleza estocástica \cite{Kuttruff2016}. Antes de dicho instante, las reflexiones mantienen una estructura temporal relativamente resoluble y conservan información geométrica macroscópica del recinto; después de $t_{mix}$, la superposición densa de trayectorias reduce la interpretabilidad determinista individual de cada reflexión. En práctica de ingeniería acústica, este umbral se sitúa típicamente en el entorno de los primeros 50 ms, lo que respalda la viabilidad de inferir o extrapolar la cola reverberante a partir del segmento temprano de la RIR.
 
-\begin{table}[H]
-	\centering
-	\caption{Resumen de las fases metodológicas}
-	\begin{tabular}{|p{3.5cm}|p{6cm}|p{4cm}|}
-		\hline
-		\textbf{Fase} & \textbf{Actividad Principal} & \textbf{Referencia Técnica} \\ \hline
-		1. Generación del Dataset & Simulación de 6.000 salaEs con distintas geometrías y materiales. & \cite{muhammad2025} \\ \hline
-		2. Extracción de Características & Procesado de los primeros 50 ms de la RIR y cálculo de las EDCs. & \cite{Lin25, muhammad2025} \\ \hline
-		3. Entrenamiento del Modelo & Implementación de redes LSTM y mecanismos de atención. & \cite{muhammad2025, GENEVA25} \\ \hline
-		4. Validación Acústica & Evaluación de errores en T20, EDT y parámetros de claridad C50. & \cite{muhammad2025, Lin25} \\ \hline
-	\end{tabular}
-\end{table}
+Dado que la reverberación tardía presenta un carácter estocástico, su análisis resulta más robusto cuando se formula en términos energéticos. En este contexto, se adopta la Curva de Decaimiento de Energía (EDC) según la formulación de Schroeder \cite{Schroeder1965}:
 
+\begin{equation}
+\mathrm{EDC}(t)=\frac{\int_{t}^{\infty} h^{2}(\tau)\,d\tau}{\int_{0}^{\infty} h^{2}(\tau)\,d\tau}
+\end{equation}
 
+donde $h(\tau)$ es la respuesta al impulso del recinto en función del tiempo, $\tau$ es la variable temporal de integración y $t$ es el instante a partir del cual se evalúa la energía remanente. El denominador normaliza la magnitud respecto de la energía total de la respuesta.
 
-\section{Implementación Técnica}
+\section{Audio y redes neuronales}
 
-Para asegurar la validez de los resultados, se han seguido los siguientes criterios técnicos:
+El modelado de audio en bruto constituye un problema de alta complejidad debido a la elevada dimensionalidad de las señales temporales y a su marcada sensibilidad a variaciones de fase. En este contexto, la literatura de aprendizaje profundo introduce el concepto de espacio latente como representación comprimida de los factores relevantes de los datos \cite{Goodfellow2016}. Bajo esta formulación, un codificador se entiende como una transformación no lineal que proyecta observaciones de alta dimensión a una representación compacta:
 
-\begin{itemize}
-	\item \textbf{Simulación:} Se utiliza el método de fuentes virtuales (\textit{Image Source Method}) a través de la librería Pyroomacoustics para obtener datos de entrenamiento fiables.
-	\item \textbf{Arquitectura de Red:} Se emplea una red LSTM (Long Short-Term Memory) debido a su eficacia para modelar el decaimiento temporal del sonido. Además, se integran capas de atención para capturar dependencias de largo alcance en la señal.
-	\item \textbf{Función de Pérdida:} Se utiliza una pérdida basada en el espectrograma (MSTFT) para optimizar la señal tanto en tiempo como en frecuencia.
-	\item \textbf{Reconstrucción:} Se aplica el método \textit{Random Sign-Sticky} para garantizar que la fase de la señal reconstruida sea físicamente plausible \cite{muhammad2025}.
-\end{itemize}
+\begin{equation}
+f_{\theta}: \mathcal{X} \rightarrow \mathcal{Z}, \qquad \mathbf{z}=f_{\theta}(\mathbf{x}), \qquad \mathbf{z} \in \mathbb{R}^{d}.
+\end{equation}
 
-\section{Herramientas de Software}
+Aquí, $\mathbf{x}$ denota la secuencia de audio de entrada y $\mathbf{z}$ el vector latente que abstrae propiedades acústicas fundamentales del fenómeno observado, reduciendo redundancias y preservando la información estructural necesaria para la síntesis posterior.
 
-El desarrollo se realiza íntegramente en Python, utilizando PyTorch como motor de aprendizaje profundo y NumPy para el análisis estadístico de los datos acústicos obtenidos.
+Desde el punto de vista generativo, la predicción directa de la forma de onda, muestra a muestra, presenta inestabilidades en el dominio temporal asociadas a la naturaleza altamente oscilatoria de la señal y a la acumulación de error local. Como alternativa, la síntesis paramétrica desplaza el problema desde la generación explícita de cada muestra hacia la estimación de parámetros de control. Este principio queda formalizado en el marco de Procesamiento Digital de Señal Diferenciable (DDSP) \cite{Engel2020}, donde la red neuronal no actúa como sintetizador final de audio, sino como estimador de parámetros que gobiernan bloques DSP deterministas, tales como osciladores, generadores de ruido o filtros.
+
+La incorporación de sesgo inductivo físico en la arquitectura proporciona una ventaja metodológica decisiva frente a modelos de caja negra puros. Al integrar elementos acústicamente interpretables, como filtros FIR y curvas de decaimiento exponencial, directamente en el grafo computacional diferenciable del decodificador, el espacio de soluciones admisibles queda restringido a trayectorias consistentes con el comportamiento físico esperado de la reverberación. Esta restricción estructural reduce la ambigüedad del aprendizaje, mejora la estabilidad del entrenamiento y favorece la generalización fuera de la muestra frente a formulaciones completamente no informadas físicamente.
 

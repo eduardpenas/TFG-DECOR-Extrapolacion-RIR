@@ -1,128 +1,108 @@
-\chapter{Desarrollo de la solución}
+\chapter{Marco Experimental y Datasets}
 
-Este capítulo describe en detalle cada componente del sistema DECOR implementado, la pipeline de datos y el procedimiento de entrenamiento.
+Este capítulo expone el entorno experimental, las tuberías de procesamiento de datos (\textit{data pipelines}) y las estrategias de optimización empleadas durante el entrenamiento del sistema. Su propósito es establecer, con precisión metodológica, el marco empírico sobre el que se sustenta la validación del modelo propuesto.
 
-% ─────────────────────────────────────────────────────────────
-\section{Pipeline de datos}
+\section{Corpus BIRD}
 
-\subsection{Dataset BIRD}
+El \textit{Big Impulse Response Dataset} (BIRD) \cite{Gro+20} constituye el corpus principal empleado en este trabajo. Una de las aportaciones más relevantes del estudio reside en la evaluación, por primera vez en la literatura, de la arquitectura DECOR sobre este corpus masivo. Esta decisión metodológica reviste especial interés científico, puesto que la notable diversidad geométrica, material y espacial presente en BIRD somete al modelo a un escenario de validación considerablemente más exigente que el de los bancos sintéticos acotados habitualmente utilizados en estudios preliminares. En consecuencia, la exposición del sistema a dicha variabilidad permite examinar con mayor rigor su capacidad de generalización acústica.
 
-El dataset BIRD (\textit{Big Impulse Response Dataset}) \cite{Grondin25} está organizado en 89 carpetas tipo \texttt{fold001}…\texttt{fold089}, cada una con grabaciones de RIR en formato WAV a 48~kHz ($f_s = 48\,000$~Hz). El cargador \texttt{BirdDataset} (\texttt{scripts/bird\_loader.py}) realiza las siguientes operaciones sobre cada fichero:
+Desde el punto de vista operativo, el corpus se organiza en subconjuntos o \textit{folds}, cada uno de ellos asociado a agrupaciones independientes de respuestas impulsionales. Los archivos de audio son sometidos a una secuencia estricta de adecuación previa a su uso por la red neuronal. En primer lugar, cada señal se transforma a formato monoaural, tras lo cual se remuestrea a una frecuencia uniforme de 48 kHz. A continuación, se realiza una alineación temporal con respecto al pico máximo de amplitud, con el objetivo de garantizar que el transitorio correspondiente al sonido directo ocupe un índice determinista dentro de la secuencia. Esta operación resulta crítica para homogeneizar la referencia temporal entre impulsos acústicamente distintos.
 
-\begin{enumerate}
-	\item \textbf{Segmentación cabeza/cola:} Los primeros 2400 muestras (50~ms) constituyen la \textit{cabeza}, entrada al codificador. Las siguientes 48000 muestras (1~s) forman la \textit{cola}, objetivo del decodificador. Ambos segmentos se ajustan a longitud fija mediante truncado o relleno con ceros.
-	\item \textbf{Normalización:} La cabeza se normaliza por su valor máximo absoluto. La cola comparte el mismo factor.
-	\item \textbf{EDC de la cola:} Se calcula mediante integración de Schroeder (ec.~\ref{eq:schroeder}), obteniéndose una curva normalizada en $[0,1]$ que se usa como métrica de validación acústica durante el entrenamiento, sin participar en la función de pérdida principal.
-\end{enumerate}
+Posteriormente, cada respuesta se normaliza en amplitud y se ajusta a una longitud fija de 48.000 muestras, equivalentes a 1 segundo de duración. Una vez establecida esta longitud de referencia, la señal se segmenta en dos regiones: una cabeza temprana de longitud $N_{head}=2400$ muestras y una cola reverberante remanente. Esta partición permite aislar, por un lado, la porción que contiene el sonido directo y las reflexiones tempranas y, por otro, la región que concentra el proceso de decaimiento tardío que el sistema debe estimar.
 
-\begin{equation}
-	\mathrm{EDC}(t) = \frac{\int_t^{\infty} h^2(\tau)\,d\tau}{\int_0^{\infty} h^2(\tau)\,d\tau}
-	\label{eq:schroeder}
-\end{equation}
+La división entre entrenamiento y validación no se efectúa de manera aleatoria a nivel de impulso individual, sino a nivel de \textit{folds}. Esta decisión responde a la necesidad de evitar fuga de datos (\textit{data leakage}), fenómeno que conduciría a una sobreestimación artificial del rendimiento si señales pertenecientes a un mismo entorno acústico apareciesen repartidas simultáneamente entre ambos subconjuntos. Al establecer la separación por agrupaciones de salas independientes, se garantiza que la evaluación se lleve a cabo sobre recintos no observados durante el ajuste de pesos, lo que proporciona una estimación más fiable de la capacidad de generalización del modelo.
 
-\subsection{Dataset sintético}
+\section{Dataset sint.}
 
-De forma complementaria se generó un dataset propio de 6000 salas rectangulares con el método de fuentes imagen (ISM) implementado en Pyroomacoustics. Los parámetros de cada sala (dimensiones, posición de fuente/receptor y coeficientes de absorción) se muestrean aleatoriamente dentro de rangos físicamente plausibles. La pipeline de generación (\texttt{scripts/generate\_synthetic\_rir\_dataset.py}) almacena:
+Con objeto de disponer de un entorno de control plenamente trazable, se generó un corpus sintético propio compuesto por 6000 recintos rectangulares. Este subconjunto no pretende sustituir la diversidad geométrica y material del corpus principal, sino proporcionar un banco de simulación pura en el que todas las variables relevantes quedan explícitamente determinadas. Tal circunstancia resulta especialmente valiosa para estudios de ablación y para la verificación de la consistencia física de la tubería de datos antes del inicio de las rutinas de aprendizaje.
 
-\begin{itemize}
-	\item \texttt{rirs/sample\_XXXXX.npy} — RIR completa normalizada en \texttt{float32}.
-	\item \texttt{head/sample\_XXXXX.npy} — Primeros 50~ms.
-	\item \texttt{tail/sample\_XXXXX.npy} —  Muestra de la cola.
-	\item \texttt{edc\_tail/sample\_XXXXX.npy} — EDC de la cola.
-	\item \texttt{metadata.csv} — Parámetros de sala, RT60 estimado, dimensiones.
-\end{itemize}
+La obtención de las respuestas impulsionales sintéticas se apoya en el Método de Fuentes Imagen (ISM), según la formulación clásica de \cite{AB79}, mediante su implementación en el entorno de código abierto \textit{Pyroomacoustics}. Bajo este marco, las dimensiones tridimensionales del recinto, las coordenadas de la fuente acústica y del receptor, así como los coeficientes de absorción de las superficies, se determinan por muestreo aleatorio dentro de intervalos físicamente realistas. De esta manera, se obtiene un conjunto amplio de escenas acústicas artificiales con control explícito de sus parámetros geométricos y materiales.
 
-El script de validación (\texttt{scripts/validate\_generated\_dataset.py}) comprueba rangos físicos, coherencia de dimensiones y sanidad del RT60 calculado.
+La tubería operativa programada en el script \texttt{scripts/generate\_synthetic\_rir\_dataset.py} produce y almacena, para cada muestra, cuatro artefactos en formato binario \texttt{.npy}: la RIR completa, la sección de cabeza correspondiente a los primeros 50 ms, la sección de cola asociada a los 950 ms restantes y la curva EDC derivada de dicha cola. De forma complementaria, las propiedades macroscópicas y los descriptores globales de cada recinto, entre ellos las dimensiones geométricas y el $T_{60}$ estimado, se recogen de manera centralizada en un archivo tabular indexado denominado \texttt{metadata.csv}.
 
-% ─────────────────────────────────────────────────────────────
-\section{Arquitectura del modelo}
+El control de calidad del conjunto sintético se lleva a cabo mediante el script \texttt{scripts/validate\_generated\_dataset.py}, cuya función consiste en actuar como filtro de sanidad analítica previo al entrenamiento. Esta rutina audita de forma sistemática los rangos geométricos admisibles, la coherencia espacial de las trayectorias fuente-receptor y la validez física del tiempo de reverberación calculado. Mediante este procedimiento se favorece la exclusión temprana de anomalías numéricas, artefactos de simulación o muestras incompatibles con los supuestos acústicos del problema.
 
-El sistema DECOR sigue una arquitectura codificador–decodificador descrita a continuación.
+\section{Pipeline EDC}
 
-\subsection{Codificador (\texttt{DecorEncoder})}
-
-El codificador transforma la cabeza de la RIR $\mathbf{h} \in \mathbb{R}^{1 \times 2400}$ en un vector latente $\mathbf{z} \in \mathbb{R}^{128}$. Está compuesto por:
-
-\begin{itemize}
-	\item \textbf{14 bloques \texttt{EncoderBlock}:} Cada bloque aplica una convolución 1D con stride~2 (rama principal, kernel $k=15$) sumada a una proyección residual con convolución $1\times1$ también de stride~2. Un \textit{BatchNorm} y una activación PReLU cierran cada bloque. El stride acumulado $2^{14}$ proporciona un campo receptivo teórico superior a 100.000 muestras.
-	\item \textbf{Global Average Pooling} adaptativo que elimina la dimensión espacial residual.
-	\item \textbf{MLP de tres capas} (512 → 256 → 128) con PReLU para obtener el embedding final $\mathbf{z}$.
-\end{itemize}
-
-El número total de parámetros del codificador es aproximadamente 6,6~M.
-
-\subsection{Decodificador (\texttt{DecorDecoder})}
-
-El decodificador sintetiza la cola de la RIR $\hat{\mathbf{r}} \in {\mathbb{R}}^{1 \times 48000}$ mediante un modelo físico paramétrico de decaimiento por bandas:
+Durante la tubería de datos, el cálculo de la Curva de Decaimiento de Energía (EDC) se establece como métrica de control físico para evaluar la coherencia del decaimiento reverberante. Para la cola discreta $y[n]$ de longitud $N$, se emplea la forma discreta de Schroeder:
 
 \begin{equation}
-	\hat{r}(t) = \sum_{m=1}^{M} \left( \sum_{k=1}^{K} A_{m,k} \cdot e^{-b_k (t_0 + t/f_s)} \right) w_m(t)
-	\label{eq:decoder}
+\mathrm{EDC}_{norm}[t] = \frac{\sum_{n=t}^{N-1} y[n]^2}{\sum_{n=0}^{N-1} y[n]^2}
 \end{equation}
 
-donde $M=10$ son las bandas de octava ISO~266, $K=20$ son las tasas de decaimiento aprendibles $b_k$, $t_0 = 0{,}05$~s es el instante de inicio de la cola y $w_m(t)$ es ruido blanco filtrado por la banda $m$.
+donde $y[n]$ representa la secuencia discreta de la cola reverberante. Esta normalización garantiza una trayectoria monótona decreciente acotada en el intervalo $[0,1]$, con valor unitario al inicio del decaimiento y aproximación asintótica a cero para tiempos tardíos.
 
-Los componentes del decodificador son:
-
-\begin{enumerate}
-	\item \textbf{MLP compartido} (7 capas ocultas de 512 neuronas, LeakyReLU $\alpha=0{,}2$): proyecta $\mathbf{z}$ a un espacio de características de alta dimensión.
-	\item \textbf{Cabezas $\mathbf{A}$ y $\mathbf{C}$:} Predicen respectivamente amplitudes $A^{\prime}_{m,k}$ y máscaras de activación $C_{m,k} = \sigma(C^{\prime}_{m,k})$. La amplitud efectiva es $A_{m,k} = A^{\prime}_{m,k} \cdot C_{m,k}$.
-	\item \textbf{Base de decaimiento:} $K$ exponenciales $e^{-b_k t}$ con tasas inicializadas en una escala log-uniforme entre RT60~mín (0{,}05~s) y RT60~máx (3~s); $b_k$ son parámetros aprendibles.
-	\item \textbf{Banco de filtros FIR:} 10 filtros de banda de octava (orden 1023) inicializados analíticamente con la función \texttt{firwin} de \texttt{scipy}, que colorean el ruido blanco generado aleatoriamente en cada inferencia.
-	\item \textbf{Mezclador de bandas:} Una convolución $1\times1$ con 10 canales de entrada y 1 de salida aprende la mezcla final de las bandas.
-\end{enumerate}
-
-\subsection{Función de pérdida (MSTFT + L1)}
-
-La función de pérdida (\texttt{models/loss.py}) combina:
+Con el fin de obtener una escala de análisis perceptualmente adecuada, la curva normalizada se expresa en decibelios mediante transformación logarítmica:
 
 \begin{equation}
-	\mathcal{L} = \alpha \cdot \mathcal{L}_{\mathrm{L1}} + \beta \sum_{r \in \mathcal{R}} \left( \mathcal{L}_{\mathrm{SC}}^{(r)} + \mathcal{L}_{\mathrm{SM}}^{(r)} \right)
-	\label{eq:loss}
+\mathrm{EDC}_{dB}[t] = 10 \log_{10}\left( \max(\mathrm{EDC}_{norm}[t], \epsilon) \right)
 \end{equation}
 
-donde $\mathcal{R} = \{(64,32), (512,256), (2048,1024), (8192,4096)\}$ son los pares (ventana STFT, salto), $\mathcal{L}_{\mathrm{SC}}$ es la pérdida de convergencia espectral (norma de Frobenius relativa) y $\mathcal{L}_{\mathrm{SM}}$ es la pérdida de log-magnitud espectral (MAE en escala logarítmica). Los pesos por defecto son $\alpha=0$ y $\beta=1$, utilizando únicamente la componente MSTFT.
+El término de protección $\epsilon$, asociado en práctica a un suelo dinámico del orden de -80 dB, resulta indispensable para preservar estabilidad numérica en el cálculo tensorial, evitando singularidades cuando la energía remanente tiende a cero.
 
-% ─────────────────────────────────────────────────────────────
+Desde la perspectiva computacional, la lógica de segmentación temporal (corte exacto en la muestra 2400) y el cálculo de la EDC se implementan dentro de estructuras de carga iterativa (\textit{DataLoaders}). Este diseño permite generar tensores de manera dinámica y empaquetarlos en lotes (\textit{batches}), manteniendo un flujo de memoria estable hacia GPU sin colapso de memoria principal. De forma simultánea, se conserva la trazabilidad exacta entre la cabeza de entrada, la cola objetivo y su EDC analítica en cada muestra procesada.
+
 \section{Entrenamiento}
 
-\subsection{Configuración}
+El proceso de optimización se ejecutó en la plataforma Google Colab Pro, con uso de aceleradores gráficos NVIDIA A100, requisito operativo para el tratamiento eficiente de secuencias temporales extensas en dominio de audio. Para la evaluación del comportamiento fuera de muestra se adoptó una estrategia de validación cruzada (\textit{k-fold cross-validation}), estableciendo particiones con proporción de 3 \textit{folds} dedicados a la fase de aprendizaje y 1 \textit{fold} reservado para evaluación cruzada.
 
-El entrenamiento (\texttt{scripts/train.py}) sigue el protocolo:
+La dinámica de ajuste de parámetros se rige por una función de coste compuesta:
 
-\begin{table}[H]
-	\centering
-	\caption{Hiperparámetros de entrenamiento}
-	\begin{tabular}{|l|l|}
-		\hline
-		\textbf{Parámetro} & \textbf{Valor por defecto} \\ \hline
-		Épocas & 20 \\ \hline
-		Tamaño de batch & 32 \\ \hline
-		Learning rate & $10^{-4}$ \\ \hline
-		Optimizador & Ranger21 \\ \hline
-		Gradient clipping & Norma máxima 1{,}0 \\ \hline
-		Dimensión latente & 128 \\ \hline
-		Ratio validación & 10\% \\ \hline
-		Semilla & 42 \\ \hline
-	\end{tabular}
-\end{table}
+\begin{equation}
+\mathcal{L}_{total} = \beta \cdot \mathcal{L}_{MSTFT} + \alpha \cdot \mathcal{L}_{EDC-L1}
+\end{equation}
 
-Se utiliza el optimizador \textbf{Ranger21} de la librería \texttt{pytorch-optimizer}, que combina RAdam, Lookahead y otras técnicas de regularización en un único optimizador robusto. Ranger21 requiere conocer el número total de iteraciones en el momento de la inicialización, calculado como $N_{iter} = \max(1,\; E \times |\mathcal{D}_{train}|)$, donde $E$ es el número de épocas.
+Esta formulación combina el error espectral multiresolución, ponderado por $\beta$, con el error absoluto asociado a la curva de decaimiento energético temporal, ponderado por $\alpha$. Dentro del protocolo de validación, la métrica $L1$ sobre la EDC se establece como indicador principal para verificar la precisión física de la respuesta sintetizada durante el ciclo iterativo de aprendizaje.
 
-\subsection{Ciclo de entrenamiento}
+Para la actualización de pesos se emplea el optimizador Ranger21, diseñado para trayectorias de optimización prolongadas y robustas. Este algoritmo incorpora mecanismos de estabilización, entre ellos el recorte de gradientes (\textit{Gradient Clipping}), que permite mitigar el riesgo de explosión de gradientes característico en la predicción de secuencias largas. Asimismo, contempla una fase final de enfriamiento (\textit{Cooldown}) que reduce progresivamente la tasa de aprendizaje en las últimas épocas, favoreciendo la aproximación estable hacia mínimos profundos de la superficie de coste.
 
-En cada época, el bucle:
-
+El protocolo de entrenamiento se estructura en tres fases claramente diferenciadas:
 \begin{enumerate}
-	\item Carga un batch $\{(\mathbf{h}_i, \mathbf{r}_i)\}_{i=1}^{B}$ del \texttt{DataLoader}.
-	\item Calcula el embedding $\mathbf{z}_i = \texttt{Encoder}(\mathbf{h}_i)$.
-	\item Sintetiza la cola $\hat{\mathbf{r}}_i = \texttt{Decoder}(\mathbf{z}_i)$.
-	\item Calcula $\mathcal{L}(\hat{\mathbf{r}}, \mathbf{r})$ y retropropaga.
-	\item Aplica \textit{gradient clipping} y actualiza los pesos.
+\item \textbf{Fase 1 (Épocas 1 a 20) --- Inicialización Frecuencial.}
+El entrenamiento se inició con un tamaño de lote de 128 muestras y una tasa de aprendizaje de $1\cdot 10^{-4}$. En esta etapa se establecieron los pesos de la función de coste como $\alpha=0.0$ y $\beta=1.0$. El propósito consistió en permitir que la red asimilara la estructura espectral de la cola reverberante sin imponer todavía penalización temporal explícita, favoreciendo un asentamiento inicial de los parámetros del decodificador. Al cierre de esta fase se obtuvo una pérdida de validación (Val Loss) de 11.13 y un error EDC-L1 preliminar de 0.10.
+
+\begin{lstlisting}[style=pythoncell,caption={Ejecución de entrenamiento correspondiente a la Fase 1.},label={lst:fase1_train}]
+DATA_LOCAL="/content/BIRD_Local"
+CHECKPOINT_DRIVE="/content/drive/MyDrive/BIRD_Dataset/decor_best_model.pth"
+
+!python scripts/train.py \
+	--data-root "$DATA_LOCAL" \
+	--epochs 20 \
+	--batch-size 128 \
+	--lr 1e-4 \
+	--num-workers 8 \
+	--checkpoint "$CHECKPOINT_DRIVE"
+\end{lstlisting}
+
+\item \textbf{Fase 2 (Épocas 21 a 400) --- Estabilización Transitoria y Acoplamiento Físico.}
+La transición hacia la optimización conjunta mostró una inestabilidad intensa cuando se activó de forma abrupta la penalización temporal con $\alpha=0.1$, observándose explosión de la norma del gradiente y aumento de la pérdida por encima de 19. Para mitigar este comportamiento se aplicó una estrategia progresiva: la tasa de aprendizaje se redujo a $1\cdot 10^{-5}$ y el término temporal se suavizó inicialmente a $\alpha=0.01$, elevándolo de manera gradual hasta 0.05. De forma complementaria, el tamaño de lote se amplió a 256 muestras para aprovechar la capacidad de cómputo de los aceleradores gráficos y disminuir la varianza estocástica del gradiente. Bajo este esquema el optimizador absorbió la nueva restricción y, en la época 390, se superó la barrera de pérdida con una Val Loss de 9.41 y un error EDC-L1 de 0.085.
+
+\begin{lstlisting}[style=pythoncell,caption={Ejecución de entrenamiento correspondiente a la Fase 2.},label={lst:fase2_train}]
+!python scripts/train.py \
+    --data-root "$DATA_LOCAL" \
+    --epochs 400 \
+    --batch-size 256 \
+    --lr 1e-4 \
+    --loss-alpha 0.05 \
+    --loss-beta 1.0 \
+    --num-workers 8 \
+    --resume "$CHECKPOINT_PREVIO" \
+    --checkpoint "$NUEVO_CHECKPOINT"
+\end{lstlisting}
+
+\item \textbf{Fase 3 (Épocas 401 a 590) --- Afinación Fina y Convergencia Asintótica.}
+En la etapa final se mantuvieron fijos el tamaño de lote en 256 y el peso temporal en $\alpha=0.05$, operando con una tasa de aprendizaje conservadora de $1\cdot 10^{-5}$ para recorrer el entorno del mínimo con mayor precisión. La fase de enfriamiento (\textit{Cooldown}) de Ranger21 resultó determinante en este tramo, promoviendo el asentamiento definitivo de los pesos y una convergencia estable. En la iteración terminal se extrajo el punto de control óptimo (\textit{checkpoint}), registrándose un mínimo absoluto histórico con Val Loss de 9.345, resultado que respalda la eficacia del protocolo de entrenamiento.
+
+\begin{lstlisting}[style=pythoncell,caption={Ejecución de entrenamiento correspondiente a la Fase 3 (pulido final).},label={lst:fase3_train}]
+!python scripts/train.py \
+	--data-root "$DATA_LOCAL" \
+	--epochs 590 \
+	--batch-size 256 \
+	--lr 1e-5 \
+	--loss-alpha 0.05 \
+	--loss-beta 1.0 \
+	--num-workers 8 \
+	--resume "$CHECKPOINT_PREVIO" \
+	--checkpoint "$NUEVO_CHECKPOINT"
+\end{lstlisting}
 \end{enumerate}
-
-Al final de cada época se evalúa sobre el conjunto de validación reportando: pérdida MSTFT de validación y error L1 en la EDC (métrica acústica secundaria).
-
-\subsection{Checkpointing y reanudación}
-
-El sistema guarda automáticamente un checkpoint (\texttt{checkpoint.pth}) con el estado del modelo que minimiza la pérdida de validación. El checkpoint contiene el estado del codificador, el decodificador, el optimizador y la época actual, permitiendo reanudar el entrenamiento con \texttt{--resume}.
