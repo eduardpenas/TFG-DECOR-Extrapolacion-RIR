@@ -1,6 +1,8 @@
 # Entornos virtuales
 venv/
 .venv/
+.venv_new/
+.venv_old_20260227/
 .conda/
 decor/
 
