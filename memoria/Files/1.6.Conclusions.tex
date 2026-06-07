@@ -9,7 +9,7 @@ El proceso de optimización se extendió a lo largo de 590 épocas, observándos
 \includegraphics[width=0.48\textwidth]{../Figures/train_loss.png}
 \hfill
 \includegraphics[width=0.48\textwidth]{../Figures/val_loss.png}
-\caption{Evolución de la pérdida compuesta de entrenamiento y validación. Se superpone la tendencia suavizada mediante media móvil.}
+\caption[Evolución de pérdidas]{Evolución de la pérdida compuesta de entrenamiento y validación. Se superpone la tendencia suavizada mediante media móvil.}
 \label{fig:loss_curves}
 \end{figure}
 
@@ -20,7 +20,7 @@ La métrica física principal, definida como error absoluto medio sobre la Curva
 \includegraphics[width=0.48\textwidth]{../Figures/train_edc.png}
 \hfill
 \includegraphics[width=0.48\textwidth]{../Figures/val_edc.png}
-\caption{Convergencia del error absoluto medio de la Curva de Decaimiento de Energía (EDC-L1).}
+\caption[Convergencia EDC-L1]{Convergencia del error absoluto medio de la Curva de Decaimiento de Energía (EDC-L1).}
 \label{fig:edc_curves}
 \end{figure}
 
@@ -29,7 +29,7 @@ Desde la perspectiva de estabilidad numérica, la predicción de tasas de decaim
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{../Figures/gnorm_log.png}
-\caption{Evolución de la norma del gradiente en escala logarítmica durante el entrenamiento.}
+\caption[Norma del gradiente]{Evolución de la norma del gradiente en escala logarítmica durante el entrenamiento.}
 \label{fig:gnorm}
 \end{figure}
 
@@ -60,7 +60,7 @@ Error Porcentual Absoluto Medio del $T_{60}$ ($T_{60}$ MAPE) [\%] & 8.1 \\
 Error Cuadrático Medio de la Relación Directo-Reverberante (DRR MSE) [dB] & 7.24 \\
 \bottomrule
 \end{tabular}
-\caption{Métricas de evaluación objetiva sobre el conjunto de test. Se reportan los valores medios obtenidos tras procesar las 40.000 muestras de evaluación.}
+\caption{Métricas de evaluación objetiva sobre el conjunto de test.}
 \label{tab:eval_objetiva}
 \end{table}
 
@@ -78,15 +78,15 @@ La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comp
 \resizebox{0.98\textwidth}{!}{%
 \begin{tabular}{lccccc}
 \toprule
-\textbf{Modelo} & \textbf{MSTFT ($\uparrow$)} & \textbf{EDF (MAE, dB, $\downarrow$)} & \textbf{EDF (RMSE, dB, $\downarrow$)} & \textbf{$T_{60}$ (MAPE, \%, $\downarrow$)} & \textbf{DRR (MSE, dB, $\downarrow$)} \\
+\textbf{Modelo} & \textbf{MSTFT ($\downarrow$)} & \textbf{EDF (MAE, dB, $\downarrow$)} & \textbf{EDF (RMSE, dB, $\downarrow$)} & \textbf{$T_{60}$ (MAPE, \%, $\downarrow$)} & \textbf{DRR (MSE, dB, $\downarrow$)} \\
 \midrule
 DECOR (propuesto) & 8.6108 & 5.39 & 7.26 & 8.1 & 7.24 \\
-Naive & 3.53 & 12.8 & 17.3 & 41.6 & 14.5 \\
-FiNS & 1.32 & 10.9 & 13.9 & 41.9 & 8.68 \\
+Naive & 2.60 & 10.4 & 13.0 & 29.0 & 13.9 \\
+FiNS & 1.05 & 5.21 & 7.56 & 20.1 & 1.69 \\
 \bottomrule
 \end{tabular}%
 }
-\caption{Comparativa con modelos de referencia en métricas objetivas. En MSTFT se emplea flecha ascendente ($\uparrow$) para destacar que el valor del modelo propuesto es mayor que el de las referencias; en el resto de métricas, flecha descendente ($\downarrow$) indica mejor rendimiento para valores menores.}
+\caption[Comparativa de métricas]{Comparativa con modelos de referencia en métricas objetivas. Naive representa la extrapolación directa de la porción temprana sin procesamiento adicional, mientras que FiNS corresponde a la arquitectura propuesta por Steinmetz et al. (2021).}
 \label{tab:comparativa_modelos}
 \end{table}
 
@@ -96,8 +96,8 @@ Con el propósito de interpretar el comportamiento del modelo más allá de las 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=1\textwidth]{../Figures/analisis_cualitativo.png}
-\caption{Evaluación cualitativa de un caso de estudio. (Arriba) Comparativa de la forma de onda temporal. (Centro) Espectrogramas de magnitud. (Abajo) Curvas de Decaimiento de Energía (EDC).}
+\includegraphics[width=1\textwidth]{../Figures/resultados_multibanda.png}
+\caption[Evaluación cualitativa]{Evaluación cualitativa mediante comparación entre la respuesta de referencia (fila superior, \textit{Ground Truth}) y la respuesta sintetizada por DECOR (fila inferior). Las columnas muestran, de izquierda a derecha, la forma de onda temporal de la cola reverberante, las curvas de Decaimiento de Energía multibanda (EDC) y el espectrograma de magnitud. La figura permite contrastar simultáneamente la envolvente temporal, la disipación energética por bandas y la distribución espectro-temporal de la energía entre ambas respuestas.}
 \label{fig:caso_estudio}
 \end{figure}
 
@@ -126,24 +126,53 @@ En el dominio espectral, la lectura de la Figura~\ref{fig:caso_estudio} puede si
 
 \textbf{Puntos de mejora y limitaciones}
 \begin{itemize}
-\item \textbf{Efecto de suavizado.} La síntesis presenta una textura más difuminada que la señal medida, cuya microestructura estocástica resulta más rugosa en la cola tardía.
+\item \textbf{Artefactos de filtrado multibanda (Efecto persiana).} Se observan franjas horizontales de atenuación en las frecuencias de cruce (especialmente visibles entre las bandas de 1, 2, 4 y 8 kHz). Este fenómeno es inherente a la arquitectura paramétrica del decodificador: al sintetizar la respuesta mediante un banco discreto de filtros FIR de octava, las regiones de solapamiento espectral entre filtros adyacentes pueden presentar caídas de energía si las envolventes predichas difieren abruptamente, evidenciando las "costuras" del modelo.
+\item \textbf{Supresión severa en altas frecuencias.} Por encima de los 8 kHz, el modelo tiende a atenuar la energía de forma casi absoluta y prematura, formando un muro espectral. Dado el carácter altamente estocástico y difícilmente predecible del aire a esas frecuencias, la red minimiza el error de reconstrucción optando por una supresión temprana.
+\item \textbf{Efecto de suavizado.} La síntesis presenta una textura general más difuminada que la señal medida, cuya microestructura estocástica resulta más rugosa en la cola tardía.
 \item \textbf{Resolución modal en bajas frecuencias.} En la banda baja (aproximadamente 0--128 Hz), las trazas modales verticales se representan con menor nitidez y mayor cuantización espacial.
-\item \textbf{Atenuación del fondo residual.} En el tramo final del decaimiento, la predicción tiende a suprimir con mayor intensidad el ruido de fondo tenue observado en la referencia.
 \end{itemize}
 
-La comparación de las curvas EDC, igualmente visible en la Figura~\ref{fig:caso_estudio}, puede resumirse del siguiente modo:
+La comparación de las curvas EDC multibanda, igualmente visible en la columna central de la Figura~\ref{fig:caso_estudio}, revela el comportamiento termodinámico del sistema:
 
 \textbf{Aciertos del modelo}
 \begin{itemize}
-\item \textbf{Seguimiento de la tendencia global.} Durante la mayor parte del eje temporal, la curva estimada se superpone de forma casi idéntica a la curva de referencia, reflejando una estimación precisa de la distribución energética macroscópica.
-\item \textbf{Estabilidad sin desviaciones sistémicas.} No se observan saltos espurios, oscilaciones anómalas ni desplazamientos persistentes de nivel entre trayectorias, lo que indica normalización energética robusta.
+\item \textbf{Conservación de la energía global.} La curva de banda completa (\textit{full-band}, trazo más oscuro) se superpone de forma casi idéntica a la curva de referencia, reflejando que la red inyecta y atenúa la cantidad correcta de energía total en el recinto.
+\item \textbf{Coherencia termodinámica por bandas.} El modelo captura exitosamente la tasa de disipación específica de cada banda de octava, mostrando cómo las altas frecuencias (trazos claros) decaen a un ritmo notablemente superior al de las bajas frecuencias, manteniendo un escalonamiento análogo a la referencia.
+\item \textbf{Estabilidad sin desviaciones sistémicas.} No se observan saltos espurios, oscilaciones anómalas ni desplazamientos persistentes de nivel entre trayectorias, lo que indica una normalización energética robusta.
 \end{itemize}
 
 \textbf{Puntos de mejora y limitaciones}
 \begin{itemize}
-\item \textbf{Divergencia en el truncamiento final.} En el entorno previo a la caída abrupta al suelo de ruido, la predicción tiende a retener energía ligeramente más tiempo o a decaer de forma menos brusca que la referencia.
-\item \textbf{Sensibilidad al ruido de fondo estocástico.} La estimación del instante exacto de corte en la cola final mantiene una dificultad intrínseca elevada en modelos neuronales aplicados a audio.
+\item \textbf{Divergencia en el truncamiento final.} En el entorno previo a la caída abrupta al suelo de ruido, el decaimiento de algunas bandas predichas tiende a suavizarse o retener energía ligeramente más tiempo en comparación con la extinción brusca observada en la referencia empírica.
+\item \textbf{Sensibilidad al ruido de fondo estocástico.} La estimación del instante exacto de corte en la cola final mantiene una dificultad intrínseca elevada en modelos neuronales aplicados a audio, afectando a la precisión del tramo asintótico de las curvas.
 \end{itemize}
 
-En conjunto, pese a las discrepancias localizadas en la microtextura espectral y en el truncamiento final, la coincidencia global de patrones respalda que el sistema asimila con elevada precisión la dinámica energética del recinto y confirma su robustez matemática en extrapolación ciega.
+En conjunto, pese a las discrepancias localizadas en la microtextura espectral (artefactos de filtrado) y en el truncamiento final, la coincidencia global de patrones respalda que el sistema asimila con elevada precisión la dinámica energética multiexponencial del recinto y confirma su robustez matemática en extrapolación ciega.
+
+\section{Análisis de Complejidad Computacional}
+
+La viabilidad de un modelo de acústica computacional para escenarios interactivos, como la realidad extendida, no queda determinada exclusivamente por su fidelidad termodinámica, sino también por su eficiencia paramétrica, su huella de memoria y su latencia de inferencia. En aplicaciones de audio inmersivo, estas tres magnitudes condicionan de forma directa la escalabilidad del sistema, la capacidad de despliegue en hardware de propósito general y la posibilidad de integrar la síntesis reverberante en cadenas de procesamiento en tiempo real sin degradar la experiencia perceptiva del usuario.
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\resizebox{0.96\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Modelo} & \textbf{Parámetros (M)} & \textbf{Memoria [MB]} & \textbf{Inferencia [ms]} & \textbf{RTF} \\
+\midrule
+DECOR -- Propuesto & 17.57 & 67.03 & 5.36 & 0.0056 \\
+FiNS -- Referencia & $\approx$ 340.0 & 1300.0 & N/D & N/D \\
+\bottomrule
+\end{tabular}%
+}
+\caption[Comparativa de complejidad]{Comparativa de complejidad computacional, tiempo de inferencia y el Factor de Tiempo Real (RTF) entre el modelo propuesto (DECOR) y el modelo de referencia FiNS.}
+\label{tab:complejidad}
+\end{table}
+
+Desde la perspectiva del tamaño del modelo, la arquitectura propuesta, DECOR, con 17.57 millones de parámetros, se sitúa en una escala marcadamente inferior a la del modelo de referencia FiNS, cuya magnitud paramétrica alcanza aproximadamente 340 millones de parámetros y cuya huella de memoria asciende a 1.3 GB. Esta reducción equivale a un modelo casi 20 veces más ligero, lo cual confirma la eficacia del sesgo inductivo paramétrico incorporado en la formulación. En particular, al modelar explícitamente tasas de decaimiento en lugar de secuencias densas de muestras, el espacio de representación queda restringido a un subespacio físicamente interpretable, reduciéndose de forma sustancial los requisitos de almacenamiento sin comprometer la reconstrucción macroscópica del fenómeno reverberante.
+
+En términos de latencia, el valor de 5.36 ms por inferencia, junto con un Factor de Tiempo Real de 0.0056, demuestra que el sistema sintetiza la reverberación tardía con una velocidad superior en más de 170 veces al tiempo real cuando opera bajo aceleración por hardware. Dicho resultado no constituye únicamente una mejora incremental, sino un indicador objetivo de aptitud operativa para su integración en motores de audio inmersivo, sistemas de realidad extendida y procedimientos de generación masiva de datos acústicos. En consecuencia, la combinación de baja complejidad paramétrica y latencia ultrarreducida certifica que la propuesta no solo es acústicamente consistente, sino también computacionalmente viable para contextos de despliegue exigentes.
 

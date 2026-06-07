@@ -1,91 +1,135 @@
 \chapter{Estado de la cuestión}
 
-La caracterización acústica de recintos mediante la Respuesta al Impulso de la Sala (RIR) ha sido históricamente un desafío computacional. Esta sección revisa las metodologías actuales, desde los modelos de procesamiento de señal hasta las arquitecturas informadas por la física que definen el estado de la cuestión en la extrapolación acústica.
+La caracterización acústica de recintos mediante la Respuesta al Impulso de la Sala (RIR) es un desafío complejo que combina aspectos físicos, matemáticos y computacionales. Esta sección sitúa el estado de la cuestión desde los métodos geométricos clásicos (Ray Tracing e ISM), útiles para el análisis físico de salas, hasta los enfoques de aprendizaje profundo orientados a extrapolar la reverberación tardía con mayor eficiencia y capacidad de generalización.
 
-\section{Simulación}
+\section[Acústica geométrica]{Acústica geométrica para el análisis de salas y la síntesis de RIR}
 
-Históricamente, la simulación de la acústica de salas para generar Respuestas al Impulso de la Sala (RIR) se ha abordado mediante técnicas de acústica geométrica. Entre los enfoques más consolidados y utilizados se encuentran el método de fuentes imagen (\textit{Image Source Method}, ISM) \cite{ALLEN1979} y el trazado de rayos (\textit{Ray Tracing}). Estos métodos calculan la propagación del sonido modelando las reflexiones (tanto especulares como difusas) que ocurren al interactuar las ondas sonoras con las superficies del recinto. 
+\subsection{Trazado de Rayos (\textit{Ray Tracing})}
 
-Sin embargo, estas técnicas puramente físicas presentan un desafío crítico: su coste computacional escala de forma lineal (e incluso exponencial en el caso de ISM para órdenes altos de reflexión) con la duración de la respuesta al impulso que se desea simular. Esto hace que la generación de colas de reverberación largas y densas sea un proceso prohibitivo en términos de tiempo, limitando su viabilidad para aplicaciones en tiempo real o para la creación de bases de datos masivas.
+Introducido en la acústica de salas a finales de la década de 1960 \cite{Krokstad1968}, el trazado de rayos es un método estadístico que discretiza la energía acústica emitida por una fuente omnidireccional o direccional. El algoritmo emite un número finito de rayos que se propagan por el entorno virtual tridimensional. Cada vez que un rayo colisiona con un polígono, su energía disminuye en función del coeficiente de absorción del material, y se refleja de manera especular (siguiendo la ley de Snell) o se dispersa de manera difusa según el coeficiente de \textit{scattering}. Para registrar la respuesta de impulso, se define un volumen de recepción (habitualmente esférico); cuando un rayo atraviesa este volumen, su energía, tiempo de llegada y dirección se acumulan en la Respuesta al Impulso de la Sala (RIR).
 
-\begin{figure}[H]
+A pesar de ser el estándar en la industria para auralización, el trazado de rayos presenta limitaciones matemáticas y computacionales  cuando se trata de sintetizar colas de reverberación densas y largas. Estudios  sobre la optimización de motores de simulación geométrica, como la evaluación del entorno GSound-SIR \cite{Zang2025GSoundSIR}, han cuantificado empíricamente la ineficiencia de este método:
+
+\begin{itemize}
+    \item \textbf{Escalabilidad lineal del coste computacional:} El tiempo de simulación y el procesamiento de rutas válidas crecen de manera estrictamente lineal respecto al número total de rayos emitidos \cite{Zang2025GSoundSIR}. Para lograr una densidad suficiente en la reverberación tardía , se requiere proyectar millones de rayos, lo que satura los recursos de procesamiento e imposibilita su uso dinámico en tiempo real.
+    \begin{figure}[H]
     \centering
-    \includegraphics[width=0.42\linewidth]{Figures/images.png}
-    \caption{Representación conceptual del Método de Fuentes Imagen (ISM) para la simulación de reflexiones acústicas tempranas.}
-    \label{fig:esquema_ism}
+    \includegraphics[width=0.75\linewidth]{Figures/gsound_computation_time.png} % Asegúrate de guardar el recorte con este nombre
+    \caption[Coste computacional del trazado de rayos]{Relación entre el tiempo de cálculo computacional y el número total de rayos emitidos, categorizado por el porcentaje de rayos especulares. El escalado estrictamente lineal subraya la limitación del método para simulaciones de alta densidad acústica. \cite{Zang2025GSoundSIR}}
+    \label{fig:gsound_computation}
+\end{figure}
+    
+    \item \textbf{Sobrecarga por reflexiones especulares:} La validación de trayectorias físicas libres de obstrucciones entre la fuente y el oyente es computacionalmente costosa. Las configuraciones de simulación que exigen un mayor porcentaje de reflexión especular frente a la difusa incrementan exponencialemente el tiempo de cálculo \cite{Zang2025GSoundSIR}.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.85\linewidth]{Figures/gsound_storage_performance.png} % Asegúrate de que el nombre del archivo coincida
+        \caption[Rendimiento de almacenamiento según porcentaje de rayos]{Relación entre el tiempo de escritura en disco (izquierda) y el tamaño del archivo resultante (derecha) en función del porcentaje de rayos de mayor energía procesados. Aprovechar la redundancia energética descartando la inmensa mayoría de rayos de baja energía permite un ahorro drástico en los costes de almacenamiento y lectura de la simulación. \cite{Zang2025GSoundSIR}}
+        \label{fig:gsound_storage}
+    \end{figure}
+
+    
+    \item \textbf{Redundancia energética masiva:} El análisis de distribución de energía en simulaciones densas revela que el cálculo exhaustivo de rayos es extremadamente ineficiente. Las mediciones indican que apenas el $0,1\%$ de los rayos capturan el $81,8\%$ de la energía acústica total de la sala, y el $10\%$ superior de los rayos modela el $99,6\%$ de la energía \cite{Zang2025GSoundSIR}. Esto demuestra que los métodos tradicionales invierten la inmensa mayoría de sus ciclos de reloj en trazar decenas de miles de reflexiones tardías que apenas aportan una fracción marginal a la reconstrucción energética de la RIR.
+    
+    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Figures/gsound_energy_distribution.png} % Asegúrate de guardar el recorte con este nombre
+    \caption[Distribución de energía acústica en trazado de rayos]{Distribución de energía acústica acumulada en función del porcentaje de rayos simulados. Se observa que el 10\% de los rayos de mayor intensidad concentran el 99,6\% de la energía total, evidenciando la redundancia del cálculo exhaustivo para la reverberación tardía. \cite{Zang2025GSoundSIR}}
+    \label{fig:gsound_energy}
+    \end{figure}
+    \end{itemize}
+
+Esta redundancia energética y el alto coste computacional asociado a la resolución espacial exhaustiva evidencian el límite tecnológico del \textit{Ray Tracing}. Como sugieren los propios autores del estudio, la enorme concentración de energía en una fracción mínima de rayos abre la puerta a enfoques basados en aprendizaje profundo \cite{Zang2025GSoundSIR}; específicamente, a modelos capaces de reconstruir y extrapolar la respuesta impulsional completa a partir de un conjunto reducido de rayos de alta energía, los cuales corresponden físicamente al campo directo y a las primeras reflexiones \cite{Zang2025GSoundSIR}. 
+
+\subsection{Método de Fuentes Imagen (ISM)}
+
+El Método de Fuentes Imagen (\textit{Image Source Method}, ISM) es una de las técnicas de acústica geométrica más rigurosas para el modelado de reflexiones especulares. Formalizado originalmente por Allen y Berkley en 1979 para recintos de geometría rectangular estricta \cite{Allen1979}, el algoritmo asume que las interacciones de las ondas sonoras con las superficies rígidas se comportan como reflexiones ópticas en espejos. Matemáticamente, cada reflexión se modela sustituyendo la superficie reflectante por una fuente acústica virtual, ubicada en la posición simétrica a la fuente real respecto al plano de la pared.
+
+La RIR en el punto receptor se construye superponiendo la señal directa y las contribuciones retrasadas y atenuadas de todas las fuentes imagen iterativas. Si bien el ISM ofrece una exactitud temporal absoluta para las primeras reflexiones, su viabilidad colapsa rápidamente al incrementar el orden de reflexión necesario para modelar la reverberación tardía. 
+
+La extensión del algoritmo a recintos de topología arbitraria (poliedros), desarrollada por Borish en 1984 \cite{Borish1984}, puso de manifiesto el verdadero cuello de botella de esta metodología: el coste computacional. A diferencia de las geometrías de caja, en geometrías complejas el algoritmo debe realizar costosas pruebas de intersección y validación de visibilidad para garantizar que la trayectoria desde cada fuente virtual hasta el receptor no está obstruida por otros planos del recinto \cite{Borish1984}. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/ism_cubic_growth.png}
+\caption[Crecimiento cúbico en ISM]{Crecimiento del número de fuentes virtuales en el Método de Fuentes Imagen (ISM) en 3D en función del orden de reflexión $N$. La tendencia muestra un comportamiento polinómico dominante de orden cúbico, coherente con $\mathcal{O}(N^3)$.}
+\label{fig:ism_cubic_growth}
 \end{figure}
 
-Para superar estas barreras computacionales, en los últimos años se ha introducido el aprendizaje profundo (\textit{Deep Learning}) como modelo sustituto (\textit{surrogate model}) capaz de acelerar drásticamente la predicción acústica. Estos modelos están diseñados para aprender las complejas relaciones no lineales que existen entre las propiedades físicas de un recinto y su respuesta acústica resultante. 
+Este esfuerzo de cómputo se agrava drásticamente debido a la naturaleza matemática del propio método. En un espacio tridimensional, el número de fuentes virtuales generadas escala de forma \textbf{cúbica} ($O(N^3)$) con respecto al orden de reflexión $N$. Dado que la densidad de ecos en una sala real aumenta proporcionalmente al cuadrado del tiempo, simular los tramos finales de la curva de decaimiento de energía exige computar un volumen inasumible de fuentes imagen. Por tanto, mientras que el ISM es la herramienta ideal para extraer la firma geométrica inicial del recinto (los primeros milisegundos de la RIR), su crecimiento polinómico de orden tres lo descarta por completo como método autónomo para la síntesis completa de la reverberación.
 
-Un ejemplo destacado de esta transición es el uso de arquitecturas secuenciales, como las redes de Memoria a Corto y Largo Plazo (LSTM), que han demostrado ser altamente eficaces para predecir las Curvas de Decaimiento de Energía (EDC). A partir de parámetros de entrada relativamente simples, como las dimensiones geométricas de la sala y los coeficientes de absorción de sus materiales, estas redes logran estimar la curva EDC con una precisión comparable a los métodos tradicionales, pero con un coste computacional fraccionario \cite{muhammad2025}. Este avance sienta las bases para arquitecturas más complejas capaces de predecir la señal de audio completa en el dominio del tiempo.
+\section[Aprendizaje profundo]{Enfoques basados en Machine Learning}
 
+\subsection{De la simulación explícita a los modelos predictivos}
+
+\subsection{FiNS: Filtered Noise Shaping}
+
+En el ámbito de la estimación ciega de la respuesta al impulso de la sala (RIR) a partir de voz reverberante, el modelo FiNS (Filtered Noise Shaping) \cite{Steinmetz2021FiNS} propone un enfoque basado en el aprendizaje profundo para la estimación directa en el dominio del tiempo. Este método resulta útil para aplicaciones de realidad aumentada y posproducción de audio, donde se requiere un emparejamiento acústico preciso y de alta fidelidad operando a 48 kHz.
+
+A diferencia de los enfoques que predicen parámetros para reverberadores algorítmicos o emplean modelos de transformación de gran tamaño, FiNS modela directamente la acústica del espacio basándose únicamente en una grabación de referencia. Esto permite reemplazar simulaciones complejas por una operación de convolución simple entre una señal de entrada y la RIR predicha.
+
+Para lograr esto, la arquitectura de la red incorpora un fuerte sesgo inductivo inspirado en la acústica de salas, separando el modelado de la respuesta mediante un codificador y un decodificador especializados. El codificador en el dominio del tiempo procesa la señal de entrada utilizando bloques de convoluciones unidimensionales para capturar el comportamiento temporal a diferentes escalas, generando finalmente un espacio latente. 
+   
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.68\linewidth]{Figures/Redes-Neuronales-LSTM.jpg}
-    \caption{Arquitectura tipo LSTM aplicada al modelado de secuencias temporales acústicas.}
-    \label{fig:lstm_acustica}
+    \includegraphics[width=0.8\linewidth]{Figures/arquitecture_Fins.png} % Asegúrate de guardar el recorte con este nombre
+    \caption[Arquitectura de FiNS]{Esquema de la arquitectura de FiNS, destacando el codificador temporal y el decodificador especializado para modelar por separado la respuesta temprana (sonido directo y primeras reflexiones) y la reverberación tardía (cola reverberante).\cite{Steinmetz2021FiNS}}
+    \label{fig:fins_architecture}
 \end{figure}
 
-\section{RIR Completion}
+En la arquitectura propuesta para la síntesis y estimación acústica, el modelo procesa una señal de entrada en el dominio del tiempo $x(n)$ mediante un codificador (\textit{Encoder}) para extraer un vector de características en el espacio latente $\mathbf{z}$. A partir de esta representación, el decodificador (\textit{Decoder}) divide la reconstrucción de la respuesta al impulso de la habitación en dos enfoques complementarios basados en la física del sonido.
 
+Por un lado, estima de manera directa el sonido directo y las reflexiones tempranas, componente denotado como $h_d(n)$. Por otro lado, para modelar la reverberación tardía de naturaleza estocástica, el decodificador genera un conjunto de máscaras de ruido o envolventes temporales $y_1(n), \dots, y_m(n)$ (restringidas al rango de valores entre 0 y 1 mediante una función de activación sigmoide $\sigma$). 
 
-Una de las áreas más innovadoras en la acústica computacional reciente es la tarea denominada \textit{"RIR completion"} o completado de la respuesta al impulso. Este enfoque se aleja de la generación de señales desde cero y se centra en la extrapolación temporal de una respuesta existente pero incompleta.
+Simultáneamente, una señal de ruido blanco continuo $w(n)$ alimenta un banco de filtros convolucionales unidimensionales entrenable (\textit{Learnable filterbank}), generando múltiples componentes de ruido en subbandas $s_1(n), \dots, s_m(n)$. Cada máscara de ruido proyectada por el decodificador modula en amplitud a su respectiva subbanda de ruido para emular el decaimiento exponencial característico de la energía acústica con el tiempo.
+
+Finalmente, el conjunto de las subbandas moduladas por las envolventes y la componente inicial $h_d(n)$ se combinan e integran a través de una última capa convolucional de una dimensión (Conv1d) para producir la estimación completa y final de la respuesta al impulso de la habitación $\hat{h}(n)$.
+
+El aspecto más destacable para la extrapolación acústica reside en el decodificador, el cual descompone la síntesis de la RIR modelando por separado la respuesta temprana y la cola reverberante. Por un lado, la red utiliza un canal de salida dedicado para predecir directamente en el dominio del tiempo las muestras correspondientes al sonido directo y a las primeras reflexiones.
+
+Por otro lado, la reverberación tardía se modela como una suma de señales de ruido filtrado en decaimiento. Para generar esta cola reverberante, el decodificador produce máscaras temporales que modulan un conjunto de señales de ruido procesadas por un banco de filtros aprendibles.
+
+Esta estrategia de combinar la predicción directa para las componentes tempranas y un enfoque estocástico basado en la conformación de ruido para la parte tardía resulta muy efectiva.
+
+Las evaluaciones demuestran que FiNS no solo es capaz de sintetizar RIRs que coinciden con los parámetros objetivos de la sala, como el tiempo de reverberación ($T_{60}$) y la relación directo-reverberante (DRR), sino que también reproduce las características perceptivas con mayor realismo y precisión que otras arquitecturas base de aprendizaje profundo \cite{Steinmetz2021FiNS}.
+\subsection[PINNs]{PINNs: Physics-Informed Neural Networks}
+
+\subsection[DECOR]{DECOR: Deep Exponential Completion Of Room Impulse Responses}
+
+El modelado preciso de la reverberación tardía resulta costoso computacionalmente, pero el sonido directo y las primeras reflexiones encapsulan información suficiente sobre la geometría de la sala y sus características de absorción. Para explotar esta relación, se ha formalizado la tarea de \textit{RIR completion} (completado de la respuesta al impulso de la sala), cuyo objetivo es sintetizar la reverberación tardía a partir de la porción temprana (los primeros 50~ms) de la respuesta \cite{Lin25}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.68\linewidth]{Figures/rir_completion.png}
-    \caption{Concepto de \textit{RIR completion}: extrapolación de la reverberación tardía a partir del tramo temprano de la respuesta al impulso.}
+    \caption{Concepto de \textit{RIR completion}: extrapolación de la reverberación tardía a partir del tramo temprano de la respuesta al impulso \cite{Lin25}.}
     \label{fig:rir_completion}
 \end{figure}
 
-La hipótesis física fundamental que sustenta este paradigma postula que el sonido directo y las reflexiones tempranas —que comprenden aproximadamente los primeros 50~ms de una RIR— encapsulan información latente suficiente sobre las propiedades macroscópicas del recinto. Específicamente, este segmento inicial contiene las huellas geométricas de las superficies más próximas y los coeficientes de absorción de los materiales principales. Desde un punto de vista acústico, la reverberación tardía no es un fenómeno estocástico independiente, sino la consecuencia determinista de la evolución de esas reflexiones tempranas hacia un campo difuso.
 
-Para explotar esta relación, se han propuesto arquitecturas basadas en el paradigma codificador-decodificador (\textit{encoder-decoder}). El modelo DECOR (\textit{Deep room impulse response completion}) es un exponente de esta tendencia. En este sistema, un codificador convolucional profundo (\texttt{DecorEncoder}) comprime la estructura temporal y espectral de los primeros 50~ms en un vector latente de baja dimensión. Posteriormente, un decodificador (\texttt{DecorDecoder}) utiliza este vector para parametrizar un modelo físico de decaimiento exponencial por bandas de octava. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.68\linewidth]{Figures/encoder-decoder.png}
-    \caption{Esquema del paradigma codificador-decodificador utilizado en tareas de extrapolación temporal de RIR.}
-    \label{fig:encoder_decoder_rir}
-\end{figure}
-
-La principal ventaja de este método es la eficiencia: mientras que los simuladores geométricos convencionales deben trazar miles de rayos para modelar la cola de la respuesta, estos modelos basados en aprendizaje profundo pueden sintetizar reverberaciones realistas de forma casi instantánea. Esto permite generar entornos acústicos complejos con una fracción del coste computacional de los métodos clásicos, facilitando aplicaciones en realidad virtual y aumento de datos para entrenamiento de sistemas de reconocimiento de voz.
-
-\section{Modelo físico}
-
-El éxito y la capacidad de generalización de los modelos de aprendizaje profundo en la acústica de salas dependen fundamentalmente de la disponibilidad de bases de datos extensas y diversas. Entrenar redes neuronales para que comprendan la propagación del sonido requiere exponerlas a una multitud de geometrías, materiales y posiciones de fuente-receptor. 
-
-En este contexto, el \textit{Big Impulse Response Dataset} (BIRD) \cite{Grondin25} representa un avance fundamental para la comunidad investigadora. Al proporcionar decenas de miles de respuestas impulsionales de alta calidad simuladas y medidas bajo una amplia variedad de condiciones acústicas, BIRD permite entrenar arquitecturas complejas evitando el sobreajuste (\textit{overfitting}) que ocurre cuando se utilizan conjuntos de datos limitados.
-
-Paralelamente a la evolución de los datos, la metodología de modelado ha experimentado un cambio de paradigma. La investigación más reciente tiende a alejarse de los modelos puramente estadísticos o de "caja negra", que aprenden mapeos directos entre entrada y salida sin restricciones físicas, para adoptar modelos híbridos o Redes Neuronales Informadas por la Física (PINNs, por sus siglas en inglés). 
-
-Como demuestran trabajos recientes \cite{krak25article}, la integración de ecuaciones diferenciales parciales (como la ecuación de onda tridimensional) directamente en la función de pérdida durante el entrenamiento obliga a la red a generar predicciones que no solo son estadísticamente probables, sino físicamente coherentes. Este enfoque ha demostrado ser especialmente superior en el modelado de bajas frecuencias, donde los fenómenos ondulatorios como la difracción y los modos propios de la sala dominan la respuesta y provocan que los métodos de acústica geométrica tradicionales fallen. Herramientas de código abierto como RIRPINN \cite{krak25web} han facilitado la adopción de estas técnicas, permitiendo a la comunidad integrar el conocimiento físico en el ciclo de desarrollo del aprendizaje profundo.
+Para abordar este problema, se han propuesto arquitecturas basadas en el paradigma codificador-decodificador (\textit{encoder-decoder}). El modelo DECOR (\textit{Deep Exponential Completion Of Room impulse responses}) es un exponente de esta tendencia \cite{Lin25}. En este sistema, un codificador convolucional temporal profundo comprime la estructura de los primeros 50~ms en un vector latente de baja dimensión de 128 dimensiones. Posteriormente, un decodificador utiliza este vector para parametrizar un modelo físico de decaimiento exponencial \cite{Lin25}. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.68\linewidth]{Figures/pinns.jpg}
-    \caption{Concepto de redes neuronales informadas por la física (PINNs) aplicadas al modelado acústico.}
-    \label{fig:pinns_acustica}
+    \includegraphics[width=0.75\linewidth]{Figures/encoder-decoder.png}
+    \caption{Esquema general de la arquitectura DECOR. El codificador procesa la cabeza de la RIR para generar un vector latente $\mathbf{z}$, que el decodificador utiliza para predecir envolventes de decaimiento aplicadas a un banco de filtros de ruido \cite{Lin25}.}
+    \label{fig:decor_overview}
 \end{figure}
 
-\section{Transformers}
+DECOR se presenta como una evolución conceptual y estructural frente a arquitecturas previas como FiNS (\textit{Filtered Noise Shaping}) \cite{Steinmetz2021FiNS,Lin25}. FiNS fue diseñado originalmente para una tarea de estimación ciega, tomando fragmentos de varios segundos de voz reverberante para predecir la RIR \cite{Steinmetz2021FiNS}. Aunque DECOR adapta la estructura del codificador de FiNS mediante convoluciones unidimensionales y conexiones residuales, la diferencia fundamental entre ambas redes radica en el diseño de su decodificador y en la imposición de un fuerte sesgo inductivo basado en la acústica de salas para la síntesis de la reverberación tardía \cite{Lin25}.
 
+Mientras que el decodificador de FiNS utiliza un enfoque basado en sobremuestreo convolucional (\textit{convolution upsampling}) \cite{Steinmetz2021FiNS}, DECOR modela estocásticamente la reverberación tardía como ruido blanco moldeado por una suma de envolventes de decaimiento exponencial \cite{Lin25}. Específicamente, el decodificador de DECOR emplea un perceptrón multicapa (MLP) que toma el vector latente y predice matrices de amplitud temporal. Estas amplitudes se multiplican por tasas de decaimiento aprendibles (inicializadas para decaimientos $T_{60}$ entre 0.05 y 3.0 segundos) para formar envolventes que modulan secuencias de ruido generadas por un banco de filtros de respuesta finita (FIR) en bandas de octava \cite{Lin25}.
 
-La evolución de las arquitecturas de aprendizaje profundo aplicadas a series temporales y acústica ha trascendido el uso exclusivo de Redes Neuronales Convolucionales (CNN) y Recurrentes (RNN). Recientemente, la arquitectura \textit{Transformer}, que originalmente revolucionó el procesamiento del lenguaje natural, se ha adaptado para modelar fenómenos físicos complejos y sistemas dinámicos continuos.
+Esta reformulación arquitectónica aporta ventajas significativas frente a FiNS que justifican su adopción para el completado de RIRs:
 
-La fortaleza de los \textit{Transformers} reside en su mecanismo de auto-atención (\textit{self-attention}), que permite a la red ponderar la importancia relativa de diferentes instantes de tiempo en una secuencia, independientemente de la distancia temporal que los separe. Este mecanismo es especialmente valioso para capturar dependencias temporales de largo alcance en sistemas dinámicos no lineales, permitiendo que la red establezca relaciones causales entre eventos acústicos distantes en el tiempo.
+\begin{itemize}
+    \item \textbf{Eficiencia computacional y tamaño del modelo:} La parametrización física en el decodificador permite que DECOR sea extremadamente ligero. El modelo DECOR ocupa únicamente 37~MB, lo que lo hace más de 30 veces más pequeño que la arquitectura base de FiNS, cuyo peso asciende a 1,3~GB \cite{Lin25}. Esta reducción drástica de parámetros facilita su despliegue en aplicaciones de síntesis en tiempo real para entornos dinámicos de realidad virtual o aumentada.
+    
+    \item \textbf{Eliminación de artefactos acústicos:} Las redes generativas que no imponen restricciones físicas estrictas sobre la síntesis de la señal suelen presentar problemas perceptuales. FiNS tiende a generar picos dispersos de gran amplitud en la cola de la RIR, lo que introduce una "granulosidad" (\textit{graininess}) poco natural en el audio resultante \cite{Steinmetz2021FiNS,Lin25}. Al forzar a la red a predecir parámetros para un modelo de decaimiento exponencial puro, DECOR garantiza curvas de decaimiento suaves y un sonido más realista y coherente con el comportamiento acústico natural \cite{Lin25}.
+    
+    \item \textbf{Mejora en métricas objetivas:} DECOR supera a FiNS en la evaluación de la similitud con las características acústicas de la sala objetivo. Logra reducir el error en el dominio espectro-temporal (MSTFT), mejora la precisión de la función de decaimiento de energía (EDF), y estima con mayor exactitud tanto el tiempo de reverberación ($T_{60}$) como la relación directo-reverberante (DRR) \cite{Lin25}. 
+    
+    \item \textbf{Capacidad de generalización:} Aunque la extrapolación de una señal a veinte veces su longitud original es una tarea compleja que penaliza a ambos modelos ante datos no vistos, DECOR mantiene un mejor rendimiento de generalización. Frente a conjuntos de datos de medición reales que la red no ha observado durante el entrenamiento, DECOR sigue siendo capaz de deducir relaciones correctas del $T_{60}$ y superar a FiNS, demostrando que su arquitectura de decaimiento estructurado es más robusta frente a escenarios acústicos fuera de distribución \cite{Lin25}.
+\end{itemize}
 
-La extracción rigurosa de la señal de audio se realiza mediante un proceso de decodificación secuencial. Dado un vector latente $\mathbf{z}$ comprimido por el codificador, el decodificador \textit{Transformer} genera iterativamente muestras de audio mediante predicción autoregresiva. En cada paso de tiempo $t$, el modelo calcula la distribución de probabilidad $p(x_t | x_{<t}, \mathbf{z})$ sobre las posibles amplitudes, condicionada por el historial de muestras previas $x_{<t}$ y el contexto acústico $\mathbf{z}$. La estabilidad numérica y coherencia temporal se mantiene gracias al mecanismo de atención, que asegura que cada muestra generada se ajuste de forma coherente al decaimiento energético esperado de la reverberación.
+En conclusión, la transición de un enfoque de sobremuestreo genérico a un modelo fuertemente condicionado por la física acústica permite que DECOR resuelva el problema del \textit{RIR completion} de forma mucho más eficiente. La parametrización directa de variables como el decaimiento por bandas de octava no solo elimina la inestabilidad de las muestras individuales, sino que dota a la red de una alta expresividad para modelar escenarios acústicos complejos manteniendo una huella computacional mínima. Por este motivo, DECOR constituye el método seleccionado para ser implementado y empleado en el desarrollo de este trabajo.
 
-Aplicado a la extrapolación de la RIR, el \textit{Transformer} permite extraer una "física latente" a partir de las reflexiones tempranas. Al procesar el tramo inicial de la respuesta, la red aprende patrones de decaimiento que se propagan consistentemente durante toda la síntesis de la cola, garantizando que la reverberación generada mantenga integridad acústica y mantiene la coherencia perceptual con el recinto original.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.68\linewidth]{Figures/transformers.png}
-    \caption{Arquitectura Transformer aplicada a la extrapolación de RIR: mecanismo de auto-atención que captura dependencias temporales a largo plazo en la síntesis de reverberación.}
-    \label{fig:transformer_rir}
-\end{figure}
-
-\section{Elección DECOR}
-
-La elección de DECOR en este trabajo se justifica por el equilibrio que ofrece entre fidelidad física, coste computacional y viabilidad práctica de implementación. Frente a enfoques puramente geométricos, DECOR reduce drásticamente el tiempo de inferencia al predecir la reverberación tardía a partir de los primeros 50~ms, manteniendo una representación acústicamente coherente del recinto. Frente a modelos totalmente de caja negra, su formulación codificador-decodificador con decaimiento por bandas introduce una estructura inductiva alineada con la física de la reverberación, mejorando la interpretabilidad y la robustez. Además, su planteamiento encaja de forma directa con la disponibilidad de datasets grandes como BIRD y con el objetivo aplicado de este TFG: extrapolar colas de RIR realistas de forma eficiente para tareas de síntesis acústica y aumento de datos.

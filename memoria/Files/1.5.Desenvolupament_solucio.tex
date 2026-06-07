@@ -1,22 +1,45 @@
 \chapter{Marco Experimental y Datasets}
 
-Este capítulo expone el entorno experimental, las tuberías de procesamiento de datos (\textit{data pipelines}) y las estrategias de optimización empleadas durante el entrenamiento del sistema. Su propósito es establecer, con precisión metodológica, el marco empírico sobre el que se sustenta la validación del modelo propuesto.
+Este capítulo expone el marco metodológico y experimental  para la aplicación y evaluación de la arquitectura propuesta. En primer lugar, se describen los conjuntos de datos empleados como base de aprendizaje del modelo, detallando tanto el preprocesamiento del corpus masivo BIRD como la generación de un conjunto de datos sintético complementario. A continuación, se define la cadena de procesamiento de la señal, centrada en el cálculo de la Curva de Decaimiento de Energía (EDC) para el correcto acondicionamiento y análisis de las respuestas acústicas. Finalmente, se detalla la fase de entrenamiento, estableciendo las estrategias de optimización y los criterios de evaluación que permiten cuantificar el rendimiento y la capacidad de generalización de la red neuronal.
 
 \section{Corpus BIRD}
 
-El \textit{Big Impulse Response Dataset} (BIRD) \cite{Gro+20} constituye el corpus principal empleado en este trabajo. Una de las aportaciones más relevantes del estudio reside en la evaluación, por primera vez en la literatura, de la arquitectura DECOR sobre este corpus masivo. Esta decisión metodológica reviste especial interés científico, puesto que la notable diversidad geométrica, material y espacial presente en BIRD somete al modelo a un escenario de validación considerablemente más exigente que el de los bancos sintéticos acotados habitualmente utilizados en estudios preliminares. En consecuencia, la exposición del sistema a dicha variabilidad permite examinar con mayor rigor su capacidad de generalización acústica.
+El \textit{Big Impulse Response Dataset} (BIRD) \cite{Grondin25} constituye la fuente principal de datos empleada en este trabajo para el entrenamiento y validación de la arquitectura DECOR. En su concepción original, este conjunto de datos se define como el mayor corpus abierto de respuestas al impulso en salas multicanal, compuesto por un total de 100.000 RIRs simuladas mediante el Método de la Imagen (\textit{Image Method}). Sin embargo, para los experimentos desarrollados en esta investigación, se ha seleccionado un subconjunto representativo de 40.000 respuestas. Esta dimensión muestral mantiene una base estadística suficientemente robusta para el entrenamiento de la red neuronal, a la vez que optimiza el coste computacional y los tiempos de iteración del modelo. 
 
-Desde el punto de vista operativo, el corpus se organiza en subconjuntos o \textit{folds}, cada uno de ellos asociado a agrupaciones independientes de respuestas impulsionales. Los archivos de audio son sometidos a una secuencia estricta de adecuación previa a su uso por la red neuronal. En primer lugar, cada señal se transforma a formato monoaural, tras lo cual se remuestrea a una frecuencia uniforme de 48 kHz. A continuación, se realiza una alineación temporal con respecto al pico máximo de amplitud, con el objetivo de garantizar que el transitorio correspondiente al sonido directo ocupe un índice determinista dentro de la secuencia. Esta operación resulta crítica para homogeneizar la referencia temporal entre impulsos acústicamente distintos.
+El uso de este corpus presenta ventajas sustanciales para la tarea que nos ocupa. Cada simulación varía aleatoriamente parámetros clave como las dimensiones físicas de la sala, la velocidad del sonido y las posiciones relativas de 2 micrófonos y 4 fuentes de sonido omnidireccionales. Dado que el coste computacional espacial del Método de la Imagen escala de forma cúbica en el espacio tridimensional, disponer de un corpus precalculado de esta magnitud resulta fundamental para agilizar la experimentación.
 
-Posteriormente, cada respuesta se normaliza en amplitud y se ajusta a una longitud fija de 48.000 muestras, equivalentes a 1 segundo de duración. Una vez establecida esta longitud de referencia, la señal se segmenta en dos regiones: una cabeza temprana de longitud $N_{head}=2400$ muestras y una cola reverberante remanente. Esta partición permite aislar, por un lado, la porción que contiene el sonido directo y las reflexiones tempranas y, por otro, la región que concentra el proceso de decaimiento tardío que el sistema debe estimar.
+\begin{figure}[htbp]
+    \centering
+    % Ajusta el valor 0.7 según lo grande que quieras que se vea en el PDF
+    \includegraphics[width=0.7\textwidth]{Figures/bird.png}
+    \caption[Configuración espacial BIRD]{Configuración espacial empleada para las simulaciones del corpus BIRD. El entorno virtual consiste en una sala rectangular de dimensiones $L_x \times L_y \times L_z$ metros, en la que se posicionan de manera aleatoria cuatro fuentes de sonido omnidireccionales ($\mathbf{s}_1, \mathbf{s}_2, \mathbf{s}_3, \mathbf{s}_4$) y un par de micrófonos ($\mathbf{m}_1, \mathbf{m}_2$) separados por una distancia $d$ \cite{Grondin25}.}
+    \label{fig:bird_setup}
+\end{figure}
 
-La división entre entrenamiento y validación no se efectúa de manera aleatoria a nivel de impulso individual, sino a nivel de \textit{folds}. Esta decisión responde a la necesidad de evitar fuga de datos (\textit{data leakage}), fenómeno que conduciría a una sobreestimación artificial del rendimiento si señales pertenecientes a un mismo entorno acústico apareciesen repartidas simultáneamente entre ambos subconjuntos. Al establecer la separación por agrupaciones de salas independientes, se garantiza que la evaluación se lleve a cabo sobre recintos no observados durante el ajuste de pesos, lo que proporciona una estimación más fiable de la capacidad de generalización del modelo.
+No obstante, la utilización de BIRD para la extrapolación de la cola reverberante conlleva limitaciones inherentes a su naturaleza sintética que es crucial documentar. La topología del corpus representa una abstracción espacial simplificada: el algoritmo de simulación genera exclusivamente habitaciones vacías estrictamente rectangulares. De igual modo, el modelado acústico asume un único coeficiente de absorción ($\alpha$) idéntico para todas las superficies (suelo, techo y paredes) dentro de una misma sala. 
 
-\section{Dataset sint.}
+Esta simplificación ignora la heterogeneidad de materiales presentes en entornos reales, lo que limita la variabilidad frecuencial y direccional de las reflexiones tardías que la red debe aprender a completar.  Desde el punto de vista operativo, los archivos de audio originales—generados a una frecuencia de muestreo nativa de 16 kHz y con 1 segundo exacto de duración (16.000 muestras)—son sometidos a una secuencia estricta de adecuación previa a su paso por la red neuronal. 
+
+En primer lugar, cada señal multicanal se transforma a formato monoaural y se remuestrea a una frecuencia uniforme de 48 kHz, garantizando así la compatibilidad dimensional con la arquitectura DECOR. Sobre esta nueva base temporal, la respuesta se normaliza en amplitud y se alinea con respecto a su pico máximo para asegurar que el transitorio del sonido directo ocupe un índice determinista. Finalmente, la secuencia se ajusta a una longitud fija de 48.000 muestras (equivalentes a 1 segundo exacto).
+
+Una vez acondicionada la señal, se procede a su segmentación en dos regiones de interés. Aprovechando la resolución obtenida tras el remuestreo, se aísla una cabeza temprana de longitud $N_{head} = 2400$ muestras (correspondientes exactamente a los primeros 50 ms), la cual abarca el sonido directo y las reflexiones tempranas. El resto de la secuencia conforma la cola reverberante remanente, que constituye el proceso de decaimiento tardío que el sistema debe aprender a extrapolar. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/bird_preprocess_before_after_onset.png}
+    \caption[Preprocesado BIRD]{Efecto de la etapa de preprocesado sobre una respuesta al impulso del corpus BIRD. El procedimiento ilustrado incluye la extracción de un canal monoaural aleatorio, el sobremuestreo a 48 kHz y la alineación temporal basada en la detección de inicio (\textit{onset detection}). Este método elimina el tiempo de vuelo originado en la simulación preservando la integridad morfológica del sonido directo y de las reflexiones tempranas previas al pico de máxima amplitud.}
+    \label{fig:bird_preprocessing_onset}
+\end{figure}
+
+Finalmente, para prevenir la contaminación cruzada y el solapamiento acústico, la división del subconjunto de 40.000 respuestas impulsionales entre las fases de entrenamiento y validación no se efectúa de manera aleatoria a nivel de impulso individual, sino aprovechando la estructura de bloques independientes (\textit{folds}) del corpus original. Al establecer la separación mediante estas agrupaciones de salas no solapadas, se garantiza que la evaluación se lleve a cabo sobre recintos acústicos no observados durante el ajuste de pesos, lo que proporciona una estimación rigurosa y fiable de la capacidad de generalización del modelo. 
+
+En resumen, el corpus BIRD ofrece un entorno de simulación controlado y de gran escala para el entrenamiento de modelos de aprendizaje profundo en tareas de extrapolación temporal de RIR. Sin embargo, su naturaleza sintética y sus simplificaciones acústicas introducen limitaciones que deben ser consideradas al interpretar los resultados y extrapolar las conclusiones hacia escenarios del mundo real.
+
+\section{Dataset sintético}
 
 Con objeto de disponer de un entorno de control plenamente trazable, se generó un corpus sintético propio compuesto por 6000 recintos rectangulares. Este subconjunto no pretende sustituir la diversidad geométrica y material del corpus principal, sino proporcionar un banco de simulación pura en el que todas las variables relevantes quedan explícitamente determinadas. Tal circunstancia resulta especialmente valiosa para estudios de ablación y para la verificación de la consistencia física de la tubería de datos antes del inicio de las rutinas de aprendizaje.
 
-La obtención de las respuestas impulsionales sintéticas se apoya en el Método de Fuentes Imagen (ISM), según la formulación clásica de \cite{AB79}, mediante su implementación en el entorno de código abierto \textit{Pyroomacoustics}. Bajo este marco, las dimensiones tridimensionales del recinto, las coordenadas de la fuente acústica y del receptor, así como los coeficientes de absorción de las superficies, se determinan por muestreo aleatorio dentro de intervalos físicamente realistas. De esta manera, se obtiene un conjunto amplio de escenas acústicas artificiales con control explícito de sus parámetros geométricos y materiales.
+La obtención de las respuestas impulsionales sintéticas se apoya en el Método de Fuentes Imagen (ISM), según la formulación clásica de \cite{Allen1979}, mediante su implementación en el entorno de código abierto \textit{Pyroomacoustics}. Bajo este marco, las dimensiones tridimensionales del recinto, las coordenadas de la fuente acústica y del receptor, así como los coeficientes de absorción de las superficies, se determinan por muestreo aleatorio dentro de intervalos físicamente realistas. De esta manera, se obtiene un conjunto amplio de escenas acústicas artificiales con control explícito de sus parámetros geométricos y materiales.
 
 La tubería operativa programada en el script \texttt{scripts/generate\_synthetic\_rir\_dataset.py} produce y almacena, para cada muestra, cuatro artefactos en formato binario \texttt{.npy}: la RIR completa, la sección de cabeza correspondiente a los primeros 50 ms, la sección de cola asociada a los 950 ms restantes y la curva EDC derivada de dicha cola. De forma complementaria, las propiedades macroscópicas y los descriptores globales de cada recinto, entre ellos las dimensiones geométricas y el $T_{60}$ estimado, se recogen de manera centralizada en un archivo tabular indexado denominado \texttt{metadata.csv}.
 
@@ -24,12 +47,13 @@ El control de calidad del conjunto sintético se lleva a cabo mediante el script
 
 \section{Pipeline EDC}
 
-Durante la tubería de datos, el cálculo de la Curva de Decaimiento de Energía (EDC) se establece como métrica de control físico para evaluar la coherencia del decaimiento reverberante. Para la cola discreta $y[n]$ de longitud $N$, se emplea la forma discreta de Schroeder:
+Dentro del flujo de procesamiento de datos, el cálculo de la Curva de Decaimiento de Energía (EDC, por sus siglas en inglés) se establece como métrica fundamental para evaluar la coherencia del decaimiento reverberante. Dado que la respuesta al impulso tardía presenta un comportamiento altamente estocástico, resulta inviable predecir su forma de onda exacta. Por ello, la EDC permite extraer una envolvente energética determinista que el modelo sí puede aprender a extrapolar. Para una secuencia discreta de la cola reverberante $y[n]$ de longitud $N$, se emplea la forma de integración discreta propuesta originalmente por Schroeder \cite{Schroeder1965}:
 
 \begin{equation}
 \mathrm{EDC}_{norm}[t] = \frac{\sum_{n=t}^{N-1} y[n]^2}{\sum_{n=0}^{N-1} y[n]^2}
 \end{equation}
 
+En esta formulación, la EDC se normaliza por la energía total de la cola para garantizar que su valor inicial sea exactamente 1 (0 dB) y que tienda asintóticamente a 0 a medida que el tiempo avanza. Esta normalización es crucial para establecer una escala de análisis coherente y para facilitar la comparación entre diferentes muestras con niveles de energía variables.
 donde $y[n]$ representa la secuencia discreta de la cola reverberante. Esta normalización garantiza una trayectoria monótona decreciente acotada en el intervalo $[0,1]$, con valor unitario al inicio del decaimiento y aproximación asintótica a cero para tiempos tardíos.
 
 Con el fin de obtener una escala de análisis perceptualmente adecuada, la curva normalizada se expresa en decibelios mediante transformación logarítmica:
@@ -38,15 +62,25 @@ Con el fin de obtener una escala de análisis perceptualmente adecuada, la curva
 \mathrm{EDC}_{dB}[t] = 10 \log_{10}\left( \max(\mathrm{EDC}_{norm}[t], \epsilon) \right)
 \end{equation}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/tail_edc_overlay.png}
+    \caption[Curva de Decaimiento de Energía (EDC) ]{Comparativa visual entre la forma de onda estocástica de una cola reverberante y su correspondiente Curva de Decaimiento de Energía (EDC) expresada en decibelios. Se observa cómo la integración de Schroeder extrae una envolvente energética determinista y monótonamente decreciente, transformando la señal bruta en un objetivo de aprendizaje estable para el modelo predictivo.}
+    \label{fig:edc_schroeder}
+\end{figure} 
+
 El término de protección $\epsilon$, asociado en práctica a un suelo dinámico del orden de -80 dB, resulta indispensable para preservar estabilidad numérica en el cálculo tensorial, evitando singularidades cuando la energía remanente tiende a cero.
 
-Desde la perspectiva computacional, la lógica de segmentación temporal (corte exacto en la muestra 2400) y el cálculo de la EDC se implementan dentro de estructuras de carga iterativa (\textit{DataLoaders}). Este diseño permite generar tensores de manera dinámica y empaquetarlos en lotes (\textit{batches}), manteniendo un flujo de memoria estable hacia GPU sin colapso de memoria principal. De forma simultánea, se conserva la trazabilidad exacta entre la cabeza de entrada, la cola objetivo y su EDC analítica en cada muestra procesada.
+Desde la perspectiva computacional, la lógica de segmentación temporal (corte exacto en la muestra 2400) y el cálculo de la EDC se implementan dentro de estructuras de carga iterativa (\textit{DataLoaders}). Esto permite generar tensores de manera dinámica y empaquetarlos en lotes (\textit{batches}), manteniendo un flujo de memoria estable hacia GPU sin colapso de memoria principal. De forma simultánea, se conserva la trazabilidad exacta entre la cabeza de entrada, la cola objetivo y su EDC analítica en cada muestra procesada.
 
 \section{Entrenamiento}
 
-El proceso de optimización se ejecutó en la plataforma Google Colab Pro, con uso de aceleradores gráficos NVIDIA A100, requisito operativo para el tratamiento eficiente de secuencias temporales extensas en dominio de audio. Para la evaluación del comportamiento fuera de muestra se adoptó una estrategia de validación cruzada (\textit{k-fold cross-validation}), estableciendo particiones con proporción de 3 \textit{folds} dedicados a la fase de aprendizaje y 1 \textit{fold} reservado para evaluación cruzada.
+La fase de entrenamiento de la red neuronal se llevó a cabo utilizando el entorno basado en la nube Google Colab Pro, haciendo uso de una GPU NVIDIA A100. Las prestaciones de esta unidad de procesamiento gráfico resultan plenamente adecuadas para satisfacer la demanda computacional del modelo, permitiendo gestionar de manera eficiente las  secuencias temporales inherentes al procesamiento de audio.
+ La adopción de esta infraestructura basada en la nube destaca por ofrecer acceso inmediato a \textit{hardware} de alto rendimiento sin requerir una elevada inversión en equipamiento local. No obstante, este entorno introduce limitaciones operativas significativas, tales como la interrupción forzosa de las sesiones por límites de tiempo y la dependencia de sistemas de almacenamiento no persistentes. En consecuencia, el uso de esta plataforma exigió la implementación de rutinas de guardado periódico (\textit{checkpoints}) para salvaguardar los pesos de la red y mitigar la volatilidad del sistema.
 
-La dinámica de ajuste de parámetros se rige por una función de coste compuesta:
+Para garantizar la solidez de la evaluación ante datos no observados, se adoptó una estrategia de validación cruzada (\textit{k-fold cross-validation}). El corpus se dividió manteniendo una proporción estricta de 3 \textit{folds} dedicados a la fase de aprendizaje por cada \textit{fold} reservado para la evaluación del rendimiento. Esta metodología asegura que el modelo se ajuste a una variedad de escenarios acústicos durante el entrenamiento, mientras que la validación se realiza sobre recintos completamente nuevos, lo que proporciona una estimación rigurosa de la capacidad de generalización del sistema.
+
+Por otro lado, para dirigir el aprendizaje del modelo hacia una solución que sea tanto acústicamente precisa como físicamente coherente, la dinámica de ajuste de parámetros no puede depender de un único criterio. En su lugar, se rige por una función de coste compuesta que equilibra la fidelidad espectral y el comportamiento temporal del sonido: 
 
 \begin{equation}
 \mathcal{L}_{total} = \beta \cdot \mathcal{L}_{MSTFT} + \alpha \cdot \mathcal{L}_{EDC-L1}
@@ -54,7 +88,12 @@ La dinámica de ajuste de parámetros se rige por una función de coste compuest
 
 Esta formulación combina el error espectral multiresolución, ponderado por $\beta$, con el error absoluto asociado a la curva de decaimiento energético temporal, ponderado por $\alpha$. Dentro del protocolo de validación, la métrica $L1$ sobre la EDC se establece como indicador principal para verificar la precisión física de la respuesta sintetizada durante el ciclo iterativo de aprendizaje.
 
-Para la actualización de pesos se emplea el optimizador Ranger21, diseñado para trayectorias de optimización prolongadas y robustas. Este algoritmo incorpora mecanismos de estabilización, entre ellos el recorte de gradientes (\textit{Gradient Clipping}), que permite mitigar el riesgo de explosión de gradientes característico en la predicción de secuencias largas. Asimismo, contempla una fase final de enfriamiento (\textit{Cooldown}) que reduce progresivamente la tasa de aprendizaje en las últimas épocas, favoreciendo la aproximación estable hacia mínimos profundos de la superficie de coste.
+Por último, la actualización de pesos se emplea con \textbf{Ranger21}, un optimizador diseñado para ejecutar trayectorias de aprendizaje prolongadas de forma robusta. Su elección se justifica por la incorporación de mecanismos de estabilización fundamentales para este tipo de modelado:
+\begin{itemize}
+    \item \textbf{Recorte de gradientes (\textit{Gradient Clipping}):} Permite mitigar el riesgo de explosión de gradientes, una inestabilidad característica cuando se trabaja en la predicción de secuencias largas.
+    \item \textbf{Fase de enfriamiento (\textit{Cooldown}):} Consiste en una reducción progresiva de la tasa de aprendizaje durante las últimas épocas del entrenamiento, lo que favorece una aproximación estable hacia mínimos más profundos en la superficie de coste.
+\end{itemize}
+
 
 El protocolo de entrenamiento se estructura en tres fases claramente diferenciadas:
 \begin{enumerate}
