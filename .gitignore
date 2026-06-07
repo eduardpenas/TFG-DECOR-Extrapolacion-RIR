@@ -19,6 +19,7 @@ __pycache__/
 # VS Code y Sistema
 .vscode/
 .DS_Store
+*:Zone.Identifier
 
 # Ficheros temporales de LaTeX (pero no main.tex ni main.pdf)
 main.*
