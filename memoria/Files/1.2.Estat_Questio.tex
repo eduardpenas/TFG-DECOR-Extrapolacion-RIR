@@ -60,15 +60,32 @@ Este esfuerzo de cómputo se agrava drásticamente debido a la naturaleza matem�
 
 \section[Aprendizaje profundo]{Enfoques basados en Machine Learning}
 
-\subsection{De la simulación explícita a los modelos predictivos}
+\subsection{PINNs: Physics-Informed Neural Networks}
+
+Las redes neuronales informadas por la física (PINNs) constituyen un paradigma innovador para la predicción de respuestas impulsionales (RIR). A diferencia de los enfoques puramente basados en datos, las PINNs son redes neuronales entrenadas para resolver ecuaciones diferenciales parciales. En acústica de salas, esto implica incorporar la ecuación de onda en la función de pérdida mediante la diferenciación automática. Así, al combinar pocas mediciones con las ecuaciones de derivadas parciales que rigen la propagación del sonido, el modelo aprende la física del problema en lugar de mapear únicamente correlaciones estadísticas. Esto proporciona una representación continua libre de malla del campo sonoro, destacando en la reconstrucción precisa de los frentes de onda tempranos.
+
+Matemáticamente, el entrenamiento de una PINN para la estimación de RIR se formaliza como la minimización de una función de pérdida que combina un término de error de datos (mediciones) y un término de error físico (residuo de la ecuación de onda) \cite{krak25article}:
+
+\begin{equation}
+\mathcal{L}(\theta) = \lambda_{\mathrm{data}} \sum_{i=1}^{N} \left\| \widehat{h}(t_i; \theta) - h_{\mathrm{meas}}(t_i) \right\|^2 + \lambda_{\mathrm{physics}} \int \left| \frac{\partial^2 \widehat{h}}{\partial t^2} - c^2 \Delta \widehat{h} \right|^2 \, dt
+\end{equation}              
+donde $\widehat{h}(t; \theta)$ es la RIR predicha por la red con parámetros $\theta$, $h_{\mathrm{meas}}(t_i)$ son las mediciones de RIR en tiempos discretos $t_i$, y $c$ es la velocidad del sonido. Las constantes $\lambda_{\mathrm{data}}$ y $\lambda_{\mathrm{physics}}$ equilibran la importancia relativa de los términos de pérdida de datos y física.
+
+Los resultados de \cite{krak25article}  demuestran que las PINNs pueden extrapolar con precisión los frentes de onda tempranos a partir de un número limitado de mediciones, superando a métodos tradicionales como el ISM. Sin embargo, la síntesis completa de RIRs mediante PINNs sigue siendo un desafío debido a la complejidad de las ecuaciones de onda en entornos tridimensionales y a la necesidad de un entrenamiento intensivo para converger a soluciones estables.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Figures/PINNs.png} % Asegúrate de guardar el recorte con este nombre
+    \caption[Extrapolación de RIR con PINNs]{ Comparación de la reconstrucción de la RIR en términos de presión sonora a partir de un número limitado de mediciones. Se observa que la PINN logra reconstruir con precisión los frentes de onda tempranos, aunque la síntesis completa de la reverberación tardía sigue siendo un desafío. \cite{krak25article}}
+    \label{fig:pinns_extrapolation}
+\end{figure}
 
 \subsection{FiNS: Filtered Noise Shaping}
-
-En el ámbito de la estimación ciega de la respuesta al impulso de la sala (RIR) a partir de voz reverberante, el modelo FiNS (Filtered Noise Shaping) \cite{Steinmetz2021FiNS} propone un enfoque basado en el aprendizaje profundo para la estimación directa en el dominio del tiempo. Este método resulta útil para aplicaciones de realidad aumentada y posproducción de audio, donde se requiere un emparejamiento acústico preciso y de alta fidelidad operando a 48 kHz.
+En el ámbito de la estimación respuesta al impulso de la sala (RIR) a partir de voz reverberante, el modelo FiNS (Filtered Noise Shaping) \cite{Steinmetz2021FiNS} propone un enfoque basado en el aprendizaje profundo para la estimación directa en el dominio del tiempo. Este método resulta útil para aplicaciones de realidad aumentada y posproducción de audio, donde se requiere un emparejamiento acústico preciso y de alta fidelidad operando a 48 kHz.
 
 A diferencia de los enfoques que predicen parámetros para reverberadores algorítmicos o emplean modelos de transformación de gran tamaño, FiNS modela directamente la acústica del espacio basándose únicamente en una grabación de referencia. Esto permite reemplazar simulaciones complejas por una operación de convolución simple entre una señal de entrada y la RIR predicha.
 
-Para lograr esto, la arquitectura de la red incorpora un fuerte sesgo inductivo inspirado en la acústica de salas, separando el modelado de la respuesta mediante un codificador y un decodificador especializados. El codificador en el dominio del tiempo procesa la señal de entrada utilizando bloques de convoluciones unidimensionales para capturar el comportamiento temporal a diferentes escalas, generando finalmente un espacio latente. 
+Para lograr esto, la arquitectura de la red incorpora un fuerte sesgo inductivo inspirado en la acústica de salas, separando el modelado de la respuesta mediante un codificador y un decodificador especializados. El codificador en el dominio del tiempo procesa la señal de entrada utilizando bloques de convoluciones unidimensionales para capturar el comportamiento temporal a diferentes escalas, generando finalmente un espacio latente. Esta separación es clave porque, como ocurre de forma sistemática en acústica de recintos, la parte más difícil de predecir es el campo reverberante tardío: su carácter denso y estocástico, junto con la superposición de un gran número de reflexiones débiles y sensibles a pequeñas variaciones geométricas y de absorción, incrementa notablemente la incertidumbre del modelo.
    
 \begin{figure}[H]
     \centering
@@ -92,7 +109,8 @@ Por otro lado, la reverberación tardía se modela como una suma de señales de 
 Esta estrategia de combinar la predicción directa para las componentes tempranas y un enfoque estocástico basado en la conformación de ruido para la parte tardía resulta muy efectiva.
 
 Las evaluaciones demuestran que FiNS no solo es capaz de sintetizar RIRs que coinciden con los parámetros objetivos de la sala, como el tiempo de reverberación ($T_{60}$) y la relación directo-reverberante (DRR), sino que también reproduce las características perceptivas con mayor realismo y precisión que otras arquitecturas base de aprendizaje profundo \cite{Steinmetz2021FiNS}.
-\subsection[PINNs]{PINNs: Physics-Informed Neural Networks}
+
+
 
 \subsection[DECOR]{DECOR: Deep Exponential Completion Of Room Impulse Responses}
 
