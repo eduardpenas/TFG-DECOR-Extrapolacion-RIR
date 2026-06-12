@@ -1,48 +1,54 @@
+% !TeX root = ../main.tex
+
 \chapter{Introducción}
 
 \section{Objetivo}
 
-El objeto central de este Trabajo de Fin de Grado consiste en el diseño, la implementación y la validación de un modelo de aprendizaje profundo capaz de ejecutar la extrapolación temporal de la reverberación tardía (\textit{tail}) a partir de la observación de los primeros 50 ms (\textit{head}) de la Respuesta al Impulso de la Sala (RIR) \cite{Lin25}. Desde una perspectiva metodológica, el problema se formula como una tarea de predicción condicionada en la que la porción temprana de la respuesta contiene la información estructural necesaria para estimar la evolución energética y espectral de la cola reverberante.
+El objetivo principal de este Trabajo de Fin de Grado es emplear y validar un modelo de aprendizaje profundo capaz de extrapolar la reverberación tardía de una Respuesta al Impulso de Sala (RIR) a partir de su tramo temprano de 50 ms \cite{Lin25}. El problema se formula como una inferencia condicionada, donde la cabeza de la RIR aporta la información estructural necesaria para estimar la dinámica temporal y espectral de la cola reverberante.
 
-El alcance del proyecto comprende el desarrollo de tuberías de datos reproducibles, la programación de los bloques neuronales del sistema propuesto y la evaluación del rendimiento mediante métricas analíticas acústicas. Quedan expresamente fuera del alcance las optimizaciones a nivel de firmware para ejecución en sistemas embebidos de bajo consumo, así como el procesamiento geométrico tridimensional multicanal.
+Desde el punto de vista técnico, el trabajo persigue tres metas concretas. En primer lugar, probar una arquitectura codificador-decodificador eficiente que respete hipótesis físicas del decaimiento acústico. En segundo lugar, definir un procedimiento de entrenamiento reproducible sobre bases de datos de RIR reales y sintéticas. En tercer lugar, evaluar el comportamiento del modelo con métricas espectro-temporales y métricas físicas, de forma que la validación no sea solo numérica, sino también acústicamente interpretable.
 
-La memoria se articula en siete capítulos. El Capítulo 1 introduce el problema, su motivación y los requerimientos técnicos. El Capítulo 2 establece los fundamentos teóricos. El Capítulo 3 presenta el estado de la cuestión. El Capítulo 4 desarrolla el diseño y la arquitectura del modelo DECOR. El Capítulo 5 describe el marco experimental y los conjuntos de datos. El Capítulo 6 analiza los resultados y su discusión crítica. Finalmente, el Capítulo 7 recoge las conclusiones y las líneas de trabajo futuro.
+El alcance incluye la implementación del flujo completo de datos, la adaptación e implementación de la arquitectura DECOR y su análisis experimental. Quedan fuera del alcance la simulación geométrica 3D en tiempo real y la optimización a bajo nivel para el despliegue.
+
+\section{Justificación}
+
+La extrapolación de respuestas impulsionales de sala es un problema relevante porque generar bien la reverberación tardía influye directamente en la calidad final del audio y en la utilidad de las simulaciones acústicas. Los métodos geométricos clásicos, aunque están bien fundamentados físicamente, pueden ser costosos cuando se necesita producir muchas respuestas o trabajar con tiempos de cálculo ajustados.
+
+En este contexto, un enfoque de aprendizaje profundo con sesgo físico ofrece una alternativa de interés: reduce el coste de inferencia y, al mismo tiempo, mantiene coherencia con el comportamiento acústico esperado del recinto. Esta combinación es especialmente valiosa para evaluar de forma sistemática la extrapolación de colas reverberantes y generar casos de prueba acústicos con menos coste computacional.
+
+La justificación metodológica del trabajo se apoya en la hipótesis de que el tramo temprano de la RIR contiene información suficiente para condicionar la estimación de la cola tardía, hipótesis desarrollada en el marco teórico y contrastada mediante EDC, $T_{60}$, DRR y pérdidas espectrales multirresolución.
 
 \section{Impacto}
 
-La relevancia científica y tecnológica de esta investigación se enmarca en el crecimiento del audio inmersivo para Realidad Virtual (VR) y Realidad Aumentada (AR), ámbitos en los que la caracterización acústica del recinto condiciona de forma directa la plausibilidad perceptual de la escena sonora. Los métodos tradicionales de simulación, como el Método de Fuentes Imagen (ISM) o el trazado de rayos, presentan un coste computacional elevado que crece de manera muy acusada con la duración de la cola reverberante, lo que limita su uso en escenarios con exigencias temporales estrictas.
+La relevancia del proyecto se centra en la extrapolación eficiente de RIR para análisis acústico y generación de datos en entornos de investigación. Frente a enfoques clásicos de simulación, la propuesta busca una relación más favorable entre coherencia física y coste computacional.
 
-El impacto esperado se establece en tres dimensiones complementarias. En el plano técnico, se persigue una reducción drástica del tiempo de inferencia mediante un paradigma de procesamiento de señal diferenciable orientado a síntesis eficiente. En el plano acústico, se pretende preservar verosimilitud física al incorporar restricciones teóricas en el decodificador, de modo que la señal estimada respete patrones de decaimiento compatibles con la física del recinto. En el plano aplicado, el sistema presenta potencial de transferencia como herramienta de aumento de datos para sistemas de reconocimiento de voz, al permitir generar colas reverberantes plausibles en volumen elevado y coste operativo reducido.
+El impacto esperado se articula en tres planos. En el plano técnico, se persigue reducir significativamente el tiempo de generación de colas reverberantes respecto a métodos puramente físicos. En el plano acústico, se busca mantener coherencia de decaimiento energético y distribución espectral mediante un decodificador con estructura inspirada en modelos de reverberación. Respecto a sus aplicaciones, el sistema puede emplearse para aumento de datos, diseño sonoro y experimentación rápida en entornos donde la obtención de RIR medidas es limitada o costosa.
 
 \section{Requisitos}
 
-Las especificaciones del sistema se formulan bajo criterios medibles y verificables, de acuerdo con principios de ingeniería de sistemas orientados a trazabilidad experimental y validación cuantitativa.
+Las especificaciones del sistema se formulan con criterios medibles y verificables, orientados a trazabilidad experimental y validación cuantitativa.
 
 \begin{itemize}
-    \item \textbf{Requerimientos de Entrada/Salida de Señal}
+    \item \textbf{Requisitos de Entrada/Salida de Señal}
     \begin{itemize}
         \item Procesamiento monoaural con frecuencia de muestreo estricta de 48 kHz.
         \item Ventana de entrada acotada a $N_{head}=2400$ muestras.
         \item Horizonte de predicción de cola fijado en $N_{tail}=45600$ muestras.
     \end{itemize}
 
-    \item \textbf{Requerimientos de Coherencia Acústica}
+    \item \textbf{Requisitos de Coherencia Acústica}
     \begin{itemize}
         \item Conservación de continuidad energética entre cabeza y cola sintetizada.
-        \item Error absoluto medio (MAE) acotado sobre la curva EDC.
-        \item Desajustes controlados en métricas físicas de referencia $T_{60}$ y DRR.
+        \item Error acotado sobre la curva de decaimiento energético (EDC).
+        \item Desajustes controlados en métricas físicas de referencia como $T_{60}$ y DRR.
+        \item Consistencia espectral en múltiples resoluciones de STFT.
     \end{itemize}
 
-    \item \textbf{Requerimientos del Ciclo de Entrenamiento}
+    \item \textbf{Requisitos del Entrenamiento}
     \begin{itemize}
         \item Estabilidad numérica absoluta, con ausencia de valores NaN o Inf.
         \item Repetibilidad experimental mediante fijación estricta de semillas pseudoaleatorias.
         \item Mecanismos automatizados de \textit{checkpointing} basados en minimización de pérdida de validación.
     \end{itemize}
-
-    \item \textbf{Requerimientos de Ejecución y Cómputo}
-    \begin{itemize}
-        \item Adecuación de las rutinas de optimización masiva a entornos en la nube con GPU de alta gama.
-        \item Tiempo de inferencia de la red predictiva varios órdenes de magnitud inferior al de un simulador físico geométrico convencional.
-    \end{itemize}
 \end{itemize}
+

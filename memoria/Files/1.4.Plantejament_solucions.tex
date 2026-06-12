@@ -1,3 +1,5 @@
+% !TeX root = ../main.tex
+
 \chapter{Diseño y Arquitectura del Modelo }
 
 Este capítulo presenta la formulación matemática y el diseño arquitectónico del modelo DECOR \cite{Lin25}, concebido como una solución eficiente para la extrapolación de respuestas al impulso de recinto a partir de observaciones parciales de corta duración.
@@ -36,6 +38,7 @@ Cola Sintetizada (Salida) & $\hat{\mathbf{y}}$ & $(1 \times 45600)$ \\
 \end{table}
 
 \section{El Codificador}
+El codificador $\mathcal{E}_{\psi}$ tiene la función de extraer una representación latente de la información acústica contenida en la cabeza de la RIR. El diseño es una adaptación eficiente de la arquitectura del modelo FINS\cite{Steinmetz2021FiNS}, diseñada específicamente para analizar el segmento inicial de una respuesta al impulso en recintos (RIR). En lugar de procesar varios segundos de audio continuo, este modelo se enfoca de manera exclusiva en los primeros 50 milisegundos de la señal para capturar las reflexiones tempranas críticas. 
 
 La unidad elemental del codificador corresponde a un bloque convolucional residual. Para una entrada $\mathbf{h}_{in}$, la salida del bloque se define como
 
@@ -45,7 +48,7 @@ La unidad elemental del codificador corresponde a un bloque convolucional residu
 
 En esta expresión, $\mathcal{F}_{main}$ denota una convolución unidimensional con tamaño de núcleo 15, salto 2 y relleno simétrico orientado a conservar coherencia dimensional local, seguida de normalización por lotes (\textit{Batch Normalization}). Por su parte, $\mathcal{F}_{skip}$ representa la rama residual con convolución $1\times1$ y el mismo salto, con el fin de alinear la dimensionalidad de los tensores antes de la suma elemento a elemento. La no linealidad $\sigma$ se implementa mediante una activación Parametric ReLU (PReLU).
 
-La arquitectura completa de \textit{DecorEncoder} se organiza como una cascada de 9 bloques residuales. La jerarquía de canales sigue la progresión
+La arquitectura completa del codificador se organiza como una cascada de 9 bloques residuales. La jerarquía de canales sigue la progresión
 
 \begin{equation}
 1 \rightarrow 16 \rightarrow 32 \rightarrow 64 \rightarrow 128 \rightarrow 256 \rightarrow 512 \rightarrow 512 \rightarrow 512 \rightarrow 512.
@@ -61,45 +64,108 @@ Tras el último bloque convolucional, la salida se somete a una agrupación prom
 
 el cual recoge la firma acústica de las reflexiones tempranas en una representación compacta apta para la etapa de síntesis de cola reverberante.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{Figures/esquema_encoder.jpg}
+\caption[Codificador DECOR]{Esquema de la arquitectura del codificador. La entrada es la cabeza de la RIR, que se procesa a través de una serie de bloques residuales convolucionales con reducción temporal progresiva, seguida de una agrupación promedio global y una proyección lineal para obtener el vector latente $\mathbf{z}$.}
+\label{fig:encoder}
+\end{figure}
+
 \section{Decodificador}
 
-La síntesis de la cola reverberante estimada se rige por el siguiente modelo físico:
+El decodificador se diseñó con un fuerte sesgo inductivo basado en la acústica de salas para minimizar el tamaño del modelo y la cantidad de datos de entrenamiento, maximizando al mismo tiempo su poder expresivo. El decodificador de DECOR se fundamenta en el modelo de reverberación de ruido blanco con decaimiento exponencial, descrito por Moorer \cite{Moorer1979}. 
+
+Debido a la naturaleza estocástica de la reverberación tardía, la respuesta al impulso en recintos $h(n)$ se puede modelar como un ruido blanco estocástico $w(n)$ envuelto por una suma de $N$ decaimientos exponenciales:
 
 \begin{equation}
-\hat{r}(t)=\sum_{m=1}^{M}\left(\sum_{k=1}^{K}A_{m,k}\cdot e^{-b_{k}(t_{0}+t)}\right)w_{m}(t)
+h(n) = w(n) \sum_{j=1}^{N} a_j e^{-b_j n},
 \end{equation}
 
-donde $M=10$ denota el número de bandas de octava bajo la norma ISO 266, $K=20$ el número de tasas de decaimiento linealmente combinadas, $t_{0}=0.05$~s el instante de transición temporal correspondiente al inicio de la cola, y $w_{m}(t)$ el ruido blanco gaussiano filtrado asociado a la banda espectral $m$.
+donde $a_j$ y $b_j$ son la amplitud inicial del decaimiento y la tasa de decaimiento, respectivamente. 
 
-El estimador paramétrico inicial opera sobre el vector latente $\mathbf{z}\in\mathbb{R}^{128}$ mediante un perceptrón multicapa compuesto por 7 capas densas encadenadas, cada una con 512 unidades y activación LeakyReLU con pendiente de zona muerta $\alpha=0.2$. La etapa de salida adopta un esquema ramificado (\textit{multi-head}): una rama produce amplitudes base $A'_{m,k}$ y la otra produce coeficientes de enmascaramiento $C'_{m,k}$. La activación efectiva se obtiene por producto de Hadamard, con enmascaramiento sigmoidal, según
-$A_{m,k}=A'_{m,k}\odot\sigma(C'_{m,k})$.
+Esta representación de la respuesta al impulso puede desglosarse aún más en bandas de frecuencia $i = 1, \dots, M$ para capturar el decaimiento dependiente de la frecuencia:
 
-Las tasas de amortiguamiento $b_k$ se establecen sobre una escala log-uniforme vinculada a tiempos de reverberación $T_{60}$ dentro del intervalo físico $[0.05,3.0]$~s. Este criterio impone una restricción acústica inicial coherente con recintos reales y, al mismo tiempo, conserva flexibilidad, puesto que los $b_k$ se tratan como parámetros libres optimizables durante el aprendizaje del modelo.
+\begin{equation}
+h(n) = \sum_{i=1}^{M} h_i(n) = \sum_{i=1}^{M} s_i(n) \sum_{j=1}^{N} a_{ij} e^{-b_j n},
+\end{equation}
 
-La etapa de coloración espectral utiliza un banco de 10 filtros FIR de fase lineal y orden 1023, calculados de forma analítica mediante diseño por ventanas con la función \texttt{firwin} de SciPy. Dicho banco separa la señal estocástica en bandas de octava normalizadas. Finalmente, una convolución unidimensional de tamaño de núcleo $1$ recibe los 10 canales filtrados y ejecuta una suma ponderada optimizable, equivalente a una transformación lineal $1\times1$, para reducir la representación multibanda a un único canal mono que constituye la cola extendida final.
+donde $s_i(n)$ es un ruido de banda limitada correspondiente a las diferentes bandas de frecuencia.
+
+Para una secuencia en tiempo discreto de longitud $T$, se omite $n$ y se simplifica la notación a:
+
+\begin{equation}
+\mathbf{h} = \mathbf{1}_M^\intercal (\mathbf{S} \odot \mathbf{Y}),
+\end{equation}
+
+donde $\mathbf{Y} \in \mathbb{R}^{M \times T}$ son las envolventes en el dominio del tiempo para las secuencias de ruido blanco filtrado $\mathbf{S} \in \mathbb{R}^{M \times T}$, $\odot$ denota la multiplicación elemento a elemento, y un vector columna de unos $\mathbf{1}_M^\intercal$ suma los elementos de la columna. 
+
+Las envolventes en el dominio del tiempo $\mathbf{Y}$ pueden expresarse en notación vectorial como combinaciones lineales de envolventes de decaimiento exponencial:
+
+\begin{equation}
+\mathbf{Y} = \mathbf{A}\mathbf{E},
+\end{equation}
+
+donde $\mathbf{A} \in \mathbb{R}^{M \times N}$ son las amplitudes iniciales de las envolventes de decaimiento exponencial $\mathbf{E}$ para $N$ tasas de decaimiento $\mathbf{b} \in \mathbb{R}^{N}$ a lo largo de la secuencia temporal $\mathbf{n} \in \mathbb{R}^{T}$, es decir:
+
+\begin{equation}
+\mathbf{E} := e^{-\mathbf{b}\mathbf{n}^\intercal} \in \mathbb{R}^{N \times T}.
+\end{equation}
+
+El decodificador propuesto construye las envolventes en el dominio del tiempo $\mathbf{Y}$ prediciendo los valores de amplitud de la envolvente de decaimiento $\mathbf{A}$ y multiplicándolos por las envolventes de decaimiento exponencial $\mathbf{E}$.
+
+Un Perceptrón Multicapa (MLP) multicabeza con siete capas ocultas toma el vector latente $\mathbf{z}$ y emite dos matrices $\mathbf{A}'$ y $\mathbf{C}'$. El producto elemento a elemento de $\mathbf{A}'$ y la máscara $\mathbf{C} = \sigma(\mathbf{C}')$ da como resultado la matriz de amplitudes de la envolvente de decaimiento:
+
+\begin{equation}
+\mathbf{A} = \mathbf{A}' \odot \sigma(\mathbf{C}'),
+\end{equation}
+
+donde $\sigma(\cdot)$ es la función sigmoide y $\mathbf{C} = \sigma(\mathbf{C}') = \{c_{ij} \mid 0 \leq c_{ij} \leq 1\}$.
+
+Se determinó que aprender una representación lineal $\mathbf{A}'$ y una máscara sigmoide logra mejores resultados que aprender $\mathbf{A}$ directamente. La predicción separada de $\mathbf{C}'$ y la aplicación de la función sigmoide generan una máscara que fuerza amplitudes cercanas a cero para los decaimientos inactivos. Esta estrategia resulta de utilidad para imponer dispersión en $\mathbf{A}$.
+
+Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen posteriormente a partir de $\mathbf{b}$ y $\mathbf{n}$ utilizando la Ecuación 4.9. El parámetro aprendible $\mathbf{b} = \{b_j \mid b_j = \ln(10^{-3})/T_j\} \in \mathbb{R}^{N}$ se inicializa antes del entrenamiento y se mantiene fijo durante la inferencia, siendo $T_j$ el tiempo de decaimiento $T_{60}$ de la $j$-ésima pendiente. En el modelo final, se inicializan $N = 20$ tiempos de decaimiento, muestreados logarítmicamente en el rango de $0.05$ a $3.0$ s.
+
+La matriz de envolventes $\mathbf{E}$ se calcula para una secuencia temporal de $950$ ms correspondiente a la cola de la RIR, es decir, $\mathbf{n} = [0.05, 0.05 + 1/f_s, \dots, 1.0] \in \mathbb{R}^{T}$, con una longitud de secuencia $T = 45600$ a una tasa de muestreo de $48$ kHz.
+
+Adoptando un enfoque de ruido filtrado similar al de FiNS \cite{Steinmetz2021FiNS}, se construye un banco de filtros compuesto por $M$ filtros FIR aprendibles que procesa una señal de ruido blanco gaussiano $\mathbf{w} \in \mathbb{R}^{T}$ en $M$ señales de ruido filtrado $\mathbf{S} = [\mathbf{s}_1, \mathbf{s}_2, \dots, \mathbf{s}_M]$. 
+
+Dicho banco de filtros aprendible se inicializa con $M = 10$ filtros FIR de banda de octava de orden $P = 1023$. Finalmente, la señal RIR se construye a partir del producto elemento a elemento de las envolventes en el dominio del tiempo y las señales de ruido filtrado,
+\begin{equation}
+\mathbf{H} = \mathbf{S} \odot \mathbf{Y}
+\end{equation}
+donde las filas de $\mathbf{H} \in \mathbb{R}^{M \times T}$ son señales de ruido filtrado ponderadas por las envolventes aprendidas. Una última capa de convolución 1D combina linealmente las filas de $\mathbf{H}$ para devolver la cola RIR predicha de banda completa 
+\begin{equation}
+\hat{\mathbf{h}}_{tail} = \mathbf{w}_{conv\_1D}^\intercal \mathbf{H}.
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{Figures/arquitectura_decoder.png}
+\caption[Decodificador DECOR]{Esquema de la arquitectura del decodificador. El vector latente $\mathbf{z}$ se procesa a través de un MLP multicabeza para generar las matrices $\mathbf{A}'$ y $\mathbf{C}'$, que se combinan para formar la matriz de amplitudes $\mathbf{A}$. Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen a partir de los tiempos de decaimiento aprendidos. Un banco de filtros FIR aprende a procesar una señal de ruido blanco para generar las señales de ruido filtrado $\mathbf{S}$, que se combinan con las envolventes para sintetizar la cola RIR predicha $\hat{\mathbf{h}}_{tail}$.}
+\label{fig:decoder}     
+\end{figure}
 
 \section{Pérdida}
 
-La optimización directa sobre la forma de onda mediante Error Cuadrático Medio (MSE) resulta subóptima en tareas de síntesis de audio reverberante. En particular, el MSE presenta elevada sensibilidad ante desajustes de fase que pueden ser perceptualmente poco relevantes, y no representa con fidelidad la respuesta auditiva humana, que depende de la distribución espectral de energía en el tiempo con mayor peso que del error puntual muestra a muestra.
-
-Con el objetivo de ajustar el aprendizaje a criterios más cercanos a la percepción, se establece la pérdida de Transformada de Fourier a Corto Plazo multirresolución (MSTFT). Para una respuesta predicha $\hat{h}$ y una respuesta de referencia $h$, la pérdida total se define como
+Para entrenar y evaluar el modelo, se utilizó una función de pérdida basada en la transformada de Fourier a corto plazo multirresolución (MSTFT, por sus siglas en inglés) \cite{Lin25,Steinmetz2021FiNS}. La pérdida total entre la RIR predicha $\hat{h}$ y la RIR de referencia $h$ se define como
 
 \begin{equation}
-\mathcal{L}_{\mathrm{MSTFT}}(\hat{h},h)=\sum_{r=1}^{R}\left(L_{sc}^{(r)}+L_{sm}^{(r)}\right).
+\mathcal{L}_{\mathrm{MSTFT}}(\hat{h}, h)=\sum_{r=1}^{R}\left(\mathcal{L}_{\mathrm{sc}}(\hat{h}, h)+\mathcal{L}_{\mathrm{sm}}(\hat{h}, h)\right),
 \end{equation}
 
-El término de convergencia espectral en la resolución $r$ se expresa mediante norma de Frobenius como
+donde el término de convergencia espectral se expresa como
 
 \begin{equation}
-L_{sc}^{(r)}=\frac{\left\|\left|\mathrm{STFT}_r(\hat{h})\right|-\left|\mathrm{STFT}_r(h)\right|\right\|_F}{\left\|\left|\mathrm{STFT}_r(h)\right|\right\|_F+\epsilon}.
+\mathcal{L}_{\mathrm{sc}}(\hat{h}, h)=\frac{\left\|\left|\mathrm{STFT}_{r}(\hat{h})\right|-\left|\mathrm{STFT}_{r}(h)\right|\right\|_{F}}{\left\|\left|\mathrm{STFT}_{r}(h)\right|\right\|_{F}+\epsilon},
 \end{equation}
 
-El término de log-magnitud espectral se formula como
+y el término logarítmico se define como
 
 \begin{equation}
-L_{sm}^{(r)}=\left\|\log\left(\left|\mathrm{STFT}_r(\hat{h})\right|+\epsilon\right)-\log\left(\left|\mathrm{STFT}_r(h)\right|+\epsilon\right)\right\|_1.
+\mathcal{L}_{\mathrm{sm}}(\hat{h}, h)=\left\|\log\left(\left|\mathrm{STFT}_{r}(\hat{h})\right|+\epsilon\right)-\log\left(\left|\mathrm{STFT}_{r}(h)\right|+\epsilon\right)\right\|_{1}.
 \end{equation}
 
-En estas expresiones, $\epsilon$ es un término de estabilidad numérica. La presencia del logaritmo en $L_{sm}^{(r)}$ aproxima la sensibilidad psicoacústica a variaciones relativas de presión sonora, lo que favorece un ajuste más coherente con la percepción auditiva.
+donde $\|\cdot\|_{F}$ denota la norma de Frobenius y $\|\cdot\|_{1}$ la norma $L_{1}$. Durante el entrenamiento se emplearon $R=4$ resoluciones, con tamaños de ventana $W\in\{64,512,2048,8192\}$, saltos $H\in\{32,256,1024,4096\}$ y ventana de Hann.
 
-En el modelo presentado se emplean $R=4$ resoluciones, con ventanas de Hann de tamaños $W\in\{64,512,2048,8192\}$ y saltos proporcionales $H\in\{32,256,1024,4096\}$. Esta selección combina escalas temporales cortas, adecuadas para transitorios rápidos, con escalas largas que mejoran la precisión frecuencial en el modelado de modos estacionarios y del decaimiento macroscópico de la reverberación tardía.
+
+

@@ -1,9 +1,11 @@
+% !TeX root = ../main.tex
+
 \chapter*{Resum}
 \addcontentsline{toc}{chapter}{Resum}
 
 La síntesi de respostes impulsionals de sala (RIR) completes mitjançant simulació acústica convencional presenta un cost computacional elevat. Aquest treball parteix de la hipòtesi que la porció inicial d'una RIR (els primers 50~ms), que conté el so directe i les primeres reflexions, incorpora informació suficient sobre la geometria i les propietats acústiques del recinte per reconstruir-ne la reverberació tardana.
 
-S'ha emprat DECOR (\textit{Deep Exponential Completion Of Room impulse responses}), una arquitectura codificador-decodificador orientada a la completació de RIR. El codificador comprimeix la capçalera de la RIR (2400 mostres a 48~kHz) mitjançant nou blocs convolucionals amb connexions \textit{skip} i reducció progressiva de la resolució temporal, obtenint un vector latent de 128 dimensions. El decodificador, guiat per un model físic de soroll blanc amb decaïment exponencial, estima envoltants multiexponencials que modulen seqüències de soroll filtrat a través d'un banc de deu filtres FIR en bandes d'octava ISO~266. Aquesta formulació introdueix biaix acústic amb l'objectiu de reduir la mida del model preservant capacitat representacional.
+S'ha emprat DECOR (\textit{Deep Exponential Completion Of Room impulse responses}), una arquitectura codificador-decodificador orientada a la completació de la RIR. El codificador comprimeix la capçalera de la RIR (2400 mostres a 48~kHz) mitjançant nou blocs convolucionals amb connexions \textit{skip} i reducció progressiva de la resolució temporal, obtenint un vector latent de 128 dimensions. El decodificador, guiat per un model físic de soroll blanc amb decaïment exponencial, estima envoltants multiexponencials que modulen seqüències de soroll filtrat a través d'un banc de  filtres FIR en bandes d'octava ISO~266. Aquesta formulació introdueix biaix acústic amb l'objectiu de reduir la mida del model preservant capacitat representacional.
 
 L'eficàcia de la proposta s'ha validat mitjançant comparació amb una arquitectura d'estat de l'art de mida considerablement superior. Els resultats indiquen que DECOR assoleix un rendiment competitiu amb una complexitat substancialment menor, i confirmen la viabilitat de la completació de RIR com a estratègia pràctica per a l'extrapolació de reverberació tardana.
 \vfill % <--- Añade esto al final del texto
@@ -14,7 +16,7 @@ La síntesis de respuestas impulsionales de sala (RIR) completas mediante simula
 
 Se ha empleado DECOR (\textit{Deep Exponential Completion Of Room impulse responses}), una arquitectura codificador-decodificador orientada a la completación de RIR. El codificador comprime la cabecera de la RIR (2400 muestras a 48~kHz) mediante nueve bloques convolucionales con conexiones \textit{skip} y reducción progresiva de la resolución temporal, obteniendo un vector latente de 128 dimensiones. El decodificador, guiado por un modelo físico de ruido blanco con decaimiento exponencial, estima envolventes multiexponenciales que modulan secuencias de ruido filtrado a través de un banco de diez filtros FIR en bandas de octava ISO~266. Esta formulación introduce sesgo acústico con el objetivo de reducir el tamaño del modelo preservando capacidad representacional.
 
-La eficacia de la propuesta se ha validado mediante comparación con una arquitectura del estado del arte de tamaño considerablemente superior. Los resultados indican que DECOR alcanza un rendimiento competitivo con una complejidad sustancialmente menor, y confirman la viabilidad de la completación de RIR como estrategia práctica para la extrapolación de reverberación tardía.
+La eficacia de la propuesta se ha validado mediante comparación con una arquitectura del estado del arte de tamaño considerablemente superior. Los resultados indican que DECOR alcanza un rendimiento competitivo con una coste y un espacio sustancialmente menor, y confirman la viabilidad de la completación de RIR como estrategia práctica para la extrapolación de reverberación tardía.
 \vfill % <--- Añade esto al final del texto
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
