@@ -9,6 +9,12 @@ from tqdm import tqdm
 
 CENTER_FREQS = [125, 250, 500, 1000, 2000, 4000]
 WALL_NAMES = ["east", "west", "north", "south", "ceiling", "floor"]
+ABSORPTION_PROFILES = {
+    "neutral": np.array([1.00, 1.00, 1.00, 1.00, 1.00, 1.00], dtype=np.float64),
+    "hf_absorbente": np.array([0.75, 0.82, 0.92, 1.05, 1.20, 1.32], dtype=np.float64),
+    "lf_absorbente": np.array([1.32, 1.20, 1.05, 0.92, 0.82, 0.75], dtype=np.float64),
+    "medio_absorbente": np.array([0.88, 1.08, 1.20, 1.20, 1.05, 0.88], dtype=np.float64),
+}
 
 
 def sample_room_dimensions(rng: np.random.Generator) -> np.ndarray:
@@ -22,16 +28,48 @@ def sample_band_absorption(
     rng: np.random.Generator,
     low: float = 0.1,
     high: float = 0.6,
-) -> tuple[dict[str, pra.Material], np.ndarray]:
+    mode: str = "uniform",
+    wall_variability: float = 0.08,
+    band_variability: float = 0.05,
+) -> tuple[dict[str, pra.Material], np.ndarray, str]:
+    if not (0.0 <= low < high <= 1.0):
+        raise ValueError("Los límites de absorción deben cumplir 0 <= low < high <= 1.")
+
+    if mode not in {"uniform", "profiled"}:
+        raise ValueError("mode debe ser 'uniform' o 'profiled'.")
+
     materials = {}
     all_coeffs = []
+
+    if mode == "uniform":
+        profile_name = "uniform"
+        base_curve = None
+    else:
+        profile_name = str(rng.choice(list(ABSORPTION_PROFILES.keys())))
+        profile_shape = ABSORPTION_PROFILES[profile_name]
+        center = rng.uniform(low, high)
+        spread = max((high - low) * 0.35, 1e-4)
+        base_curve = np.clip(
+            center + rng.normal(0.0, spread / 3.0, size=len(CENTER_FREQS)),
+            low,
+            high,
+        )
+        base_curve = np.clip(base_curve * profile_shape, low, high)
+
     for wall in WALL_NAMES:
-        coeffs = rng.uniform(low, high, size=len(CENTER_FREQS)).tolist()
+        if mode == "uniform":
+            coeffs_arr = rng.uniform(low, high, size=len(CENTER_FREQS))
+        else:
+            wall_offset = rng.normal(0.0, wall_variability * (high - low))
+            band_noise = rng.normal(0.0, band_variability * (high - low), size=len(CENTER_FREQS))
+            coeffs_arr = np.clip(base_curve + wall_offset + band_noise, low, high)
+
+        coeffs = coeffs_arr.tolist()
         all_coeffs.extend(coeffs)
         materials[wall] = pra.Material(
             energy_absorption={"coeffs": coeffs, "center_freqs": CENTER_FREQS}
         )
-    return materials, np.asarray(all_coeffs, dtype=np.float64)
+    return materials, np.asarray(all_coeffs, dtype=np.float64), profile_name
 
 
 def random_point_in_room(
@@ -154,6 +192,11 @@ def generate_dataset(
     max_order: int = 20,
     max_retries_per_room: int = 5,
     seed: int | None = 42,
+    absorption_low: float = 0.1,
+    absorption_high: float = 0.6,
+    absorption_mode: str = "uniform",
+    wall_variability: float = 0.08,
+    band_variability: float = 0.05,
 ) -> tuple[Path, Path, int]:
     rng = np.random.default_rng(seed)
     subdirs = ensure_output_structure(output_dir)
@@ -172,6 +215,7 @@ def generate_dataset(
         "receiver_y_m",
         "receiver_z_m",
         "source_receiver_distance_m",
+        "absorption_profile",
         "mean_absorption",
         "rt60_estimated_s",
         "rir_path",
@@ -206,7 +250,14 @@ def generate_dataset(
             for attempt in range(1, max_retries_per_room + 1):
                 try:
                     room_dims = sample_room_dimensions(rng)
-                    materials, all_coeffs = sample_band_absorption(rng)
+                    materials, all_coeffs, profile_name = sample_band_absorption(
+                        rng,
+                        low=absorption_low,
+                        high=absorption_high,
+                        mode=absorption_mode,
+                        wall_variability=wall_variability,
+                        band_variability=band_variability,
+                    )
                     source, receiver = sample_source_receiver_positions(room_dims, rng)
 
                     rir = simulate_rir(
@@ -246,6 +297,7 @@ def generate_dataset(
                             "receiver_y_m": receiver[1],
                             "receiver_z_m": receiver[2],
                             "source_receiver_distance_m": float(np.linalg.norm(source - receiver)),
+                            "absorption_profile": profile_name,
                             "mean_absorption": float(np.mean(all_coeffs)),
                             "rt60_estimated_s": rt60,
                             "rir_path": str(rir_path),
@@ -310,6 +362,37 @@ def parse_args() -> argparse.Namespace:
         default=42,
         help="Semilla aleatoria (usa un entero o elimina este argumento para no fijar semilla)",
     )
+    parser.add_argument(
+        "--absorption-low",
+        type=float,
+        default=0.1,
+        help="Límite inferior del coeficiente de absorción por banda (0..1)",
+    )
+    parser.add_argument(
+        "--absorption-high",
+        type=float,
+        default=0.6,
+        help="Límite superior del coeficiente de absorción por banda (0..1)",
+    )
+    parser.add_argument(
+        "--absorption-mode",
+        type=str,
+        choices=["uniform", "profiled"],
+        default="uniform",
+        help="Modo de muestreo de absorción: uniforme o perfilado por frecuencia",
+    )
+    parser.add_argument(
+        "--wall-variability",
+        type=float,
+        default=0.08,
+        help="Variabilidad entre paredes en modo profiled (escala relativa)",
+    )
+    parser.add_argument(
+        "--band-variability",
+        type=float,
+        default=0.05,
+        help="Ruido entre bandas en modo profiled (escala relativa)",
+    )
     return parser.parse_args()
 
 
@@ -322,6 +405,11 @@ def main() -> None:
         max_order=args.max_order,
         max_retries_per_room=args.max_retries_per_room,
         seed=args.seed,
+        absorption_low=args.absorption_low,
+        absorption_high=args.absorption_high,
+        absorption_mode=args.absorption_mode,
+        wall_variability=args.wall_variability,
+        band_variability=args.band_variability,
     )
     print(f"Dataset generado correctamente. Metadata en: {metadata_path}")
     print(f"Log de errores en: {errors_path}")

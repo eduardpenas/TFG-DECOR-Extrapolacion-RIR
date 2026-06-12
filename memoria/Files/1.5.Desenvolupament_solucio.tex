@@ -90,7 +90,7 @@ Por otro lado, para dirigir el aprendizaje del modelo hacia una solución que se
 
 Esta formulación combina el error espectral multiresolución, ponderado por $\beta$, con el error absoluto asociado a la curva de decaimiento energético temporal, ponderado por $\alpha$. Dentro del protocolo de validación, la métrica $L1$ sobre la EDC se establece como indicador principal para verificar la precisión física de la respuesta sintetizada durante el ciclo iterativo de aprendizaje.
 
-Por último, la actualización de pesos se emplea con \textbf{Ranger21}, un optimizador diseñado para ejecutar trayectorias de aprendizaje prolongadas de forma robusta. Su elección se justifica por la incorporación de mecanismos de estabilización fundamentales para este tipo de modelado:
+Por último, la actualización de pesos se emplea con \textbf{Ranger21}\cite{Ranger21}, un optimizador diseñado para ejecutar trayectorias de aprendizaje prolongadas de forma robusta. Su elección se justifica por la incorporación de mecanismos de estabilización fundamentales para este tipo de modelado:
 \begin{itemize}
     \item \textbf{Recorte de gradientes (\textit{Gradient Clipping}):} Permite mitigar el riesgo de explosión de gradientes, una inestabilidad característica cuando se trabaja en la predicción de secuencias largas.
     \item \textbf{Fase de enfriamiento (\textit{Cooldown}):} Consiste en una reducción progresiva de la tasa de aprendizaje durante las últimas épocas del entrenamiento, lo que favorece una aproximación estable hacia mínimos más profundos en la superficie de coste.

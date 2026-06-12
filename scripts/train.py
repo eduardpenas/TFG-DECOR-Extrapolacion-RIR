@@ -13,43 +13,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
 	sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.bird_loader import BirdDataset
-from scripts.bird_loader import schroeder_integration
+from scripts.synthetic_loader import SyntheticRIRDataset
+from scripts.synthetic_loader import schroeder_integration
 from models.encoder import DecorEncoder
 from models.decoder import DecorDecoder
 from models.loss import DecorLoss
-
-
-def build_folds(num_folds: int = 89):
-	return [f"fold{i:03d}" for i in range(1, num_folds + 1)]
-
-
-def build_fold_based_split(data_root: str, val_ratio: float = 0.1, seed: int = 42):
-	"""
-	Asigna folds enteros a train/val para evitar fuga de datos entre
-	configuraciones acústicas de la misma sala (paper §3.3).
-	Si solo hay 1 fold disponible, retorna (None, None) para usar split aleatorio.
-	"""
-	root = Path(data_root)
-	bird_sub = root / "Bird"
-	search_dir = bird_sub if (bird_sub.exists() and bird_sub.is_dir()) else root
-
-	folds = sorted(
-		d.name for d in search_dir.iterdir()
-		if d.is_dir() and d.name.lower().startswith("fold")
-	)
-
-	if len(folds) < 2:
-		return None, None  # fallback a split aleatorio
-
-	rng = random.Random(seed)
-	shuffled = folds.copy()
-	rng.shuffle(shuffled)
-
-	val_size = max(1, int(len(shuffled) * val_ratio))
-	train_folds = shuffled[:-val_size]
-	val_folds = shuffled[-val_size:]
-	return sorted(train_folds), sorted(val_folds)
 
 
 def build_train_val_subsets(dataset, val_ratio: float, seed: int):
@@ -110,8 +78,13 @@ def run_validation(encoder, decoder, criterion, val_loader, device):
 
 
 def main():
-	parser = argparse.ArgumentParser(description="Entrenamiento DECOR sobre dataset BIRD")
-	parser.add_argument("--data-root", type=str, default="data/BIRD", help="Ruta raíz del dataset BIRD.")
+	parser = argparse.ArgumentParser(description="Entrenamiento DECOR sobre dataset sintetico (.npy)")
+	parser.add_argument(
+		"--data-root",
+		type=str,
+		default="data/raw_train_sintetico_v1",
+		help="Ruta raíz del dataset sintetico con metadata.csv",
+	)
 	parser.add_argument("--epochs", type=int, default=20, help="Número de épocas de entrenamiento.")
 	parser.add_argument("--batch-size", type=int, default=32, help="Tamaño de batch.")
 	parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate para Ranger21.")
@@ -124,6 +97,13 @@ def main():
 	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta para guardar el mejor modelo.")
 	parser.add_argument("--resume", type=str, default=None, help="Ruta de un checkpoint para reanudar el entrenamiento.")
 	parser.add_argument("--grad-clip", type=float, default=1.0, help="Norma máxima para gradient clipping (0 = desactivado).")
+	parser.add_argument("--force-cpu", action="store_true", help="Fuerza entrenamiento en CPU")
+	parser.add_argument(
+		"--max-samples",
+		type=int,
+		default=None,
+		help="Limita muestras del dataset para pruebas rápidas (None = usar todas)",
+	)
 	args = parser.parse_args()
 
 	random.seed(args.seed)
@@ -131,28 +111,18 @@ def main():
 	if torch.cuda.is_available():
 		torch.cuda.manual_seed_all(args.seed)
 
-	device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+	device = torch.device("cpu" if args.force_cpu else ("cuda" if torch.cuda.is_available() else "cpu"))
 	print(f"Dispositivo: {device}")
 
 	if device.type == "cuda":
 		torch.backends.cudnn.benchmark = True
 
-	# Split por folds para evitar fuga de datos entre salas (paper §3.3).
-	# Si solo hay 1 fold descargado, se cae a split aleatorio.
-	train_folds, val_folds = build_fold_based_split(args.data_root, args.val_ratio, args.seed)
-
-	if train_folds is not None:
-		print(f"Split por folds: {len(train_folds)} train / {len(val_folds)} val")
-		dataset_train = BirdDataset(root_dir=args.data_root, folds=train_folds, augment=True)
-		dataset_val   = BirdDataset(root_dir=args.data_root, folds=val_folds,   augment=False)
-		train_subset  = dataset_train
-		val_subset    = dataset_val if len(dataset_val) > 0 else None
-	else:
-		print("Solo 1 fold disponible — split aleatorio dentro del fold.")
-		dataset_base  = BirdDataset(root_dir=args.data_root, folds=None, augment=False)
-		train_subset, val_subset = build_train_val_subsets(dataset_base, val_ratio=args.val_ratio, seed=args.seed)
-		dataset_aug   = BirdDataset(root_dir=args.data_root, folds=None, augment=True)
-		train_subset  = Subset(dataset_aug, list(train_subset.indices))
+	dataset_base = SyntheticRIRDataset(root_dir=args.data_root, max_samples=args.max_samples)
+	train_subset, val_subset = build_train_val_subsets(dataset_base, val_ratio=args.val_ratio, seed=args.seed)
+	print(
+		"Split sintetico aleatorio: "
+		f"train={len(train_subset)} | val={len(val_subset) if val_subset is not None else 0}"
+	)
 
 	train_loader = DataLoader(
 		train_subset,

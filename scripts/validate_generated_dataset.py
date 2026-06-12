@@ -19,6 +19,18 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Permite RT60 NaN sin marcar error (útil en casos borde)",
     )
+    parser.add_argument(
+        "--absorption-low",
+        type=float,
+        default=0.1,
+        help="Límite inferior esperado para mean_absorption",
+    )
+    parser.add_argument(
+        "--absorption-high",
+        type=float,
+        default=0.6,
+        help="Límite superior esperado para mean_absorption",
+    )
     return parser.parse_args()
 
 
@@ -28,6 +40,8 @@ def validate_dataset(
     fs: int,
     head_ms: float,
     allow_nan_rt60: bool,
+    absorption_low: float,
+    absorption_high: float,
 ) -> int:
     metadata_path = data_path / "metadata.csv"
     if not metadata_path.exists():
@@ -70,8 +84,10 @@ def validate_dataset(
                 errors.append(f"sample_id={sid}: room_height_m fuera de rango [2.5,4]")
             if distance < 1.0:
                 errors.append(f"sample_id={sid}: distancia fuente-receptor < 1m")
-            if not (0.1 <= mean_abs <= 0.6):
-                errors.append(f"sample_id={sid}: mean_absorption fuera de rango [0.1,0.6]")
+            if not (absorption_low <= mean_abs <= absorption_high):
+                errors.append(
+                    f"sample_id={sid}: mean_absorption fuera de rango [{absorption_low},{absorption_high}]"
+                )
 
             if np.isnan(rt60):
                 if not allow_nan_rt60:
@@ -148,6 +164,8 @@ def main() -> None:
         fs=args.fs,
         head_ms=args.head_ms,
         allow_nan_rt60=args.allow_nan_rt60,
+        absorption_low=args.absorption_low,
+        absorption_high=args.absorption_high,
     )
     raise SystemExit(exit_code)
 
