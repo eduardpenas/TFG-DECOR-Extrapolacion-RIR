@@ -96,6 +96,18 @@ def main():
 	parser.add_argument("--seed", type=int, default=42, help="Semilla aleatoria.")
 	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta para guardar el mejor modelo.")
 	parser.add_argument("--resume", type=str, default=None, help="Ruta de un checkpoint para reanudar el entrenamiento.")
+	parser.add_argument(
+		"--save-every",
+		type=int,
+		default=1,
+		help="Guardar checkpoint periódico cada N épocas (1 = cada época, 0 = desactivado).",
+	)
+	parser.add_argument(
+		"--periodic-dir",
+		type=str,
+		default=None,
+		help="Directorio para checkpoints periódicos (por defecto: directorio de --checkpoint).",
+	)
 	parser.add_argument("--grad-clip", type=float, default=1.0, help="Norma máxima para gradient clipping (0 = desactivado).")
 	parser.add_argument("--force-cpu", action="store_true", help="Fuerza entrenamiento en CPU")
 	parser.add_argument(
@@ -105,6 +117,14 @@ def main():
 		help="Limita muestras del dataset para pruebas rápidas (None = usar todas)",
 	)
 	args = parser.parse_args()
+	if args.save_every < 0:
+		raise ValueError("--save-every debe ser >= 0")
+
+	best_checkpoint_path = Path(args.checkpoint)
+	best_checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+
+	periodic_dir = Path(args.periodic_dir) if args.periodic_dir else best_checkpoint_path.parent
+	periodic_dir.mkdir(parents=True, exist_ok=True)
 
 	random.seed(args.seed)
 	torch.manual_seed(args.seed)
@@ -221,24 +241,33 @@ def main():
 			print(f"[Epoch {epoch}] Val Loss: {val_loss:.6f} | Val EDC-L1: {val_edc_l1:.6f}")
 			checkpoint_loss = val_loss
 		else:
+			val_loss = None
 			checkpoint_loss = epoch_train_loss
+
+		checkpoint_payload = {
+			"epoch": epoch,
+			"encoder_state_dict": encoder.state_dict(),
+			"decoder_state_dict": decoder.state_dict(),
+			"optimizer_state_dict": optimizer.state_dict(),
+			"best_val_loss": best_val_loss,
+			"train_loss": epoch_train_loss,
+			"val_loss": val_loss,
+			"config": vars(args),
+		}
+
+		if args.save_every > 0 and (epoch % args.save_every == 0):
+			suffix = best_checkpoint_path.suffix if best_checkpoint_path.suffix else ".pth"
+			periodic_name = f"{best_checkpoint_path.stem}_epoch_{epoch:04d}{suffix}"
+			periodic_path = periodic_dir / periodic_name
+			torch.save(checkpoint_payload, periodic_path)
+			print(f"Checkpoint periódico guardado en {periodic_path}")
 
 		if checkpoint_loss < best_val_loss:
 			best_val_loss = checkpoint_loss
 			criterio = "val" if val_loader is not None else "train"
-			torch.save(
-				{
-					"epoch": epoch,
-					"encoder_state_dict": encoder.state_dict(),
-					"decoder_state_dict": decoder.state_dict(),
-					"optimizer_state_dict": optimizer.state_dict(),
-					"best_val_loss": best_val_loss,
-					"train_loss": epoch_train_loss,
-					"config": vars(args),
-				},
-				args.checkpoint,
-			)
-			print(f"Nuevo mejor modelo guardado en {args.checkpoint} (mejor {criterio}_loss={best_val_loss:.6f})")
+			checkpoint_payload["best_val_loss"] = best_val_loss
+			torch.save(checkpoint_payload, best_checkpoint_path)
+			print(f"Nuevo mejor modelo guardado en {best_checkpoint_path} (mejor {criterio}_loss={best_val_loss:.6f})")
 
 
 if __name__ == "__main__":
