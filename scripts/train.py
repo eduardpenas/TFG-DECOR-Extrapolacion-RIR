@@ -94,20 +94,8 @@ def main():
 	parser.add_argument("--num-workers", type=int, default=0, help="Número de workers para DataLoader.")
 	parser.add_argument("--val-ratio", type=float, default=0.1, help="Proporción para validación.")
 	parser.add_argument("--seed", type=int, default=42, help="Semilla aleatoria.")
-	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta para guardar el mejor modelo.")
+	parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta base para guardar checkpoints (se generan best_ y current_).")  
 	parser.add_argument("--resume", type=str, default=None, help="Ruta de un checkpoint para reanudar el entrenamiento.")
-	parser.add_argument(
-		"--save-every",
-		type=int,
-		default=1,
-		help="Guardar checkpoint periódico cada N épocas (1 = cada época, 0 = desactivado).",
-	)
-	parser.add_argument(
-		"--periodic-dir",
-		type=str,
-		default=None,
-		help="Directorio para checkpoints periódicos (por defecto: directorio de --checkpoint).",
-	)
 	parser.add_argument("--grad-clip", type=float, default=1.0, help="Norma máxima para gradient clipping (0 = desactivado).")
 	parser.add_argument("--force-cpu", action="store_true", help="Fuerza entrenamiento en CPU")
 	parser.add_argument(
@@ -117,14 +105,11 @@ def main():
 		help="Limita muestras del dataset para pruebas rápidas (None = usar todas)",
 	)
 	args = parser.parse_args()
-	if args.save_every < 0:
-		raise ValueError("--save-every debe ser >= 0")
 
 	best_checkpoint_path = Path(args.checkpoint)
 	best_checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
 
-	periodic_dir = Path(args.periodic_dir) if args.periodic_dir else best_checkpoint_path.parent
-	periodic_dir.mkdir(parents=True, exist_ok=True)
+	current_checkpoint_path = best_checkpoint_path.parent / f"current_{best_checkpoint_path.name}"
 
 	random.seed(args.seed)
 	torch.manual_seed(args.seed)
@@ -255,12 +240,8 @@ def main():
 			"config": vars(args),
 		}
 
-		if args.save_every > 0 and (epoch % args.save_every == 0):
-			suffix = best_checkpoint_path.suffix if best_checkpoint_path.suffix else ".pth"
-			periodic_name = f"{best_checkpoint_path.stem}_epoch_{epoch:04d}{suffix}"
-			periodic_path = periodic_dir / periodic_name
-			torch.save(checkpoint_payload, periodic_path)
-			print(f"Checkpoint periódico guardado en {periodic_path}")
+		torch.save(checkpoint_payload, current_checkpoint_path)
+		print(f"Checkpoint actual guardado en {current_checkpoint_path}")
 
 		if checkpoint_loss < best_val_loss:
 			best_val_loss = checkpoint_loss
