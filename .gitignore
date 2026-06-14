@@ -25,3 +25,4 @@ __pycache__/
 main.*
 !main.tex
 !main.pdf
+checkpoint_sintetico_cpu_1ep.pth
