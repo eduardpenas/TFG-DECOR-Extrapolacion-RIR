@@ -2,7 +2,7 @@
 
 \chapter{Impacto ambiental y social}
 
-El desarrollo de modelos de aprendizaje profundo para audio inmersivo no puede evaluarse de forma completa si se omite su dimensión energética. En el presente trabajo, el uso de aceleradores gráficos (GPU) de altas prestaciones ha sido una condición técnica necesaria para entrenar secuencias largas de señal acústica con estabilidad numérica y en tiempos razonables. Sin embargo, esta decisión metodológica conlleva un coste ambiental asociado al consumo eléctrico intensivo durante las fases de optimización.
+El desarrollo de modelos de aprendizaje profundo para audio inmersivo no puede evaluarse de forma completa si se omite su dimensión energética. En el presente trabajo, el uso de aceleradores gráficos (GPU) de altas prestaciones ha sido una condición técnica necesaria para entrenar secuencias largas de señal acústica con estabilidad numérica y en tiempos razonables. Sin embargo, esta decisión metodológica conlleva un coste ambiental asociado al consumo eléctrico intensivo durante las fases de entrenamiento.
 
 Desde una perspectiva cuantitativa, la energía consumida durante entrenamiento puede aproximarse por
 
@@ -18,7 +18,7 @@ donde $P_{med}$ representa la potencia media efectiva del sistema de cómputo y 
 
 siendo $I_{red}$ la intensidad de carbono de la red eléctrica que alimenta la infraestructura. Este marco evidencia que la eficiencia algorítmica no es únicamente una cuestión de rendimiento computacional, sino también un criterio de responsabilidad ambiental.
 
-Bajo este enfoque, la arquitectura DECOR aporta una ventaja relevante: al introducir sesgo físico mediante DDSP y reducir dimensionalidad efectiva de la síntesis, permite alcanzar objetivos acústicos robustos con complejidad inferior a alternativas puramente generativas de mayor escala. En términos prácticos, una reducción de parámetros, épocas efectivas o tiempo de convergencia se traduce en menor demanda energética por experimento y, por extensión, en menor impacto ambiental acumulado en ciclos iterativos de investigación.
+Bajo este enfoque, la arquitectura DECOR aporta una ventaja relevante: al introducir sesgo físico en el decodificadory reducir dimensionalidad efectiva de la síntesis, permite alcanzar objetivos acústicos robustos con complejidad inferior a alternativas puramente generativas de mayor escala. En términos prácticos, una reducción de parámetros, épocas efectivas o tiempo de convergencia se traduce en menor demanda energética por experimento y, por extensión, en menor impacto ambiental acumulado en ciclos iterativos de investigación.
 
 La reflexión social del proyecto se articula en dos planos. Primero, en el plano de acceso tecnológico, el alto coste de entrenamiento sobre GPU de gama alta puede ampliar la brecha entre grupos con distinta capacidad de cómputo. En consecuencia, el diseño de modelos más eficientes constituye también una estrategia de democratización científica. Segundo, en el plano aplicado, la capacidad de extrapolar reverberación realista con menor coste abre oportunidades en educación, accesibilidad y producción audiovisual, al facilitar herramientas acústicas avanzadas en contextos con recursos limitados.
 

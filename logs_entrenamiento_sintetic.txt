@@ -1,0 +1,2469 @@
+/content/TFG-DECOR-Extrapolacion-RIR
+Dispositivo: cuda
+Split sintetico aleatorio: train=5400 | val=600
+Época 1/540: 100% 43/43 [00:45<00:00,  1.07s/it, edc_l1=0.77906, gnorm=459.04, l1=0.00179, loss=41.70104, mrstft=41.70104]
+[Epoch 1] Train Loss: 37.552951 | Train EDC-L1: 0.774284
+[Epoch 1] Val Loss: 37.936690 | Val EDC-L1: 0.774434
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=37.936690)
+Época 2/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.77492, gnorm=328.10, l1=0.00254, loss=34.85702, mrstft=34.85702]
+[Epoch 2] Train Loss: 37.016428 | Train EDC-L1: 0.774210
+[Epoch 2] Val Loss: 37.397280 | Val EDC-L1: 0.774653
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=37.397280)
+Época 3/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.77119, gnorm=2032.43, l1=0.00282, loss=33.91612, mrstft=33.91612]
+[Epoch 3] Train Loss: 36.191392 | Train EDC-L1: 0.774298
+[Epoch 3] Val Loss: 36.045993 | Val EDC-L1: 0.775166
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=36.045993)
+Época 4/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.77492, gnorm=412.21, l1=0.00263, loss=39.58022, mrstft=39.58022]
+[Epoch 4] Train Loss: 35.100716 | Train EDC-L1: 0.774700
+[Epoch 4] Val Loss: 34.662742 | Val EDC-L1: 0.774982
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=34.662742)
+Época 5/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.77160, gnorm=817.77, l1=0.00232, loss=32.04785, mrstft=32.04785]
+[Epoch 5] Train Loss: 33.487937 | Train EDC-L1: 0.774581
+[Epoch 5] Val Loss: 32.964619 | Val EDC-L1: 0.775146
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=32.964619)
+Época 6/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.77664, gnorm=2117.21, l1=0.00139, loss=30.46128, mrstft=30.46128]
+[Epoch 6] Train Loss: 31.940281 | Train EDC-L1: 0.774656
+[Epoch 6] Val Loss: 32.289884 | Val EDC-L1: 0.775367
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=32.289884)
+Época 7/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.77580, gnorm=2683.91, l1=0.00230, loss=30.06206, mrstft=30.06206]
+[Epoch 7] Train Loss: 30.816240 | Train EDC-L1: 0.774686
+[Epoch 7] Val Loss: 31.181939 | Val EDC-L1: 0.775370
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=31.181939)
+Época 8/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.76947, gnorm=1104.22, l1=0.00249, loss=30.39024, mrstft=30.39024]
+[Epoch 8] Train Loss: 30.226397 | Train EDC-L1: 0.772495
+[Epoch 8] Val Loss: 29.349015 | Val EDC-L1: 0.770967
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=29.349015)
+Época 9/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.76553, gnorm=909.32, l1=0.00178, loss=30.58028, mrstft=30.58028]
+[Epoch 9] Train Loss: 29.738569 | Train EDC-L1: 0.767822
+[Epoch 9] Val Loss: 28.772954 | Val EDC-L1: 0.766338
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=28.772954)
+Época 10/540: 100% 43/43 [00:09<00:00,  4.39it/s, edc_l1=0.75723, gnorm=1171.24, l1=0.00301, loss=28.41522, mrstft=28.41522]
+[Epoch 10] Train Loss: 29.287739 | Train EDC-L1: 0.762378
+[Epoch 10] Val Loss: 28.633406 | Val EDC-L1: 0.759263
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=28.633406)
+Época 11/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.75072, gnorm=1250.39, l1=0.00272, loss=28.08929, mrstft=28.08929]
+[Epoch 11] Train Loss: 28.901247 | Train EDC-L1: 0.755353
+[Epoch 11] Val Loss: 29.730970 | Val EDC-L1: 0.753123
+Checkpoint actual guardado en current_checkpoint.pth
+Época 12/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.74791, gnorm=1118.02, l1=0.00213, loss=28.18654, mrstft=28.18654]
+[Epoch 12] Train Loss: 28.699208 | Train EDC-L1: 0.747608
+[Epoch 12] Val Loss: 30.621650 | Val EDC-L1: 0.741243
+Checkpoint actual guardado en current_checkpoint.pth
+Época 13/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.72320, gnorm=1291.17, l1=0.00273, loss=30.18224, mrstft=30.18224]
+[Epoch 13] Train Loss: 28.566148 | Train EDC-L1: 0.735804
+[Epoch 13] Val Loss: 27.249281 | Val EDC-L1: 0.727480
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=27.249281)
+Época 14/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.72099, gnorm=8476.81, l1=0.00171, loss=29.39803, mrstft=29.39803]
+[Epoch 14] Train Loss: 28.364200 | Train EDC-L1: 0.722997
+[Epoch 14] Val Loss: 27.532597 | Val EDC-L1: 0.715983
+Checkpoint actual guardado en current_checkpoint.pth
+Época 15/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.69805, gnorm=3445.48, l1=0.00178, loss=27.76561, mrstft=27.76561]
+[Epoch 15] Train Loss: 28.222105 | Train EDC-L1: 0.711633
+[Epoch 15] Val Loss: 27.564232 | Val EDC-L1: 0.703642
+Checkpoint actual guardado en current_checkpoint.pth
+Época 16/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.71436, gnorm=4505.68, l1=0.00210, loss=27.01441, mrstft=27.01441]
+[Epoch 16] Train Loss: 28.263798 | Train EDC-L1: 0.702769
+[Epoch 16] Val Loss: 29.923576 | Val EDC-L1: 0.697007
+Checkpoint actual guardado en current_checkpoint.pth
+Época 17/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.68037, gnorm=2142.09, l1=0.00281, loss=26.75901, mrstft=26.75901]
+[Epoch 17] Train Loss: 27.971243 | Train EDC-L1: 0.693259
+[Epoch 17] Val Loss: 29.166646 | Val EDC-L1: 0.703536
+Checkpoint actual guardado en current_checkpoint.pth
+Época 18/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.69669, gnorm=879.17, l1=0.00154, loss=29.38155, mrstft=29.38155]
+[Epoch 18] Train Loss: 27.961574 | Train EDC-L1: 0.687900
+[Epoch 18] Val Loss: 26.990291 | Val EDC-L1: 0.673862
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=26.990291)
+Época 19/540: 100% 43/43 [00:10<00:00,  4.18it/s, edc_l1=0.67916, gnorm=652.70, l1=0.00190, loss=30.03960, mrstft=30.03960]
+[Epoch 19] Train Loss: 27.906061 | Train EDC-L1: 0.676508
+[Epoch 19] Val Loss: 25.970816 | Val EDC-L1: 0.661319
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=25.970816)
+Época 20/540: 100% 43/43 [00:10<00:00,  4.16it/s, edc_l1=0.64484, gnorm=3103.02, l1=0.00203, loss=26.02899, mrstft=26.02899]
+[Epoch 20] Train Loss: 27.740291 | Train EDC-L1: 0.656588
+[Epoch 20] Val Loss: 26.887558 | Val EDC-L1: 0.633234
+Checkpoint actual guardado en current_checkpoint.pth
+Época 21/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.64389, gnorm=2229.27, l1=0.00247, loss=26.75565, mrstft=26.75565]
+[Epoch 21] Train Loss: 27.679376 | Train EDC-L1: 0.652052
+[Epoch 21] Val Loss: 29.364901 | Val EDC-L1: 0.681735
+Checkpoint actual guardado en current_checkpoint.pth
+Época 22/540: 100% 43/43 [00:10<00:00,  4.12it/s, edc_l1=0.62498, gnorm=5359.56, l1=0.00194, loss=25.30189, mrstft=25.30189]
+[Epoch 22] Train Loss: 27.575079 | Train EDC-L1: 0.648226
+[Epoch 22] Val Loss: 30.009678 | Val EDC-L1: 0.672387
+Checkpoint actual guardado en current_checkpoint.pth
+Época 23/540: 100% 43/43 [00:10<00:00,  4.14it/s, edc_l1=0.65558, gnorm=2542.12, l1=0.00217, loss=29.59351, mrstft=29.59351]
+[Epoch 23] Train Loss: 27.512525 | Train EDC-L1: 0.644480
+[Epoch 23] Val Loss: 26.651011 | Val EDC-L1: 0.640616
+Checkpoint actual guardado en current_checkpoint.pth
+Época 24/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.67045, gnorm=1382.38, l1=0.00210, loss=28.98471, mrstft=28.98471]
+[Epoch 24] Train Loss: 27.404548 | Train EDC-L1: 0.638774
+[Epoch 24] Val Loss: 25.934397 | Val EDC-L1: 0.617637
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=25.934397)
+Época 25/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.62180, gnorm=3244.33, l1=0.00126, loss=26.65056, mrstft=26.65056]
+[Epoch 25] Train Loss: 27.580775 | Train EDC-L1: 0.648926
+[Epoch 25] Val Loss: 25.321731 | Val EDC-L1: 0.616764
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=25.321731)
+Época 26/540: 100% 43/43 [00:10<00:00,  4.11it/s, edc_l1=0.60857, gnorm=1466.47, l1=0.00289, loss=25.70777, mrstft=25.70777]
+[Epoch 26] Train Loss: 27.406864 | Train EDC-L1: 0.642392
+[Epoch 26] Val Loss: 30.049568 | Val EDC-L1: 0.681039
+Checkpoint actual guardado en current_checkpoint.pth
+Época 27/540: 100% 43/43 [00:10<00:00,  4.11it/s, edc_l1=0.63812, gnorm=3603.89, l1=0.00246, loss=26.83637, mrstft=26.83637]
+[Epoch 27] Train Loss: 27.718267 | Train EDC-L1: 0.649739
+[Epoch 27] Val Loss: 29.637518 | Val EDC-L1: 0.667905
+Checkpoint actual guardado en current_checkpoint.pth
+Época 28/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.67727, gnorm=10206.67, l1=0.00178, loss=28.98354, mrstft=28.98354]
+[Epoch 28] Train Loss: 27.730613 | Train EDC-L1: 0.651267
+[Epoch 28] Val Loss: 26.489518 | Val EDC-L1: 0.635808
+Checkpoint actual guardado en current_checkpoint.pth
+Época 29/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.67746, gnorm=8277.62, l1=0.00130, loss=29.42105, mrstft=29.42105]
+[Epoch 29] Train Loss: 27.382968 | Train EDC-L1: 0.645121
+[Epoch 29] Val Loss: 25.783274 | Val EDC-L1: 0.625258
+Checkpoint actual guardado en current_checkpoint.pth
+Época 30/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.61693, gnorm=1556.57, l1=0.00262, loss=25.75475, mrstft=25.75475]
+[Epoch 30] Train Loss: 27.289477 | Train EDC-L1: 0.645736
+[Epoch 30] Val Loss: 26.518859 | Val EDC-L1: 0.622443
+Checkpoint actual guardado en current_checkpoint.pth
+Época 31/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.62856, gnorm=4034.48, l1=0.00295, loss=25.56643, mrstft=25.56643]
+[Epoch 31] Train Loss: 27.339577 | Train EDC-L1: 0.644215
+[Epoch 31] Val Loss: 29.107796 | Val EDC-L1: 0.678338
+Checkpoint actual guardado en current_checkpoint.pth
+Época 32/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.60029, gnorm=3417.44, l1=0.00148, loss=25.95588, mrstft=25.95588]
+[Epoch 32] Train Loss: 27.133025 | Train EDC-L1: 0.640932
+[Epoch 32] Val Loss: 29.586117 | Val EDC-L1: 0.672011
+Checkpoint actual guardado en current_checkpoint.pth
+Época 33/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.68289, gnorm=7145.99, l1=0.00181, loss=29.32349, mrstft=29.32349]
+[Epoch 33] Train Loss: 27.619222 | Train EDC-L1: 0.647839
+[Epoch 33] Val Loss: 26.661241 | Val EDC-L1: 0.619959
+Checkpoint actual guardado en current_checkpoint.pth
+Época 34/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.67827, gnorm=8840.38, l1=0.00280, loss=29.85685, mrstft=29.85685]
+[Epoch 34] Train Loss: 27.720084 | Train EDC-L1: 0.648132
+[Epoch 34] Val Loss: 26.305825 | Val EDC-L1: 0.636792
+Checkpoint actual guardado en current_checkpoint.pth
+Época 35/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.63364, gnorm=2131.37, l1=0.00219, loss=25.88125, mrstft=25.88125]
+[Epoch 35] Train Loss: 27.488949 | Train EDC-L1: 0.645941
+[Epoch 35] Val Loss: 25.809844 | Val EDC-L1: 0.596422
+Checkpoint actual guardado en current_checkpoint.pth
+Época 36/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.59904, gnorm=7059.20, l1=0.00175, loss=24.94947, mrstft=24.94947]
+[Epoch 36] Train Loss: 27.046026 | Train EDC-L1: 0.632529
+[Epoch 36] Val Loss: 29.240482 | Val EDC-L1: 0.663667
+Checkpoint actual guardado en current_checkpoint.pth
+Época 37/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.62775, gnorm=2502.84, l1=0.00210, loss=26.13463, mrstft=26.13463]
+[Epoch 37] Train Loss: 27.418646 | Train EDC-L1: 0.649493
+[Epoch 37] Val Loss: 29.689489 | Val EDC-L1: 0.710220
+Checkpoint actual guardado en current_checkpoint.pth
+Época 38/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.67972, gnorm=5237.79, l1=0.00251, loss=28.60110, mrstft=28.60110]
+[Epoch 38] Train Loss: 27.404144 | Train EDC-L1: 0.650460
+[Epoch 38] Val Loss: 26.474508 | Val EDC-L1: 0.599346
+Checkpoint actual guardado en current_checkpoint.pth
+Época 39/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.64916, gnorm=6025.85, l1=0.00223, loss=28.62450, mrstft=28.62450]
+[Epoch 39] Train Loss: 26.867088 | Train EDC-L1: 0.636374
+[Epoch 39] Val Loss: 26.190062 | Val EDC-L1: 0.606002
+Checkpoint actual guardado en current_checkpoint.pth
+Época 40/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.61888, gnorm=4991.52, l1=0.00253, loss=24.95234, mrstft=24.95234]
+[Epoch 40] Train Loss: 27.141073 | Train EDC-L1: 0.652381
+[Epoch 40] Val Loss: 26.476788 | Val EDC-L1: 0.649923
+Checkpoint actual guardado en current_checkpoint.pth
+Época 41/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.63485, gnorm=5328.75, l1=0.00288, loss=25.75261, mrstft=25.75261]
+[Epoch 41] Train Loss: 26.677572 | Train EDC-L1: 0.645953
+[Epoch 41] Val Loss: 28.452579 | Val EDC-L1: 0.663657
+Checkpoint actual guardado en current_checkpoint.pth
+Época 42/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.63672, gnorm=9462.65, l1=0.00121, loss=25.36496, mrstft=25.36496]
+[Epoch 42] Train Loss: 28.020754 | Train EDC-L1: 0.663275
+[Epoch 42] Val Loss: 31.538498 | Val EDC-L1: 0.725126
+Checkpoint actual guardado en current_checkpoint.pth
+Época 43/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.71004, gnorm=1252.26, l1=0.00241, loss=29.71876, mrstft=29.71876]
+[Epoch 43] Train Loss: 28.121394 | Train EDC-L1: 0.669903
+[Epoch 43] Val Loss: 25.678213 | Val EDC-L1: 0.647368
+Checkpoint actual guardado en current_checkpoint.pth
+Época 44/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.69555, gnorm=3147.57, l1=0.00186, loss=29.63118, mrstft=29.63118]
+[Epoch 44] Train Loss: 27.582393 | Train EDC-L1: 0.655022
+[Epoch 44] Val Loss: 26.628339 | Val EDC-L1: 0.609188
+Checkpoint actual guardado en current_checkpoint.pth
+Época 45/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.60810, gnorm=1598.58, l1=0.00285, loss=26.66911, mrstft=26.66911]
+[Epoch 45] Train Loss: 27.497094 | Train EDC-L1: 0.647411
+[Epoch 45] Val Loss: 25.113887 | Val EDC-L1: 0.632380
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=25.113887)
+Época 46/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.62999, gnorm=5399.25, l1=0.00326, loss=25.84055, mrstft=25.84055]
+[Epoch 46] Train Loss: 27.266829 | Train EDC-L1: 0.656624
+[Epoch 46] Val Loss: 29.537133 | Val EDC-L1: 0.704098
+Checkpoint actual guardado en current_checkpoint.pth
+Época 47/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.64563, gnorm=3061.50, l1=0.00284, loss=26.83237, mrstft=26.83237]
+[Epoch 47] Train Loss: 27.477676 | Train EDC-L1: 0.659793
+[Epoch 47] Val Loss: 29.266304 | Val EDC-L1: 0.682834
+Checkpoint actual guardado en current_checkpoint.pth
+Época 48/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.68488, gnorm=671.91, l1=0.00235, loss=29.28365, mrstft=29.28365]
+[Epoch 48] Train Loss: 27.219232 | Train EDC-L1: 0.658324
+[Epoch 48] Val Loss: 26.051054 | Val EDC-L1: 0.649053
+Checkpoint actual guardado en current_checkpoint.pth
+Época 49/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.67306, gnorm=527.13, l1=0.00255, loss=28.36782, mrstft=28.36782]
+[Epoch 49] Train Loss: 26.850283 | Train EDC-L1: 0.657256
+[Epoch 49] Val Loss: 25.613653 | Val EDC-L1: 0.628585
+Checkpoint actual guardado en current_checkpoint.pth
+Época 50/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.63476, gnorm=2273.70, l1=0.00165, loss=25.21984, mrstft=25.21984]
+[Epoch 50] Train Loss: 26.786288 | Train EDC-L1: 0.655701
+[Epoch 50] Val Loss: 24.734425 | Val EDC-L1: 0.617534
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=24.734425)
+Época 51/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.62748, gnorm=3123.65, l1=0.00270, loss=25.65783, mrstft=25.65783]
+[Epoch 51] Train Loss: 26.790673 | Train EDC-L1: 0.654057
+[Epoch 51] Val Loss: 29.430281 | Val EDC-L1: 0.707502
+Checkpoint actual guardado en current_checkpoint.pth
+Época 52/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.60709, gnorm=9085.07, l1=0.00175, loss=24.14558, mrstft=24.14558]
+[Epoch 52] Train Loss: 26.360940 | Train EDC-L1: 0.652592
+[Epoch 52] Val Loss: 28.193371 | Val EDC-L1: 0.691618
+Checkpoint actual guardado en current_checkpoint.pth
+Época 53/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.68112, gnorm=2634.98, l1=0.00171, loss=28.24490, mrstft=28.24490]
+[Epoch 53] Train Loss: 26.120507 | Train EDC-L1: 0.649099
+[Epoch 53] Val Loss: 24.518597 | Val EDC-L1: 0.636697
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=24.518597)
+Época 54/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.67207, gnorm=2381.45, l1=0.00198, loss=27.29524, mrstft=27.29524]
+[Epoch 54] Train Loss: 25.593044 | Train EDC-L1: 0.634332
+[Epoch 54] Val Loss: 23.542052 | Val EDC-L1: 0.605102
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=23.542052)
+Época 55/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.62026, gnorm=1904.55, l1=0.00248, loss=24.27536, mrstft=24.27536]
+[Epoch 55] Train Loss: 25.299733 | Train EDC-L1: 0.629903
+[Epoch 55] Val Loss: 23.569473 | Val EDC-L1: 0.596670
+Checkpoint actual guardado en current_checkpoint.pth
+Época 56/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.61989, gnorm=1011.41, l1=0.00191, loss=24.39178, mrstft=24.39178]
+[Epoch 56] Train Loss: 25.330342 | Train EDC-L1: 0.631839
+[Epoch 56] Val Loss: 27.388876 | Val EDC-L1: 0.687811
+Checkpoint actual guardado en current_checkpoint.pth
+Época 57/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.61399, gnorm=1779.27, l1=0.00166, loss=23.73810, mrstft=23.73810]
+[Epoch 57] Train Loss: 25.832217 | Train EDC-L1: 0.641620
+[Epoch 57] Val Loss: 28.916432 | Val EDC-L1: 0.684360
+Checkpoint actual guardado en current_checkpoint.pth
+Época 58/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.66855, gnorm=697.78, l1=0.00191, loss=29.00323, mrstft=29.00323]
+[Epoch 58] Train Loss: 25.625178 | Train EDC-L1: 0.636717
+[Epoch 58] Val Loss: 23.726678 | Val EDC-L1: 0.613037
+Checkpoint actual guardado en current_checkpoint.pth
+Época 59/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.68824, gnorm=2508.37, l1=0.00204, loss=28.11810, mrstft=28.11810]
+[Epoch 59] Train Loss: 25.245780 | Train EDC-L1: 0.628033
+[Epoch 59] Val Loss: 24.779989 | Val EDC-L1: 0.610596
+Checkpoint actual guardado en current_checkpoint.pth
+Época 60/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.60425, gnorm=1414.30, l1=0.00207, loss=23.27047, mrstft=23.27047]
+[Epoch 60] Train Loss: 25.006787 | Train EDC-L1: 0.627103
+[Epoch 60] Val Loss: 22.665840 | Val EDC-L1: 0.587061
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=22.665840)
+Época 61/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.58669, gnorm=1391.44, l1=0.00208, loss=23.58990, mrstft=23.58990]
+[Epoch 61] Train Loss: 24.808571 | Train EDC-L1: 0.617465
+[Epoch 61] Val Loss: 27.301738 | Val EDC-L1: 0.670127
+Checkpoint actual guardado en current_checkpoint.pth
+Época 62/540: 100% 43/43 [00:10<00:00,  4.11it/s, edc_l1=0.59395, gnorm=1333.90, l1=0.00166, loss=23.13218, mrstft=23.13218]
+[Epoch 62] Train Loss: 24.799486 | Train EDC-L1: 0.620593
+[Epoch 62] Val Loss: 26.780090 | Val EDC-L1: 0.667632
+Checkpoint actual guardado en current_checkpoint.pth
+Época 63/540: 100% 43/43 [00:10<00:00,  4.18it/s, edc_l1=0.66010, gnorm=684.96, l1=0.00257, loss=28.08077, mrstft=28.08077]
+[Epoch 63] Train Loss: 24.861797 | Train EDC-L1: 0.624832
+[Epoch 63] Val Loss: 23.197958 | Val EDC-L1: 0.600366
+Checkpoint actual guardado en current_checkpoint.pth
+Época 64/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.68118, gnorm=2156.60, l1=0.00151, loss=26.93404, mrstft=26.93404]
+[Epoch 64] Train Loss: 24.553716 | Train EDC-L1: 0.616587
+[Epoch 64] Val Loss: 23.102281 | Val EDC-L1: 0.571907
+Checkpoint actual guardado en current_checkpoint.pth
+Época 65/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.58614, gnorm=2584.51, l1=0.00239, loss=22.90892, mrstft=22.90892]
+[Epoch 65] Train Loss: 24.665899 | Train EDC-L1: 0.618618
+[Epoch 65] Val Loss: 23.885932 | Val EDC-L1: 0.588169
+Checkpoint actual guardado en current_checkpoint.pth
+Época 66/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.58768, gnorm=4876.86, l1=0.00265, loss=22.88204, mrstft=22.88204]
+[Epoch 66] Train Loss: 24.778756 | Train EDC-L1: 0.611524
+[Epoch 66] Val Loss: 27.537399 | Val EDC-L1: 0.669728
+Checkpoint actual guardado en current_checkpoint.pth
+Época 67/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.56799, gnorm=8153.96, l1=0.00340, loss=23.36090, mrstft=23.36090]
+[Epoch 67] Train Loss: 24.966840 | Train EDC-L1: 0.617062
+[Epoch 67] Val Loss: 26.717942 | Val EDC-L1: 0.672647
+Checkpoint actual guardado en current_checkpoint.pth
+Época 68/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.65836, gnorm=2721.51, l1=0.00155, loss=26.43181, mrstft=26.43181]
+[Epoch 68] Train Loss: 24.723552 | Train EDC-L1: 0.622009
+[Epoch 68] Val Loss: 23.370261 | Val EDC-L1: 0.595926
+Checkpoint actual guardado en current_checkpoint.pth
+Época 69/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.65585, gnorm=735.13, l1=0.00181, loss=26.58067, mrstft=26.58067]
+[Epoch 69] Train Loss: 24.572934 | Train EDC-L1: 0.614146
+[Epoch 69] Val Loss: 23.514648 | Val EDC-L1: 0.580148
+Checkpoint actual guardado en current_checkpoint.pth
+Época 70/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.58712, gnorm=5679.48, l1=0.00191, loss=23.62950, mrstft=23.62950]
+[Epoch 70] Train Loss: 24.518338 | Train EDC-L1: 0.608730
+[Epoch 70] Val Loss: 22.978089 | Val EDC-L1: 0.563889
+Checkpoint actual guardado en current_checkpoint.pth
+Época 71/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.56809, gnorm=13051.62, l1=0.00198, loss=22.42649, mrstft=22.42649]
+[Epoch 71] Train Loss: 24.504057 | Train EDC-L1: 0.600136
+[Epoch 71] Val Loss: 27.011849 | Val EDC-L1: 0.660606
+Checkpoint actual guardado en current_checkpoint.pth
+Época 72/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.56223, gnorm=8928.54, l1=0.00233, loss=22.81399, mrstft=22.81399]
+[Epoch 72] Train Loss: 24.555594 | Train EDC-L1: 0.603444
+[Epoch 72] Val Loss: 27.108889 | Val EDC-L1: 0.646908
+Checkpoint actual guardado en current_checkpoint.pth
+Época 73/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.63552, gnorm=6162.31, l1=0.00297, loss=26.84427, mrstft=26.84427]
+[Epoch 73] Train Loss: 24.451249 | Train EDC-L1: 0.603279
+[Epoch 73] Val Loss: 22.773131 | Val EDC-L1: 0.579173
+Checkpoint actual guardado en current_checkpoint.pth
+Época 74/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.63094, gnorm=1436.06, l1=0.00242, loss=26.91604, mrstft=26.91604]
+[Epoch 74] Train Loss: 24.179989 | Train EDC-L1: 0.598483
+[Epoch 74] Val Loss: 22.419278 | Val EDC-L1: 0.567371
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=22.419278)
+Época 75/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.57713, gnorm=1487.43, l1=0.00257, loss=23.18117, mrstft=23.18117]
+[Epoch 75] Train Loss: 24.218511 | Train EDC-L1: 0.598160
+[Epoch 75] Val Loss: 22.287559 | Val EDC-L1: 0.560861
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=22.287559)
+Época 76/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.54940, gnorm=2689.36, l1=0.00147, loss=22.13282, mrstft=22.13282]
+[Epoch 76] Train Loss: 24.154344 | Train EDC-L1: 0.590295
+[Epoch 76] Val Loss: 26.578402 | Val EDC-L1: 0.634214
+Checkpoint actual guardado en current_checkpoint.pth
+Época 77/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.58146, gnorm=2430.01, l1=0.00164, loss=23.32488, mrstft=23.32488]
+[Epoch 77] Train Loss: 24.373865 | Train EDC-L1: 0.597824
+[Epoch 77] Val Loss: 27.017778 | Val EDC-L1: 0.652684
+Checkpoint actual guardado en current_checkpoint.pth
+Época 78/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.62611, gnorm=861.43, l1=0.00118, loss=26.06740, mrstft=26.06740]
+[Epoch 78] Train Loss: 24.508189 | Train EDC-L1: 0.604249
+[Epoch 78] Val Loss: 22.432481 | Val EDC-L1: 0.587425
+Checkpoint actual guardado en current_checkpoint.pth
+Época 79/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.65055, gnorm=6609.41, l1=0.00243, loss=27.78901, mrstft=27.78901]
+[Epoch 79] Train Loss: 24.614171 | Train EDC-L1: 0.587035
+[Epoch 79] Val Loss: 23.820266 | Val EDC-L1: 0.590044
+Checkpoint actual guardado en current_checkpoint.pth
+Época 80/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.58131, gnorm=4061.56, l1=0.00173, loss=23.04439, mrstft=23.04439]
+[Epoch 80] Train Loss: 24.525099 | Train EDC-L1: 0.593129
+[Epoch 80] Val Loss: 22.388945 | Val EDC-L1: 0.546471
+Checkpoint actual guardado en current_checkpoint.pth
+Época 81/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.54128, gnorm=3125.70, l1=0.00288, loss=22.50195, mrstft=22.50195]
+[Epoch 81] Train Loss: 24.313104 | Train EDC-L1: 0.589737
+[Epoch 81] Val Loss: 26.558696 | Val EDC-L1: 0.630934
+Checkpoint actual guardado en current_checkpoint.pth
+Época 82/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.51672, gnorm=11601.08, l1=0.00202, loss=21.50595, mrstft=21.50595]
+[Epoch 82] Train Loss: 23.968311 | Train EDC-L1: 0.588525
+[Epoch 82] Val Loss: 27.309365 | Val EDC-L1: 0.642347
+Checkpoint actual guardado en current_checkpoint.pth
+Época 83/540: 100% 43/43 [00:09<00:00,  4.39it/s, edc_l1=0.63381, gnorm=1303.89, l1=0.00177, loss=25.83944, mrstft=25.83944]
+[Epoch 83] Train Loss: 24.284351 | Train EDC-L1: 0.588126
+[Epoch 83] Val Loss: 23.140107 | Val EDC-L1: 0.563709
+Checkpoint actual guardado en current_checkpoint.pth
+Época 84/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.64510, gnorm=1352.52, l1=0.00194, loss=26.16302, mrstft=26.16302]
+[Epoch 84] Train Loss: 24.108888 | Train EDC-L1: 0.593641
+[Epoch 84] Val Loss: 22.377555 | Val EDC-L1: 0.562255
+Checkpoint actual guardado en current_checkpoint.pth
+Época 85/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.58846, gnorm=4395.52, l1=0.00151, loss=23.33265, mrstft=23.33265]
+[Epoch 85] Train Loss: 23.863334 | Train EDC-L1: 0.590891
+[Epoch 85] Val Loss: 21.151524 | Val EDC-L1: 0.529537
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=21.151524)
+Época 86/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.57979, gnorm=2485.64, l1=0.00263, loss=23.48865, mrstft=23.48865]
+[Epoch 86] Train Loss: 23.716362 | Train EDC-L1: 0.583159
+[Epoch 86] Val Loss: 25.332434 | Val EDC-L1: 0.620247
+Checkpoint actual guardado en current_checkpoint.pth
+Época 87/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.56398, gnorm=2210.17, l1=0.00126, loss=22.42968, mrstft=22.42968]
+[Epoch 87] Train Loss: 23.827051 | Train EDC-L1: 0.587247
+[Epoch 87] Val Loss: 25.945271 | Val EDC-L1: 0.636974
+Checkpoint actual guardado en current_checkpoint.pth
+Época 88/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.57194, gnorm=3145.65, l1=0.00265, loss=24.62089, mrstft=24.62089]
+[Epoch 88] Train Loss: 23.927561 | Train EDC-L1: 0.582303
+[Epoch 88] Val Loss: 23.531404 | Val EDC-L1: 0.561227
+Checkpoint actual guardado en current_checkpoint.pth
+Época 89/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.63327, gnorm=2891.83, l1=0.00125, loss=25.81084, mrstft=25.81084]
+[Epoch 89] Train Loss: 23.891104 | Train EDC-L1: 0.577993
+[Epoch 89] Val Loss: 22.807008 | Val EDC-L1: 0.596951
+Checkpoint actual guardado en current_checkpoint.pth
+Época 90/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.53480, gnorm=3002.48, l1=0.00287, loss=22.04784, mrstft=22.04784]
+[Epoch 90] Train Loss: 23.956583 | Train EDC-L1: 0.586480
+[Epoch 90] Val Loss: 22.363625 | Val EDC-L1: 0.567829
+Checkpoint actual guardado en current_checkpoint.pth
+Época 91/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.56055, gnorm=3449.34, l1=0.00226, loss=22.18390, mrstft=22.18390]
+[Epoch 91] Train Loss: 23.594118 | Train EDC-L1: 0.579082
+[Epoch 91] Val Loss: 25.330922 | Val EDC-L1: 0.620102
+Checkpoint actual guardado en current_checkpoint.pth
+Época 92/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.52117, gnorm=3833.84, l1=0.00287, loss=21.75330, mrstft=21.75330]
+[Epoch 92] Train Loss: 23.051963 | Train EDC-L1: 0.574862
+[Epoch 92] Val Loss: 25.393757 | Val EDC-L1: 0.632932
+Checkpoint actual guardado en current_checkpoint.pth
+Época 93/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.62744, gnorm=3407.14, l1=0.00193, loss=25.86436, mrstft=25.86436]
+[Epoch 93] Train Loss: 23.563448 | Train EDC-L1: 0.584434
+[Epoch 93] Val Loss: 21.760631 | Val EDC-L1: 0.570417
+Checkpoint actual guardado en current_checkpoint.pth
+Época 94/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.57495, gnorm=5133.78, l1=0.00219, loss=25.09374, mrstft=25.09374]
+[Epoch 94] Train Loss: 23.361364 | Train EDC-L1: 0.568526
+[Epoch 94] Val Loss: 23.313176 | Val EDC-L1: 0.542220
+Checkpoint actual guardado en current_checkpoint.pth
+Época 95/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.56219, gnorm=5745.73, l1=0.00130, loss=22.51126, mrstft=22.51126]
+[Epoch 95] Train Loss: 23.968356 | Train EDC-L1: 0.570631
+[Epoch 95] Val Loss: 22.406634 | Val EDC-L1: 0.546682
+Checkpoint actual guardado en current_checkpoint.pth
+Época 96/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.54341, gnorm=8649.13, l1=0.00216, loss=21.17227, mrstft=21.17227]
+[Epoch 96] Train Loss: 23.464827 | Train EDC-L1: 0.573630
+[Epoch 96] Val Loss: 25.414858 | Val EDC-L1: 0.635618
+Checkpoint actual guardado en current_checkpoint.pth
+Época 97/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.52917, gnorm=3073.90, l1=0.00251, loss=21.71590, mrstft=21.71590]
+[Epoch 97] Train Loss: 23.118451 | Train EDC-L1: 0.568354
+[Epoch 97] Val Loss: 25.817742 | Val EDC-L1: 0.607483
+Checkpoint actual guardado en current_checkpoint.pth
+Época 98/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.61699, gnorm=2653.36, l1=0.00097, loss=24.13650, mrstft=24.13650]
+[Epoch 98] Train Loss: 23.617808 | Train EDC-L1: 0.576816
+[Epoch 98] Val Loss: 22.664684 | Val EDC-L1: 0.548408
+Checkpoint actual guardado en current_checkpoint.pth
+Época 99/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.61456, gnorm=1395.21, l1=0.00259, loss=26.26751, mrstft=26.26751]
+[Epoch 99] Train Loss: 23.289988 | Train EDC-L1: 0.568844
+[Epoch 99] Val Loss: 22.162068 | Val EDC-L1: 0.547929
+Checkpoint actual guardado en current_checkpoint.pth
+Época 100/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.55037, gnorm=3898.83, l1=0.00184, loss=22.89412, mrstft=22.89412]
+[Epoch 100] Train Loss: 23.410373 | Train EDC-L1: 0.573258
+[Epoch 100] Val Loss: 22.167150 | Val EDC-L1: 0.528410
+Checkpoint actual guardado en current_checkpoint.pth
+Época 101/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.54777, gnorm=2825.96, l1=0.00234, loss=22.30001, mrstft=22.30001]
+[Epoch 101] Train Loss: 23.259628 | Train EDC-L1: 0.566593
+[Epoch 101] Val Loss: 25.112921 | Val EDC-L1: 0.598437
+Checkpoint actual guardado en current_checkpoint.pth
+Época 102/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.56121, gnorm=1897.83, l1=0.00115, loss=23.02766, mrstft=23.02766]
+[Epoch 102] Train Loss: 23.499784 | Train EDC-L1: 0.561838
+[Epoch 102] Val Loss: 26.758701 | Val EDC-L1: 0.632444
+Checkpoint actual guardado en current_checkpoint.pth
+Época 103/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.63258, gnorm=1573.80, l1=0.00134, loss=26.49419, mrstft=26.49419]
+[Epoch 103] Train Loss: 24.223689 | Train EDC-L1: 0.580539
+[Epoch 103] Val Loss: 22.140001 | Val EDC-L1: 0.545900
+Checkpoint actual guardado en current_checkpoint.pth
+Época 104/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.61474, gnorm=1051.05, l1=0.00194, loss=25.07028, mrstft=25.07028]
+[Epoch 104] Train Loss: 23.262168 | Train EDC-L1: 0.575832
+[Epoch 104] Val Loss: 21.886131 | Val EDC-L1: 0.562642
+Checkpoint actual guardado en current_checkpoint.pth
+Época 105/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.56534, gnorm=3412.87, l1=0.00131, loss=21.66966, mrstft=21.66966]
+[Epoch 105] Train Loss: 22.998165 | Train EDC-L1: 0.576253
+[Epoch 105] Val Loss: 21.033316 | Val EDC-L1: 0.517163
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=21.033316)
+Época 106/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.54728, gnorm=5536.13, l1=0.00165, loss=21.90466, mrstft=21.90466]
+[Epoch 106] Train Loss: 23.070859 | Train EDC-L1: 0.577035
+[Epoch 106] Val Loss: 25.636858 | Val EDC-L1: 0.627632
+Checkpoint actual guardado en current_checkpoint.pth
+Época 107/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.54337, gnorm=5021.98, l1=0.00162, loss=21.47861, mrstft=21.47861]
+[Epoch 107] Train Loss: 23.273665 | Train EDC-L1: 0.575956
+[Epoch 107] Val Loss: 25.611666 | Val EDC-L1: 0.623083
+Checkpoint actual guardado en current_checkpoint.pth
+Época 108/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.62455, gnorm=866.94, l1=0.00166, loss=26.03521, mrstft=26.03521]
+[Epoch 108] Train Loss: 23.368978 | Train EDC-L1: 0.574712
+[Epoch 108] Val Loss: 21.932400 | Val EDC-L1: 0.553339
+Checkpoint actual guardado en current_checkpoint.pth
+Época 109/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.61768, gnorm=987.49, l1=0.00186, loss=25.39363, mrstft=25.39363]
+[Epoch 109] Train Loss: 22.931377 | Train EDC-L1: 0.568547
+[Epoch 109] Val Loss: 21.591135 | Val EDC-L1: 0.518554
+Checkpoint actual guardado en current_checkpoint.pth
+Época 110/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.53005, gnorm=1641.78, l1=0.00167, loss=21.73202, mrstft=21.73202]
+[Epoch 110] Train Loss: 23.184242 | Train EDC-L1: 0.570522
+[Epoch 110] Val Loss: 21.540533 | Val EDC-L1: 0.549467
+Checkpoint actual guardado en current_checkpoint.pth
+Época 111/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.53429, gnorm=4897.63, l1=0.00162, loss=20.97966, mrstft=20.97966]
+[Epoch 111] Train Loss: 23.141845 | Train EDC-L1: 0.569663
+[Epoch 111] Val Loss: 25.575543 | Val EDC-L1: 0.609852
+Checkpoint actual guardado en current_checkpoint.pth
+Época 112/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.50222, gnorm=6221.72, l1=0.00260, loss=20.53145, mrstft=20.53145]
+[Epoch 112] Train Loss: 22.586991 | Train EDC-L1: 0.554243
+[Epoch 112] Val Loss: 24.972978 | Val EDC-L1: 0.618460
+Checkpoint actual guardado en current_checkpoint.pth
+Época 113/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.60786, gnorm=3038.41, l1=0.00183, loss=24.80760, mrstft=24.80760]
+[Epoch 113] Train Loss: 22.334831 | Train EDC-L1: 0.548853
+[Epoch 113] Val Loss: 21.112758 | Val EDC-L1: 0.533804
+Checkpoint actual guardado en current_checkpoint.pth
+Época 114/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.58291, gnorm=2422.49, l1=0.00257, loss=24.11000, mrstft=24.11000]
+[Epoch 114] Train Loss: 22.182338 | Train EDC-L1: 0.549866
+[Epoch 114] Val Loss: 20.940265 | Val EDC-L1: 0.519308
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=20.940265)
+Época 115/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.53116, gnorm=3008.77, l1=0.00139, loss=20.51049, mrstft=20.51049]
+[Epoch 115] Train Loss: 21.916013 | Train EDC-L1: 0.543642
+[Epoch 115] Val Loss: 20.474082 | Val EDC-L1: 0.494777
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=20.474082)
+Época 116/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.51906, gnorm=1772.13, l1=0.00269, loss=20.23634, mrstft=20.23634]
+[Epoch 116] Train Loss: 21.907482 | Train EDC-L1: 0.541098
+[Epoch 116] Val Loss: 25.057662 | Val EDC-L1: 0.610345
+Checkpoint actual guardado en current_checkpoint.pth
+Época 117/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.52398, gnorm=1629.77, l1=0.00270, loss=22.36699, mrstft=22.36699]
+[Epoch 117] Train Loss: 22.827496 | Train EDC-L1: 0.562994
+[Epoch 117] Val Loss: 25.219678 | Val EDC-L1: 0.595093
+Checkpoint actual guardado en current_checkpoint.pth
+Época 118/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.58598, gnorm=1628.74, l1=0.00214, loss=24.67762, mrstft=24.67762]
+[Epoch 118] Train Loss: 23.321700 | Train EDC-L1: 0.567722
+[Epoch 118] Val Loss: 22.159673 | Val EDC-L1: 0.542252
+Checkpoint actual guardado en current_checkpoint.pth
+Época 119/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.62883, gnorm=4665.98, l1=0.00143, loss=25.51735, mrstft=25.51735]
+[Epoch 119] Train Loss: 23.057443 | Train EDC-L1: 0.566558
+[Epoch 119] Val Loss: 20.995696 | Val EDC-L1: 0.531552
+Checkpoint actual guardado en current_checkpoint.pth
+Época 120/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.53602, gnorm=2157.39, l1=0.00219, loss=21.24593, mrstft=21.24593]
+[Epoch 120] Train Loss: 22.967304 | Train EDC-L1: 0.564512
+[Epoch 120] Val Loss: 22.281289 | Val EDC-L1: 0.555882
+Checkpoint actual guardado en current_checkpoint.pth
+Época 121/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.54896, gnorm=7584.37, l1=0.00145, loss=21.54440, mrstft=21.54440]
+[Epoch 121] Train Loss: 22.630921 | Train EDC-L1: 0.557358
+[Epoch 121] Val Loss: 24.430572 | Val EDC-L1: 0.596967
+Checkpoint actual guardado en current_checkpoint.pth
+Época 122/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.50813, gnorm=2459.19, l1=0.00227, loss=20.22368, mrstft=20.22368]
+[Epoch 122] Train Loss: 22.490441 | Train EDC-L1: 0.560857
+[Epoch 122] Val Loss: 25.267772 | Val EDC-L1: 0.594620
+Checkpoint actual guardado en current_checkpoint.pth
+Época 123/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.61416, gnorm=6052.44, l1=0.00155, loss=24.79631, mrstft=24.79631]
+[Epoch 123] Train Loss: 22.518630 | Train EDC-L1: 0.557191
+[Epoch 123] Val Loss: 20.776532 | Val EDC-L1: 0.539586
+Checkpoint actual guardado en current_checkpoint.pth
+Época 124/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.61717, gnorm=1493.71, l1=0.00177, loss=24.10597, mrstft=24.10597]
+[Epoch 124] Train Loss: 22.382218 | Train EDC-L1: 0.554858
+[Epoch 124] Val Loss: 21.244621 | Val EDC-L1: 0.516121
+Checkpoint actual guardado en current_checkpoint.pth
+Época 125/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.52297, gnorm=4119.11, l1=0.00166, loss=21.19434, mrstft=21.19434]
+[Epoch 125] Train Loss: 22.160125 | Train EDC-L1: 0.550173
+[Epoch 125] Val Loss: 19.992538 | Val EDC-L1: 0.512527
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=19.992538)
+Época 126/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.51848, gnorm=2516.86, l1=0.00215, loss=19.89649, mrstft=19.89649]
+[Epoch 126] Train Loss: 22.646028 | Train EDC-L1: 0.554641
+[Epoch 126] Val Loss: 25.081884 | Val EDC-L1: 0.588296
+Checkpoint actual guardado en current_checkpoint.pth
+Época 127/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.56481, gnorm=6595.36, l1=0.00207, loss=20.80664, mrstft=20.80664]
+[Epoch 127] Train Loss: 22.260393 | Train EDC-L1: 0.562085
+[Epoch 127] Val Loss: 24.849067 | Val EDC-L1: 0.615037
+Checkpoint actual guardado en current_checkpoint.pth
+Época 128/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.57803, gnorm=965.53, l1=0.00330, loss=26.66298, mrstft=26.66298]
+[Epoch 128] Train Loss: 23.094089 | Train EDC-L1: 0.555948
+[Epoch 128] Val Loss: 21.896042 | Val EDC-L1: 0.546161
+Checkpoint actual guardado en current_checkpoint.pth
+Época 129/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.60974, gnorm=1171.81, l1=0.00117, loss=24.78647, mrstft=24.78647]
+[Epoch 129] Train Loss: 23.018575 | Train EDC-L1: 0.561854
+[Epoch 129] Val Loss: 21.251434 | Val EDC-L1: 0.547669
+Checkpoint actual guardado en current_checkpoint.pth
+Época 130/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.53246, gnorm=2560.65, l1=0.00239, loss=20.46644, mrstft=20.46644]
+[Epoch 130] Train Loss: 22.064456 | Train EDC-L1: 0.550651
+[Epoch 130] Val Loss: 20.197783 | Val EDC-L1: 0.502888
+Checkpoint actual guardado en current_checkpoint.pth
+Época 131/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.49227, gnorm=15772.68, l1=0.00275, loss=19.83150, mrstft=19.83150]
+[Epoch 131] Train Loss: 21.443156 | Train EDC-L1: 0.540777
+[Epoch 131] Val Loss: 23.561088 | Val EDC-L1: 0.600746
+Checkpoint actual guardado en current_checkpoint.pth
+Época 132/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.49723, gnorm=1765.83, l1=0.00180, loss=19.64925, mrstft=19.64925]
+[Epoch 132] Train Loss: 21.799929 | Train EDC-L1: 0.546734
+[Epoch 132] Val Loss: 23.956468 | Val EDC-L1: 0.590620
+Checkpoint actual guardado en current_checkpoint.pth
+Época 133/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.61730, gnorm=8115.61, l1=0.00194, loss=23.57370, mrstft=23.57370]
+[Epoch 133] Train Loss: 21.713580 | Train EDC-L1: 0.552375
+[Epoch 133] Val Loss: 20.355929 | Val EDC-L1: 0.533002
+Checkpoint actual guardado en current_checkpoint.pth
+Época 134/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.60578, gnorm=896.30, l1=0.00225, loss=24.59688, mrstft=24.59688]
+[Epoch 134] Train Loss: 21.553263 | Train EDC-L1: 0.549192
+[Epoch 134] Val Loss: 19.211670 | Val EDC-L1: 0.490218
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=19.211670)
+Época 135/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.52402, gnorm=2879.41, l1=0.00259, loss=20.56225, mrstft=20.56225]
+[Epoch 135] Train Loss: 21.751757 | Train EDC-L1: 0.561650
+[Epoch 135] Val Loss: 19.987998 | Val EDC-L1: 0.548772
+Checkpoint actual guardado en current_checkpoint.pth
+Época 136/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.50644, gnorm=1854.12, l1=0.00292, loss=20.87648, mrstft=20.87648]
+[Epoch 136] Train Loss: 21.726361 | Train EDC-L1: 0.558478
+[Epoch 136] Val Loss: 25.128663 | Val EDC-L1: 0.628566
+Checkpoint actual guardado en current_checkpoint.pth
+Época 137/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.49209, gnorm=6739.15, l1=0.00234, loss=19.81787, mrstft=19.81787]
+[Epoch 137] Train Loss: 21.822896 | Train EDC-L1: 0.561605
+[Epoch 137] Val Loss: 23.713946 | Val EDC-L1: 0.589957
+Checkpoint actual guardado en current_checkpoint.pth
+Época 138/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.62416, gnorm=1265.53, l1=0.00087, loss=23.55259, mrstft=23.55259]
+[Epoch 138] Train Loss: 21.560103 | Train EDC-L1: 0.555363
+[Epoch 138] Val Loss: 19.996478 | Val EDC-L1: 0.521141
+Checkpoint actual guardado en current_checkpoint.pth
+Época 139/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.60531, gnorm=1718.24, l1=0.00187, loss=23.30563, mrstft=23.30563]
+[Epoch 139] Train Loss: 21.201908 | Train EDC-L1: 0.552955
+[Epoch 139] Val Loss: 20.412715 | Val EDC-L1: 0.524988
+Checkpoint actual guardado en current_checkpoint.pth
+Época 140/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.52034, gnorm=1766.74, l1=0.00122, loss=19.77314, mrstft=19.77314]
+[Epoch 140] Train Loss: 21.734588 | Train EDC-L1: 0.561895
+[Epoch 140] Val Loss: 20.153522 | Val EDC-L1: 0.527859
+Checkpoint actual guardado en current_checkpoint.pth
+Época 141/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.53189, gnorm=7784.78, l1=0.00172, loss=19.32296, mrstft=19.32296]
+[Epoch 141] Train Loss: 21.309970 | Train EDC-L1: 0.559130
+[Epoch 141] Val Loss: 22.728671 | Val EDC-L1: 0.601749
+Checkpoint actual guardado en current_checkpoint.pth
+Época 142/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.49449, gnorm=3505.29, l1=0.00216, loss=18.38125, mrstft=18.38125]
+[Epoch 142] Train Loss: 20.735006 | Train EDC-L1: 0.552945
+[Epoch 142] Val Loss: 23.195056 | Val EDC-L1: 0.610010
+Checkpoint actual guardado en current_checkpoint.pth
+Época 143/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.62291, gnorm=1982.36, l1=0.00132, loss=23.33963, mrstft=23.33963]
+[Epoch 143] Train Loss: 20.860953 | Train EDC-L1: 0.557206
+[Epoch 143] Val Loss: 19.276690 | Val EDC-L1: 0.532137
+Checkpoint actual guardado en current_checkpoint.pth
+Época 144/540: 100% 43/43 [00:10<00:00,  4.16it/s, edc_l1=0.61589, gnorm=866.55, l1=0.00226, loss=24.30819, mrstft=24.30819]
+[Epoch 144] Train Loss: 20.901565 | Train EDC-L1: 0.553073
+[Epoch 144] Val Loss: 19.921658 | Val EDC-L1: 0.527551
+Checkpoint actual guardado en current_checkpoint.pth
+Época 145/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.51089, gnorm=5627.07, l1=0.00273, loss=20.22211, mrstft=20.22211]
+[Epoch 145] Train Loss: 20.756929 | Train EDC-L1: 0.552933
+[Epoch 145] Val Loss: 19.010054 | Val EDC-L1: 0.497691
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=19.010054)
+Época 146/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.51384, gnorm=2445.56, l1=0.00174, loss=19.02416, mrstft=19.02416]
+[Epoch 146] Train Loss: 20.682368 | Train EDC-L1: 0.552155
+[Epoch 146] Val Loss: 22.508394 | Val EDC-L1: 0.599788
+Checkpoint actual guardado en current_checkpoint.pth
+Época 147/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.51381, gnorm=17212.78, l1=0.00305, loss=19.44413, mrstft=19.44413]
+[Epoch 147] Train Loss: 20.568378 | Train EDC-L1: 0.543465
+[Epoch 147] Val Loss: 22.806028 | Val EDC-L1: 0.584884
+Checkpoint actual guardado en current_checkpoint.pth
+Época 148/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.58724, gnorm=5677.29, l1=0.00166, loss=22.17812, mrstft=22.17812]
+[Epoch 148] Train Loss: 20.575489 | Train EDC-L1: 0.538881
+[Epoch 148] Val Loss: 19.836190 | Val EDC-L1: 0.536769
+Checkpoint actual guardado en current_checkpoint.pth
+Época 149/540: 100% 43/43 [00:10<00:00,  4.15it/s, edc_l1=0.58834, gnorm=1134.70, l1=0.00223, loss=23.35135, mrstft=23.35135]
+[Epoch 149] Train Loss: 20.608515 | Train EDC-L1: 0.539028
+[Epoch 149] Val Loss: 18.680363 | Val EDC-L1: 0.510761
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=18.680363)
+Época 150/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.53394, gnorm=1868.80, l1=0.00178, loss=19.21416, mrstft=19.21416]
+[Epoch 150] Train Loss: 20.452836 | Train EDC-L1: 0.535994
+[Epoch 150] Val Loss: 18.949483 | Val EDC-L1: 0.515212
+Checkpoint actual guardado en current_checkpoint.pth
+Época 151/540: 100% 43/43 [00:10<00:00,  4.16it/s, edc_l1=0.49929, gnorm=21521.71, l1=0.00122, loss=18.31580, mrstft=18.31580]
+[Epoch 151] Train Loss: 20.378921 | Train EDC-L1: 0.535810
+[Epoch 151] Val Loss: 22.147221 | Val EDC-L1: 0.597148
+Checkpoint actual guardado en current_checkpoint.pth
+Época 152/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.51855, gnorm=1494.16, l1=0.00189, loss=19.37241, mrstft=19.37241]
+[Epoch 152] Train Loss: 21.296931 | Train EDC-L1: 0.550180
+[Epoch 152] Val Loss: 24.948539 | Val EDC-L1: 0.616165
+Checkpoint actual guardado en current_checkpoint.pth
+Época 153/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.60138, gnorm=3381.39, l1=0.00151, loss=23.00435, mrstft=23.00435]
+[Epoch 153] Train Loss: 21.068358 | Train EDC-L1: 0.545884
+[Epoch 153] Val Loss: 20.336512 | Val EDC-L1: 0.514741
+Checkpoint actual guardado en current_checkpoint.pth
+Época 154/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.58780, gnorm=1105.56, l1=0.00198, loss=25.21627, mrstft=25.21627]
+[Epoch 154] Train Loss: 21.896029 | Train EDC-L1: 0.547308
+[Epoch 154] Val Loss: 19.405831 | Val EDC-L1: 0.525989
+Checkpoint actual guardado en current_checkpoint.pth
+Época 155/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.45672, gnorm=24323.55, l1=0.00288, loss=20.08103, mrstft=20.08103]
+[Epoch 155] Train Loss: 21.224815 | Train EDC-L1: 0.538140
+[Epoch 155] Val Loss: 20.299376 | Val EDC-L1: 0.523246
+Checkpoint actual guardado en current_checkpoint.pth
+Época 156/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.51176, gnorm=1669.44, l1=0.00225, loss=19.79128, mrstft=19.79128]
+[Epoch 156] Train Loss: 20.900723 | Train EDC-L1: 0.540510
+[Epoch 156] Val Loss: 22.556940 | Val EDC-L1: 0.589542
+Checkpoint actual guardado en current_checkpoint.pth
+Época 157/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.54454, gnorm=9124.48, l1=0.00193, loss=17.80174, mrstft=17.80174]
+[Epoch 157] Train Loss: 20.538610 | Train EDC-L1: 0.553629
+[Epoch 157] Val Loss: 22.959047 | Val EDC-L1: 0.596084
+Checkpoint actual guardado en current_checkpoint.pth
+Época 158/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.57612, gnorm=1303.88, l1=0.00197, loss=22.72282, mrstft=22.72282]
+[Epoch 158] Train Loss: 20.396377 | Train EDC-L1: 0.555551
+[Epoch 158] Val Loss: 19.552349 | Val EDC-L1: 0.580551
+Checkpoint actual guardado en current_checkpoint.pth
+Época 159/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.61108, gnorm=3796.59, l1=0.00216, loss=22.13820, mrstft=22.13820]
+[Epoch 159] Train Loss: 20.058634 | Train EDC-L1: 0.547633
+[Epoch 159] Val Loss: 18.522289 | Val EDC-L1: 0.489655
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=18.522289)
+Época 160/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.51108, gnorm=2016.23, l1=0.00321, loss=19.67630, mrstft=19.67630]
+[Epoch 160] Train Loss: 20.296384 | Train EDC-L1: 0.546452
+[Epoch 160] Val Loss: 18.586464 | Val EDC-L1: 0.545744
+Checkpoint actual guardado en current_checkpoint.pth
+Época 161/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.49479, gnorm=4931.91, l1=0.00158, loss=18.97800, mrstft=18.97800]
+[Epoch 161] Train Loss: 20.637383 | Train EDC-L1: 0.550383
+[Epoch 161] Val Loss: 22.713131 | Val EDC-L1: 0.608375
+Checkpoint actual guardado en current_checkpoint.pth
+Época 162/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.48927, gnorm=15198.43, l1=0.00275, loss=19.04426, mrstft=19.04426]
+[Epoch 162] Train Loss: 20.617195 | Train EDC-L1: 0.550163
+[Epoch 162] Val Loss: 23.356618 | Val EDC-L1: 0.623329
+Checkpoint actual guardado en current_checkpoint.pth
+Época 163/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.60110, gnorm=1686.77, l1=0.00227, loss=21.63975, mrstft=21.63975]
+[Epoch 163] Train Loss: 20.503928 | Train EDC-L1: 0.549765
+[Epoch 163] Val Loss: 19.432939 | Val EDC-L1: 0.513712
+Checkpoint actual guardado en current_checkpoint.pth
+Época 164/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.59082, gnorm=6138.81, l1=0.00285, loss=23.66667, mrstft=23.66667]
+[Epoch 164] Train Loss: 20.758653 | Train EDC-L1: 0.561630
+[Epoch 164] Val Loss: 19.340717 | Val EDC-L1: 0.571353
+Checkpoint actual guardado en current_checkpoint.pth
+Época 165/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.53768, gnorm=4869.84, l1=0.00223, loss=20.38747, mrstft=20.38747]
+[Epoch 165] Train Loss: 20.969288 | Train EDC-L1: 0.549012
+[Epoch 165] Val Loss: 19.395864 | Val EDC-L1: 0.497656
+Checkpoint actual guardado en current_checkpoint.pth
+Época 166/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.48414, gnorm=12212.89, l1=0.00240, loss=18.93071, mrstft=18.93071]
+[Epoch 166] Train Loss: 20.649762 | Train EDC-L1: 0.539836
+[Epoch 166] Val Loss: 22.270207 | Val EDC-L1: 0.562909
+Checkpoint actual guardado en current_checkpoint.pth
+Época 167/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.51740, gnorm=7924.00, l1=0.00230, loss=18.21203, mrstft=18.21203]
+[Epoch 167] Train Loss: 20.123924 | Train EDC-L1: 0.534064
+[Epoch 167] Val Loss: 22.113068 | Val EDC-L1: 0.560035
+Checkpoint actual guardado en current_checkpoint.pth
+Época 168/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.54498, gnorm=3311.10, l1=0.00232, loss=21.05190, mrstft=21.05190]
+[Epoch 168] Train Loss: 19.839025 | Train EDC-L1: 0.536940
+[Epoch 168] Val Loss: 19.267744 | Val EDC-L1: 0.555019
+Checkpoint actual guardado en current_checkpoint.pth
+Época 169/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.59169, gnorm=1216.95, l1=0.00169, loss=21.83405, mrstft=21.83405]
+[Epoch 169] Train Loss: 19.592650 | Train EDC-L1: 0.534138
+[Epoch 169] Val Loss: 18.409302 | Val EDC-L1: 0.481754
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=18.409302)
+Época 170/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.51039, gnorm=2011.13, l1=0.00111, loss=18.48395, mrstft=18.48395]
+[Epoch 170] Train Loss: 19.667013 | Train EDC-L1: 0.535413
+[Epoch 170] Val Loss: 18.041591 | Val EDC-L1: 0.543402
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=18.041591)
+Época 171/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.51654, gnorm=2258.85, l1=0.00207, loss=18.17633, mrstft=18.17633]
+[Epoch 171] Train Loss: 19.671049 | Train EDC-L1: 0.533313
+[Epoch 171] Val Loss: 21.800209 | Val EDC-L1: 0.560415
+Checkpoint actual guardado en current_checkpoint.pth
+Época 172/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.47424, gnorm=4229.66, l1=0.00219, loss=17.88886, mrstft=17.88886]
+[Epoch 172] Train Loss: 19.876872 | Train EDC-L1: 0.538853
+[Epoch 172] Val Loss: 21.819712 | Val EDC-L1: 0.614236
+Checkpoint actual guardado en current_checkpoint.pth
+Época 173/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.60535, gnorm=1742.93, l1=0.00231, loss=21.46971, mrstft=21.46971]
+[Epoch 173] Train Loss: 19.882835 | Train EDC-L1: 0.540400
+[Epoch 173] Val Loss: 18.830315 | Val EDC-L1: 0.493796
+Checkpoint actual guardado en current_checkpoint.pth
+Época 174/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.55463, gnorm=3487.11, l1=0.00224, loss=21.79005, mrstft=21.79005]
+[Epoch 174] Train Loss: 19.999744 | Train EDC-L1: 0.541527
+[Epoch 174] Val Loss: 18.552458 | Val EDC-L1: 0.535343
+Checkpoint actual guardado en current_checkpoint.pth
+Época 175/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.52791, gnorm=12068.82, l1=0.00343, loss=18.61329, mrstft=18.61329]
+[Epoch 175] Train Loss: 20.043043 | Train EDC-L1: 0.538869
+[Epoch 175] Val Loss: 18.913995 | Val EDC-L1: 0.498510
+Checkpoint actual guardado en current_checkpoint.pth
+Época 176/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.48597, gnorm=12987.58, l1=0.00303, loss=19.19039, mrstft=19.19039]
+[Epoch 176] Train Loss: 20.065830 | Train EDC-L1: 0.540319
+[Epoch 176] Val Loss: 21.694125 | Val EDC-L1: 0.593240
+Checkpoint actual guardado en current_checkpoint.pth
+Época 177/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.52614, gnorm=21462.95, l1=0.00127, loss=17.62410, mrstft=17.62410]
+[Epoch 177] Train Loss: 19.823252 | Train EDC-L1: 0.533620
+[Epoch 177] Val Loss: 22.701241 | Val EDC-L1: 0.593619
+Checkpoint actual guardado en current_checkpoint.pth
+Época 178/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.56612, gnorm=7298.28, l1=0.00230, loss=22.05860, mrstft=22.05860]
+[Epoch 178] Train Loss: 20.344741 | Train EDC-L1: 0.537607
+[Epoch 178] Val Loss: 19.592986 | Val EDC-L1: 0.530926
+Checkpoint actual guardado en current_checkpoint.pth
+Época 179/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.59596, gnorm=2644.81, l1=0.00229, loss=23.00113, mrstft=23.00113]
+[Epoch 179] Train Loss: 20.580280 | Train EDC-L1: 0.535612
+[Epoch 179] Val Loss: 18.673310 | Val EDC-L1: 0.471824
+Checkpoint actual guardado en current_checkpoint.pth
+Época 180/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.48208, gnorm=24596.96, l1=0.00180, loss=19.39936, mrstft=19.39936]
+[Epoch 180] Train Loss: 20.519043 | Train EDC-L1: 0.524660
+[Epoch 180] Val Loss: 19.324975 | Val EDC-L1: 0.461626
+Checkpoint actual guardado en current_checkpoint.pth
+Época 181/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.48881, gnorm=22520.58, l1=0.00275, loss=19.13862, mrstft=19.13862]
+[Epoch 181] Train Loss: 20.832058 | Train EDC-L1: 0.521584
+[Epoch 181] Val Loss: 24.562657 | Val EDC-L1: 0.602345
+Checkpoint actual guardado en current_checkpoint.pth
+Época 182/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.48312, gnorm=2892.05, l1=0.00281, loss=18.53523, mrstft=18.53523]
+[Epoch 182] Train Loss: 20.369501 | Train EDC-L1: 0.527727
+[Epoch 182] Val Loss: 22.455035 | Val EDC-L1: 0.586816
+Checkpoint actual guardado en current_checkpoint.pth
+Época 183/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.56696, gnorm=1568.48, l1=0.00314, loss=23.30356, mrstft=23.30356]
+[Epoch 183] Train Loss: 19.941937 | Train EDC-L1: 0.525080
+[Epoch 183] Val Loss: 18.269708 | Val EDC-L1: 0.505485
+Checkpoint actual guardado en current_checkpoint.pth
+Época 184/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.57625, gnorm=2843.33, l1=0.00163, loss=22.50903, mrstft=22.50903]
+[Epoch 184] Train Loss: 19.909440 | Train EDC-L1: 0.523160
+[Epoch 184] Val Loss: 18.140273 | Val EDC-L1: 0.465300
+Checkpoint actual guardado en current_checkpoint.pth
+Época 185/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.50385, gnorm=2534.78, l1=0.00189, loss=18.64547, mrstft=18.64547]
+[Epoch 185] Train Loss: 19.922044 | Train EDC-L1: 0.517956
+[Epoch 185] Val Loss: 17.958481 | Val EDC-L1: 0.477565
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=17.958481)
+Época 186/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.51418, gnorm=3369.94, l1=0.00283, loss=19.24836, mrstft=19.24836]
+[Epoch 186] Train Loss: 19.988467 | Train EDC-L1: 0.523532
+[Epoch 186] Val Loss: 22.995361 | Val EDC-L1: 0.582401
+Checkpoint actual guardado en current_checkpoint.pth
+Época 187/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.48654, gnorm=4269.45, l1=0.00249, loss=19.02438, mrstft=19.02438]
+[Epoch 187] Train Loss: 20.758107 | Train EDC-L1: 0.542527
+[Epoch 187] Val Loss: 22.532436 | Val EDC-L1: 0.592709
+Checkpoint actual guardado en current_checkpoint.pth
+Época 188/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.57337, gnorm=1253.82, l1=0.00219, loss=23.56287, mrstft=23.56287]
+[Epoch 188] Train Loss: 20.561458 | Train EDC-L1: 0.515410
+[Epoch 188] Val Loss: 18.685288 | Val EDC-L1: 0.491058
+Checkpoint actual guardado en current_checkpoint.pth
+Época 189/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.59812, gnorm=1768.33, l1=0.00140, loss=23.88702, mrstft=23.88702]
+[Epoch 189] Train Loss: 21.077663 | Train EDC-L1: 0.532027
+[Epoch 189] Val Loss: 18.457496 | Val EDC-L1: 0.485211
+Checkpoint actual guardado en current_checkpoint.pth
+Época 190/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.51720, gnorm=17135.70, l1=0.00154, loss=19.09270, mrstft=19.09270]
+[Epoch 190] Train Loss: 20.423861 | Train EDC-L1: 0.512292
+[Epoch 190] Val Loss: 19.752481 | Val EDC-L1: 0.486094
+Checkpoint actual guardado en current_checkpoint.pth
+Época 191/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.52653, gnorm=20686.73, l1=0.00128, loss=18.38108, mrstft=18.38108]
+[Epoch 191] Train Loss: 20.794093 | Train EDC-L1: 0.533609
+[Epoch 191] Val Loss: 23.844445 | Val EDC-L1: 0.568475
+Checkpoint actual guardado en current_checkpoint.pth
+Época 192/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.46146, gnorm=26128.72, l1=0.00135, loss=17.60617, mrstft=17.60617]
+[Epoch 192] Train Loss: 20.776973 | Train EDC-L1: 0.528132
+[Epoch 192] Val Loss: 24.279488 | Val EDC-L1: 0.583088
+Checkpoint actual guardado en current_checkpoint.pth
+Época 193/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.60805, gnorm=905.81, l1=0.00099, loss=23.32228, mrstft=23.32228]
+[Epoch 193] Train Loss: 20.904400 | Train EDC-L1: 0.529239
+[Epoch 193] Val Loss: 19.247815 | Val EDC-L1: 0.487174
+Checkpoint actual guardado en current_checkpoint.pth
+Época 194/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.59486, gnorm=1289.51, l1=0.00168, loss=21.98949, mrstft=21.98949]
+[Epoch 194] Train Loss: 20.130849 | Train EDC-L1: 0.532419
+[Epoch 194] Val Loss: 17.950930 | Val EDC-L1: 0.461600
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=17.950930)
+Época 195/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.47302, gnorm=2357.11, l1=0.00255, loss=19.23008, mrstft=19.23008]
+[Epoch 195] Train Loss: 19.393956 | Train EDC-L1: 0.529397
+[Epoch 195] Val Loss: 17.792368 | Val EDC-L1: 0.532854
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=17.792368)
+Época 196/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.47271, gnorm=6951.32, l1=0.00285, loss=18.66116, mrstft=18.66116]
+[Epoch 196] Train Loss: 19.495453 | Train EDC-L1: 0.518777
+[Epoch 196] Val Loss: 22.669037 | Val EDC-L1: 0.577144
+Checkpoint actual guardado en current_checkpoint.pth
+Época 197/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.44495, gnorm=8961.68, l1=0.00167, loss=17.87028, mrstft=17.87028]
+[Epoch 197] Train Loss: 19.727924 | Train EDC-L1: 0.521430
+[Epoch 197] Val Loss: 22.223839 | Val EDC-L1: 0.619653
+Checkpoint actual guardado en current_checkpoint.pth
+Época 198/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.60444, gnorm=1295.13, l1=0.00274, loss=21.65728, mrstft=21.65728]
+[Epoch 198] Train Loss: 19.957937 | Train EDC-L1: 0.527311
+[Epoch 198] Val Loss: 18.244992 | Val EDC-L1: 0.471479
+Checkpoint actual guardado en current_checkpoint.pth
+Época 199/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.53012, gnorm=3515.89, l1=0.00278, loss=21.46294, mrstft=21.46294]
+[Epoch 199] Train Loss: 19.309296 | Train EDC-L1: 0.520123
+[Epoch 199] Val Loss: 17.906030 | Val EDC-L1: 0.531929
+Checkpoint actual guardado en current_checkpoint.pth
+Época 200/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.54750, gnorm=2189.16, l1=0.00176, loss=18.29632, mrstft=18.29632]
+[Epoch 200] Train Loss: 19.032430 | Train EDC-L1: 0.520402
+[Epoch 200] Val Loss: 17.205676 | Val EDC-L1: 0.442707
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=17.205676)
+Época 201/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.45192, gnorm=4355.41, l1=0.00230, loss=17.40128, mrstft=17.40128]
+[Epoch 201] Train Loss: 18.927197 | Train EDC-L1: 0.516719
+[Epoch 201] Val Loss: 20.723364 | Val EDC-L1: 0.576479
+Checkpoint actual guardado en current_checkpoint.pth
+Época 202/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.50761, gnorm=10705.79, l1=0.00266, loss=18.20575, mrstft=18.20575]
+[Epoch 202] Train Loss: 19.121080 | Train EDC-L1: 0.525301
+[Epoch 202] Val Loss: 20.838187 | Val EDC-L1: 0.538324
+Checkpoint actual guardado en current_checkpoint.pth
+Época 203/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.52636, gnorm=2510.14, l1=0.00117, loss=20.74223, mrstft=20.74223]
+[Epoch 203] Train Loss: 19.288540 | Train EDC-L1: 0.516719
+[Epoch 203] Val Loss: 18.582643 | Val EDC-L1: 0.554840
+Checkpoint actual guardado en current_checkpoint.pth
+Época 204/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.56297, gnorm=1690.43, l1=0.00239, loss=22.05995, mrstft=22.05995]
+[Epoch 204] Train Loss: 19.253550 | Train EDC-L1: 0.517837
+[Epoch 204] Val Loss: 17.628857 | Val EDC-L1: 0.474310
+Checkpoint actual guardado en current_checkpoint.pth
+Época 205/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.45166, gnorm=4717.11, l1=0.00249, loss=17.99850, mrstft=17.99850]
+[Epoch 205] Train Loss: 19.158649 | Train EDC-L1: 0.513570
+[Epoch 205] Val Loss: 18.134663 | Val EDC-L1: 0.506403
+Checkpoint actual guardado en current_checkpoint.pth
+Época 206/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.52995, gnorm=21515.86, l1=0.00158, loss=17.92277, mrstft=17.92277]
+[Epoch 206] Train Loss: 19.366980 | Train EDC-L1: 0.514384
+[Epoch 206] Val Loss: 20.935410 | Val EDC-L1: 0.523206
+Checkpoint actual guardado en current_checkpoint.pth
+Época 207/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.43762, gnorm=4798.58, l1=0.00269, loss=17.81264, mrstft=17.81264]
+[Epoch 207] Train Loss: 18.972317 | Train EDC-L1: 0.500850
+[Epoch 207] Val Loss: 20.819355 | Val EDC-L1: 0.568484
+Checkpoint actual guardado en current_checkpoint.pth
+Época 208/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.57790, gnorm=1317.68, l1=0.00249, loss=21.67843, mrstft=21.67843]
+[Epoch 208] Train Loss: 19.285268 | Train EDC-L1: 0.515161
+[Epoch 208] Val Loss: 17.938814 | Val EDC-L1: 0.497727
+Checkpoint actual guardado en current_checkpoint.pth
+Época 209/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.56629, gnorm=1726.50, l1=0.00266, loss=21.14092, mrstft=21.14092]
+[Epoch 209] Train Loss: 19.133278 | Train EDC-L1: 0.518462
+[Epoch 209] Val Loss: 17.640801 | Val EDC-L1: 0.452934
+Checkpoint actual guardado en current_checkpoint.pth
+Época 210/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.46096, gnorm=2020.32, l1=0.00176, loss=18.21361, mrstft=18.21361]
+[Epoch 210] Train Loss: 19.079004 | Train EDC-L1: 0.523399
+[Epoch 210] Val Loss: 17.804094 | Val EDC-L1: 0.514406
+Checkpoint actual guardado en current_checkpoint.pth
+Época 211/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.50275, gnorm=15039.36, l1=0.00169, loss=17.48115, mrstft=17.48115]
+[Epoch 211] Train Loss: 19.218883 | Train EDC-L1: 0.513121
+[Epoch 211] Val Loss: 21.292853 | Val EDC-L1: 0.568621
+Checkpoint actual guardado en current_checkpoint.pth
+Época 212/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.45982, gnorm=3658.37, l1=0.00092, loss=16.76584, mrstft=16.76584]
+[Epoch 212] Train Loss: 19.110646 | Train EDC-L1: 0.512214
+[Epoch 212] Val Loss: 21.071189 | Val EDC-L1: 0.542032
+Checkpoint actual guardado en current_checkpoint.pth
+Época 213/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.55915, gnorm=5807.51, l1=0.00193, loss=21.21498, mrstft=21.21498]
+[Epoch 213] Train Loss: 19.151786 | Train EDC-L1: 0.517571
+[Epoch 213] Val Loss: 18.338941 | Val EDC-L1: 0.498649
+Checkpoint actual guardado en current_checkpoint.pth
+Época 214/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.55264, gnorm=1379.49, l1=0.00243, loss=21.20106, mrstft=21.20106]
+[Epoch 214] Train Loss: 19.033641 | Train EDC-L1: 0.511583
+[Epoch 214] Val Loss: 17.765587 | Val EDC-L1: 0.501317
+Checkpoint actual guardado en current_checkpoint.pth
+Época 215/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.52721, gnorm=8737.79, l1=0.00153, loss=17.88705, mrstft=17.88705]
+[Epoch 215] Train Loss: 19.023320 | Train EDC-L1: 0.513909
+[Epoch 215] Val Loss: 17.205854 | Val EDC-L1: 0.456865
+Checkpoint actual guardado en current_checkpoint.pth
+Época 216/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.47128, gnorm=3900.11, l1=0.00161, loss=17.18271, mrstft=17.18271]
+[Epoch 216] Train Loss: 18.771277 | Train EDC-L1: 0.506346
+[Epoch 216] Val Loss: 20.904143 | Val EDC-L1: 0.564066
+Checkpoint actual guardado en current_checkpoint.pth
+Época 217/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.46823, gnorm=24764.39, l1=0.00254, loss=17.28613, mrstft=17.28613]
+[Epoch 217] Train Loss: 18.834315 | Train EDC-L1: 0.506455
+[Epoch 217] Val Loss: 21.412506 | Val EDC-L1: 0.566514
+Checkpoint actual guardado en current_checkpoint.pth
+Época 218/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.57129, gnorm=1861.92, l1=0.00204, loss=21.50960, mrstft=21.50960]
+[Epoch 218] Train Loss: 19.236860 | Train EDC-L1: 0.508819
+[Epoch 218] Val Loss: 18.298075 | Val EDC-L1: 0.500225
+Checkpoint actual guardado en current_checkpoint.pth
+Época 219/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.58259, gnorm=1428.78, l1=0.00384, loss=23.52612, mrstft=23.52612]
+[Epoch 219] Train Loss: 19.416531 | Train EDC-L1: 0.510734
+[Epoch 219] Val Loss: 18.360460 | Val EDC-L1: 0.517743
+Checkpoint actual guardado en current_checkpoint.pth
+Época 220/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.45278, gnorm=11284.72, l1=0.00234, loss=18.87214, mrstft=18.87214]
+[Epoch 220] Train Loss: 20.280442 | Train EDC-L1: 0.529152
+[Epoch 220] Val Loss: 19.106843 | Val EDC-L1: 0.520823
+Checkpoint actual guardado en current_checkpoint.pth
+Época 221/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.48909, gnorm=2144.00, l1=0.00220, loss=18.57964, mrstft=18.57964]
+[Epoch 221] Train Loss: 19.860110 | Train EDC-L1: 0.523689
+[Epoch 221] Val Loss: 21.723622 | Val EDC-L1: 0.550620
+Checkpoint actual guardado en current_checkpoint.pth
+Época 222/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.45190, gnorm=22749.11, l1=0.00241, loss=17.24766, mrstft=17.24766]
+[Epoch 222] Train Loss: 19.428443 | Train EDC-L1: 0.519390
+[Epoch 222] Val Loss: 21.114046 | Val EDC-L1: 0.574001
+Checkpoint actual guardado en current_checkpoint.pth
+Época 223/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.55492, gnorm=1657.38, l1=0.00259, loss=21.06058, mrstft=21.06058]
+[Epoch 223] Train Loss: 18.980268 | Train EDC-L1: 0.501719
+[Epoch 223] Val Loss: 18.311709 | Val EDC-L1: 0.467019
+Checkpoint actual guardado en current_checkpoint.pth
+Época 224/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.55402, gnorm=5113.00, l1=0.00281, loss=20.67538, mrstft=20.67538]
+[Epoch 224] Train Loss: 18.768130 | Train EDC-L1: 0.504292
+[Epoch 224] Val Loss: 17.462127 | Val EDC-L1: 0.476873
+Checkpoint actual guardado en current_checkpoint.pth
+Época 225/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.47973, gnorm=2435.09, l1=0.00161, loss=17.34506, mrstft=17.34506]
+[Epoch 225] Train Loss: 18.739797 | Train EDC-L1: 0.505062
+[Epoch 225] Val Loss: 17.005270 | Val EDC-L1: 0.433824
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=17.005270)
+Época 226/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.42211, gnorm=28811.77, l1=0.00296, loss=17.85276, mrstft=17.85276]
+[Epoch 226] Train Loss: 18.959742 | Train EDC-L1: 0.507975
+[Epoch 226] Val Loss: 21.646466 | Val EDC-L1: 0.574846
+Checkpoint actual guardado en current_checkpoint.pth
+Época 227/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.50492, gnorm=7369.62, l1=0.00267, loss=17.32482, mrstft=17.32482]
+[Epoch 227] Train Loss: 19.032377 | Train EDC-L1: 0.506880
+[Epoch 227] Val Loss: 21.593243 | Val EDC-L1: 0.567686
+Checkpoint actual guardado en current_checkpoint.pth
+Época 228/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.56525, gnorm=2928.92, l1=0.00223, loss=21.32373, mrstft=21.32373]
+[Epoch 228] Train Loss: 18.998613 | Train EDC-L1: 0.510594
+[Epoch 228] Val Loss: 18.035478 | Val EDC-L1: 0.476616
+Checkpoint actual guardado en current_checkpoint.pth
+Época 229/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.53932, gnorm=2009.89, l1=0.00211, loss=20.94704, mrstft=20.94704]
+[Epoch 229] Train Loss: 18.939146 | Train EDC-L1: 0.504371
+[Epoch 229] Val Loss: 17.681211 | Val EDC-L1: 0.491764
+Checkpoint actual guardado en current_checkpoint.pth
+Época 230/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.55073, gnorm=7396.63, l1=0.00162, loss=17.63837, mrstft=17.63837]
+[Epoch 230] Train Loss: 18.831271 | Train EDC-L1: 0.504617
+[Epoch 230] Val Loss: 16.811721 | Val EDC-L1: 0.436292
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=16.811721)
+Época 231/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.46616, gnorm=2576.65, l1=0.00196, loss=17.09788, mrstft=17.09788]
+[Epoch 231] Train Loss: 18.518903 | Train EDC-L1: 0.497467
+[Epoch 231] Val Loss: 21.080776 | Val EDC-L1: 0.579008
+Checkpoint actual guardado en current_checkpoint.pth
+Época 232/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.51701, gnorm=7004.77, l1=0.00222, loss=19.73812, mrstft=19.73812]
+[Epoch 232] Train Loss: 19.513065 | Train EDC-L1: 0.519148
+[Epoch 232] Val Loss: 22.971158 | Val EDC-L1: 0.588231
+Checkpoint actual guardado en current_checkpoint.pth
+Época 233/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.53721, gnorm=1489.90, l1=0.00161, loss=20.66044, mrstft=20.66044]
+[Epoch 233] Train Loss: 20.016001 | Train EDC-L1: 0.524935
+[Epoch 233] Val Loss: 19.788851 | Val EDC-L1: 0.430526
+Checkpoint actual guardado en current_checkpoint.pth
+Época 234/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.58736, gnorm=4690.00, l1=0.00231, loss=22.14844, mrstft=22.14844]
+[Epoch 234] Train Loss: 19.496530 | Train EDC-L1: 0.505518
+[Epoch 234] Val Loss: 17.664812 | Val EDC-L1: 0.468510
+Checkpoint actual guardado en current_checkpoint.pth
+Época 235/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.48457, gnorm=4947.24, l1=0.00254, loss=19.29341, mrstft=19.29341]
+[Epoch 235] Train Loss: 19.204572 | Train EDC-L1: 0.504417
+[Epoch 235] Val Loss: 18.223259 | Val EDC-L1: 0.465385
+Checkpoint actual guardado en current_checkpoint.pth
+Época 236/540: 100% 43/43 [00:10<00:00,  4.18it/s, edc_l1=0.50383, gnorm=5966.05, l1=0.00146, loss=17.91271, mrstft=17.91271]
+[Epoch 236] Train Loss: 19.557563 | Train EDC-L1: 0.515932
+[Epoch 236] Val Loss: 21.754233 | Val EDC-L1: 0.570651
+Checkpoint actual guardado en current_checkpoint.pth
+Época 237/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.45811, gnorm=3626.60, l1=0.00241, loss=17.37896, mrstft=17.37896]
+[Epoch 237] Train Loss: 19.316200 | Train EDC-L1: 0.522421
+[Epoch 237] Val Loss: 21.376529 | Val EDC-L1: 0.573836
+Checkpoint actual guardado en current_checkpoint.pth
+Época 238/540: 100% 43/43 [00:10<00:00,  4.18it/s, edc_l1=0.55685, gnorm=1444.85, l1=0.00280, loss=22.11596, mrstft=22.11596]
+[Epoch 238] Train Loss: 19.099694 | Train EDC-L1: 0.517659
+[Epoch 238] Val Loss: 17.903630 | Val EDC-L1: 0.483717
+Checkpoint actual guardado en current_checkpoint.pth
+Época 239/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.56731, gnorm=1615.07, l1=0.00232, loss=20.86269, mrstft=20.86269]
+[Epoch 239] Train Loss: 18.921187 | Train EDC-L1: 0.515600
+[Epoch 239] Val Loss: 17.450872 | Val EDC-L1: 0.504319
+Checkpoint actual guardado en current_checkpoint.pth
+Época 240/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.50692, gnorm=2873.44, l1=0.00274, loss=18.32986, mrstft=18.32986]
+[Epoch 240] Train Loss: 18.740359 | Train EDC-L1: 0.511060
+[Epoch 240] Val Loss: 16.473331 | Val EDC-L1: 0.432136
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=16.473331)
+Época 241/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.42405, gnorm=2808.78, l1=0.00341, loss=17.21919, mrstft=17.21919]
+[Epoch 241] Train Loss: 18.635392 | Train EDC-L1: 0.508198
+[Epoch 241] Val Loss: 20.810318 | Val EDC-L1: 0.582456
+Checkpoint actual guardado en current_checkpoint.pth
+Época 242/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.49548, gnorm=6176.54, l1=0.00255, loss=17.55444, mrstft=17.55444]
+[Epoch 242] Train Loss: 18.584154 | Train EDC-L1: 0.509944
+[Epoch 242] Val Loss: 20.894744 | Val EDC-L1: 0.562578
+Checkpoint actual guardado en current_checkpoint.pth
+Época 243/540: 100% 43/43 [00:10<00:00,  4.14it/s, edc_l1=0.54039, gnorm=2242.73, l1=0.00143, loss=19.62261, mrstft=19.62261]
+[Epoch 243] Train Loss: 18.578996 | Train EDC-L1: 0.507206
+[Epoch 243] Val Loss: 17.920920 | Val EDC-L1: 0.523685
+Checkpoint actual guardado en current_checkpoint.pth
+Época 244/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.56866, gnorm=1573.96, l1=0.00142, loss=20.06354, mrstft=20.06354]
+[Epoch 244] Train Loss: 18.356718 | Train EDC-L1: 0.509198
+[Epoch 244] Val Loss: 16.952083 | Val EDC-L1: 0.416354
+Checkpoint actual guardado en current_checkpoint.pth
+Época 245/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.43529, gnorm=2446.14, l1=0.00227, loss=17.31756, mrstft=17.31756]
+[Epoch 245] Train Loss: 18.236593 | Train EDC-L1: 0.501131
+[Epoch 245] Val Loss: 16.867039 | Val EDC-L1: 0.507297
+Checkpoint actual guardado en current_checkpoint.pth
+Época 246/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.50604, gnorm=2506.31, l1=0.00196, loss=17.21956, mrstft=17.21956]
+[Epoch 246] Train Loss: 18.389543 | Train EDC-L1: 0.504189
+[Epoch 246] Val Loss: 20.788332 | Val EDC-L1: 0.546259
+Checkpoint actual guardado en current_checkpoint.pth
+Época 247/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.42065, gnorm=5866.32, l1=0.00227, loss=16.38974, mrstft=16.38974]
+[Epoch 247] Train Loss: 18.416125 | Train EDC-L1: 0.507520
+[Epoch 247] Val Loss: 20.849115 | Val EDC-L1: 0.566895
+Checkpoint actual guardado en current_checkpoint.pth
+Época 248/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.57108, gnorm=3590.06, l1=0.00190, loss=20.78169, mrstft=20.78169]
+[Epoch 248] Train Loss: 18.553964 | Train EDC-L1: 0.505720
+[Epoch 248] Val Loss: 16.706354 | Val EDC-L1: 0.431144
+Checkpoint actual guardado en current_checkpoint.pth
+Época 249/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.54571, gnorm=2965.97, l1=0.00256, loss=20.19625, mrstft=20.19625]
+[Epoch 249] Train Loss: 18.365998 | Train EDC-L1: 0.500250
+[Epoch 249] Val Loss: 17.300012 | Val EDC-L1: 0.482754
+Checkpoint actual guardado en current_checkpoint.pth
+Época 250/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.49482, gnorm=2547.25, l1=0.00147, loss=16.97393, mrstft=16.97393]
+[Epoch 250] Train Loss: 18.198591 | Train EDC-L1: 0.499716
+[Epoch 250] Val Loss: 16.529832 | Val EDC-L1: 0.437074
+Checkpoint actual guardado en current_checkpoint.pth
+Época 251/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.45603, gnorm=7088.71, l1=0.00264, loss=16.46925, mrstft=16.46925]
+[Epoch 251] Train Loss: 18.201275 | Train EDC-L1: 0.502738
+[Epoch 251] Val Loss: 20.322955 | Val EDC-L1: 0.562983
+Checkpoint actual guardado en current_checkpoint.pth
+Época 252/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.49446, gnorm=7902.44, l1=0.00196, loss=16.41705, mrstft=16.41705]
+[Epoch 252] Train Loss: 18.193875 | Train EDC-L1: 0.504108
+[Epoch 252] Val Loss: 20.908520 | Val EDC-L1: 0.547550
+Checkpoint actual guardado en current_checkpoint.pth
+Época 253/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.55707, gnorm=2500.09, l1=0.00109, loss=19.68776, mrstft=19.68776]
+[Epoch 253] Train Loss: 18.314236 | Train EDC-L1: 0.504241
+[Epoch 253] Val Loss: 17.132495 | Val EDC-L1: 0.512129
+Checkpoint actual guardado en current_checkpoint.pth
+Época 254/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.54045, gnorm=1731.18, l1=0.00250, loss=20.24955, mrstft=20.24955]
+[Epoch 254] Train Loss: 18.020604 | Train EDC-L1: 0.501377
+[Epoch 254] Val Loss: 16.549691 | Val EDC-L1: 0.419911
+Checkpoint actual guardado en current_checkpoint.pth
+Época 255/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.44777, gnorm=4260.72, l1=0.00106, loss=16.66088, mrstft=16.66088]
+[Epoch 255] Train Loss: 18.636934 | Train EDC-L1: 0.500529
+[Epoch 255] Val Loss: 16.748788 | Val EDC-L1: 0.489693
+Checkpoint actual guardado en current_checkpoint.pth
+Época 256/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.48999, gnorm=4739.48, l1=0.00225, loss=16.84792, mrstft=16.84792]
+[Epoch 256] Train Loss: 18.485061 | Train EDC-L1: 0.507016
+[Epoch 256] Val Loss: 20.680318 | Val EDC-L1: 0.551116
+Checkpoint actual guardado en current_checkpoint.pth
+Época 257/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.43249, gnorm=14564.05, l1=0.00235, loss=16.52840, mrstft=16.52840]
+[Epoch 257] Train Loss: 18.575669 | Train EDC-L1: 0.503492
+[Epoch 257] Val Loss: 21.203284 | Val EDC-L1: 0.573603
+Checkpoint actual guardado en current_checkpoint.pth
+Época 258/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.55770, gnorm=1833.01, l1=0.00209, loss=20.53964, mrstft=20.53964]
+[Epoch 258] Train Loss: 18.543962 | Train EDC-L1: 0.503415
+[Epoch 258] Val Loss: 16.859095 | Val EDC-L1: 0.438267
+Checkpoint actual guardado en current_checkpoint.pth
+Época 259/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.54059, gnorm=2391.80, l1=0.00342, loss=20.52969, mrstft=20.52969]
+[Epoch 259] Train Loss: 18.114406 | Train EDC-L1: 0.494868
+[Epoch 259] Val Loss: 16.552275 | Val EDC-L1: 0.479939
+Checkpoint actual guardado en current_checkpoint.pth
+Época 260/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.46320, gnorm=1958.39, l1=0.00322, loss=17.42004, mrstft=17.42004]
+[Epoch 260] Train Loss: 18.028129 | Train EDC-L1: 0.486929
+[Epoch 260] Val Loss: 16.547901 | Val EDC-L1: 0.424379
+Checkpoint actual guardado en current_checkpoint.pth
+Época 261/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.40509, gnorm=4139.39, l1=0.00238, loss=16.66763, mrstft=16.66763]
+[Epoch 261] Train Loss: 18.065859 | Train EDC-L1: 0.491127
+[Epoch 261] Val Loss: 19.932977 | Val EDC-L1: 0.561325
+Checkpoint actual guardado en current_checkpoint.pth
+Época 262/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.46556, gnorm=9074.51, l1=0.00324, loss=16.06147, mrstft=16.06147]
+[Epoch 262] Train Loss: 17.836768 | Train EDC-L1: 0.489180
+[Epoch 262] Val Loss: 19.526096 | Val EDC-L1: 0.548080
+Checkpoint actual guardado en current_checkpoint.pth
+Época 263/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.52704, gnorm=1991.84, l1=0.00247, loss=19.64778, mrstft=19.64778]
+[Epoch 263] Train Loss: 17.806978 | Train EDC-L1: 0.481394
+[Epoch 263] Val Loss: 17.520446 | Val EDC-L1: 0.478648
+Checkpoint actual guardado en current_checkpoint.pth
+Época 264/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.58696, gnorm=3980.54, l1=0.00194, loss=22.09875, mrstft=22.09875]
+[Epoch 264] Train Loss: 18.284378 | Train EDC-L1: 0.490344
+[Epoch 264] Val Loss: 17.292631 | Val EDC-L1: 0.447020
+Checkpoint actual guardado en current_checkpoint.pth
+Época 265/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.45470, gnorm=3296.90, l1=0.00208, loss=17.49562, mrstft=17.49562]
+[Epoch 265] Train Loss: 19.013038 | Train EDC-L1: 0.498909
+[Epoch 265] Val Loss: 17.045096 | Val EDC-L1: 0.469386
+Checkpoint actual guardado en current_checkpoint.pth
+Época 266/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.45371, gnorm=4895.03, l1=0.00213, loss=17.07768, mrstft=17.07768]
+[Epoch 266] Train Loss: 19.038707 | Train EDC-L1: 0.496313
+[Epoch 266] Val Loss: 21.962527 | Val EDC-L1: 0.552865
+Checkpoint actual guardado en current_checkpoint.pth
+Época 267/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.43320, gnorm=9873.21, l1=0.00277, loss=17.48773, mrstft=17.48773]
+[Epoch 267] Train Loss: 18.855496 | Train EDC-L1: 0.488075
+[Epoch 267] Val Loss: 21.585320 | Val EDC-L1: 0.545039
+Checkpoint actual guardado en current_checkpoint.pth
+Época 268/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.52440, gnorm=10866.88, l1=0.00352, loss=22.04490, mrstft=22.04490]
+[Epoch 268] Train Loss: 19.028194 | Train EDC-L1: 0.488102
+[Epoch 268] Val Loss: 17.565240 | Val EDC-L1: 0.475272
+Checkpoint actual guardado en current_checkpoint.pth
+Época 269/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.52589, gnorm=20708.39, l1=0.00187, loss=21.27375, mrstft=21.27375]
+[Epoch 269] Train Loss: 18.589947 | Train EDC-L1: 0.477918
+[Epoch 269] Val Loss: 16.934721 | Val EDC-L1: 0.442175
+Checkpoint actual guardado en current_checkpoint.pth
+Época 270/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.45479, gnorm=2227.14, l1=0.00303, loss=17.32258, mrstft=17.32258]
+[Epoch 270] Train Loss: 18.382947 | Train EDC-L1: 0.469485
+[Epoch 270] Val Loss: 16.318309 | Val EDC-L1: 0.425916
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=16.318309)
+Época 271/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.42444, gnorm=19375.31, l1=0.00217, loss=16.28468, mrstft=16.28468]
+[Epoch 271] Train Loss: 18.325361 | Train EDC-L1: 0.477147
+[Epoch 271] Val Loss: 20.032814 | Val EDC-L1: 0.542516
+Checkpoint actual guardado en current_checkpoint.pth
+Época 272/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.44597, gnorm=17872.95, l1=0.00144, loss=15.33769, mrstft=15.33769]
+[Epoch 272] Train Loss: 17.763866 | Train EDC-L1: 0.466551
+[Epoch 272] Val Loss: 20.327984 | Val EDC-L1: 0.527269
+Checkpoint actual guardado en current_checkpoint.pth
+Época 273/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.53829, gnorm=2138.66, l1=0.00221, loss=20.78729, mrstft=20.78729]
+[Epoch 273] Train Loss: 18.000568 | Train EDC-L1: 0.477105
+[Epoch 273] Val Loss: 16.885645 | Val EDC-L1: 0.435184
+Checkpoint actual guardado en current_checkpoint.pth
+Época 274/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.53159, gnorm=5786.10, l1=0.00219, loss=20.07166, mrstft=20.07166]
+[Epoch 274] Train Loss: 17.978253 | Train EDC-L1: 0.470417
+[Epoch 274] Val Loss: 16.134854 | Val EDC-L1: 0.411956
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=16.134854)
+Época 275/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.44750, gnorm=2284.88, l1=0.00190, loss=17.06295, mrstft=17.06295]
+[Epoch 275] Train Loss: 17.837648 | Train EDC-L1: 0.467978
+[Epoch 275] Val Loss: 15.377194 | Val EDC-L1: 0.427875
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=15.377194)
+Época 276/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.42868, gnorm=10995.03, l1=0.00143, loss=16.25537, mrstft=16.25537]
+[Epoch 276] Train Loss: 17.702590 | Train EDC-L1: 0.468562
+[Epoch 276] Val Loss: 20.089136 | Val EDC-L1: 0.520776
+Checkpoint actual guardado en current_checkpoint.pth
+Época 277/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.43396, gnorm=11890.23, l1=0.00184, loss=16.03887, mrstft=16.03887]
+[Epoch 277] Train Loss: 17.997203 | Train EDC-L1: 0.473212
+[Epoch 277] Val Loss: 19.882298 | Val EDC-L1: 0.534695
+Checkpoint actual guardado en current_checkpoint.pth
+Época 278/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.51497, gnorm=6733.52, l1=0.00185, loss=20.48751, mrstft=20.48751]
+[Epoch 278] Train Loss: 18.349440 | Train EDC-L1: 0.477769
+[Epoch 278] Val Loss: 18.227285 | Val EDC-L1: 0.408447
+Checkpoint actual guardado en current_checkpoint.pth
+Época 279/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.57216, gnorm=1364.98, l1=0.00268, loss=23.04094, mrstft=23.04094]
+[Epoch 279] Train Loss: 19.351135 | Train EDC-L1: 0.490678
+[Epoch 279] Val Loss: 17.697083 | Val EDC-L1: 0.466578
+Checkpoint actual guardado en current_checkpoint.pth
+Época 280/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.45971, gnorm=8147.86, l1=0.00170, loss=17.47404, mrstft=17.47404]
+[Epoch 280] Train Loss: 18.697507 | Train EDC-L1: 0.490376
+[Epoch 280] Val Loss: 16.421512 | Val EDC-L1: 0.445371
+Checkpoint actual guardado en current_checkpoint.pth
+Época 281/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.45513, gnorm=1709.69, l1=0.00211, loss=16.65723, mrstft=16.65723]
+[Epoch 281] Train Loss: 18.472523 | Train EDC-L1: 0.484051
+[Epoch 281] Val Loss: 19.880564 | Val EDC-L1: 0.537230
+Checkpoint actual guardado en current_checkpoint.pth
+Época 282/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.43602, gnorm=12277.54, l1=0.00300, loss=17.37162, mrstft=17.37162]
+[Epoch 282] Train Loss: 18.302386 | Train EDC-L1: 0.481256
+[Epoch 282] Val Loss: 20.869199 | Val EDC-L1: 0.543869
+Checkpoint actual guardado en current_checkpoint.pth
+Época 283/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.53092, gnorm=1642.85, l1=0.00166, loss=19.66364, mrstft=19.66364]
+[Epoch 283] Train Loss: 18.134726 | Train EDC-L1: 0.478082
+[Epoch 283] Val Loss: 17.629279 | Val EDC-L1: 0.460073
+Checkpoint actual guardado en current_checkpoint.pth
+Época 284/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.52781, gnorm=1657.09, l1=0.00254, loss=20.26171, mrstft=20.26171]
+[Epoch 284] Train Loss: 18.143659 | Train EDC-L1: 0.478654
+[Epoch 284] Val Loss: 16.402676 | Val EDC-L1: 0.431112
+Checkpoint actual guardado en current_checkpoint.pth
+Época 285/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.42480, gnorm=2216.81, l1=0.00193, loss=16.84913, mrstft=16.84913]
+[Epoch 285] Train Loss: 18.204482 | Train EDC-L1: 0.480605
+[Epoch 285] Val Loss: 16.302185 | Val EDC-L1: 0.446225
+Checkpoint actual guardado en current_checkpoint.pth
+Época 286/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.44589, gnorm=8387.08, l1=0.00330, loss=17.19421, mrstft=17.19421]
+[Epoch 286] Train Loss: 18.061872 | Train EDC-L1: 0.476202
+[Epoch 286] Val Loss: 20.281709 | Val EDC-L1: 0.523085
+Checkpoint actual guardado en current_checkpoint.pth
+Época 287/540: 100% 43/43 [00:10<00:00,  4.18it/s, edc_l1=0.41357, gnorm=2256.53, l1=0.00213, loss=15.69869, mrstft=15.69869]
+[Epoch 287] Train Loss: 17.915371 | Train EDC-L1: 0.476330
+[Epoch 287] Val Loss: 20.409827 | Val EDC-L1: 0.544132
+Checkpoint actual guardado en current_checkpoint.pth
+Época 288/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.53028, gnorm=1631.85, l1=0.00163, loss=19.93174, mrstft=19.93174]
+[Epoch 288] Train Loss: 17.915757 | Train EDC-L1: 0.479366
+[Epoch 288] Val Loss: 16.724292 | Val EDC-L1: 0.449059
+Checkpoint actual guardado en current_checkpoint.pth
+Época 289/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.55253, gnorm=1639.79, l1=0.00177, loss=20.35122, mrstft=20.35122]
+[Epoch 289] Train Loss: 17.856117 | Train EDC-L1: 0.479422
+[Epoch 289] Val Loss: 16.762591 | Val EDC-L1: 0.446060
+Checkpoint actual guardado en current_checkpoint.pth
+Época 290/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.45121, gnorm=20668.79, l1=0.00114, loss=16.13696, mrstft=16.13696]
+[Epoch 290] Train Loss: 18.002013 | Train EDC-L1: 0.479009
+[Epoch 290] Val Loss: 16.163192 | Val EDC-L1: 0.452719
+Checkpoint actual guardado en current_checkpoint.pth
+Época 291/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.44733, gnorm=4711.13, l1=0.00191, loss=15.99972, mrstft=15.99972]
+[Epoch 291] Train Loss: 17.944295 | Train EDC-L1: 0.478017
+[Epoch 291] Val Loss: 20.606746 | Val EDC-L1: 0.535075
+Checkpoint actual guardado en current_checkpoint.pth
+Época 292/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.40453, gnorm=26992.39, l1=0.00279, loss=16.17584, mrstft=16.17584]
+[Epoch 292] Train Loss: 17.882146 | Train EDC-L1: 0.475309
+[Epoch 292] Val Loss: 20.453530 | Val EDC-L1: 0.538287
+Checkpoint actual guardado en current_checkpoint.pth
+Época 293/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.55287, gnorm=1529.83, l1=0.00172, loss=19.85418, mrstft=19.85418]
+[Epoch 293] Train Loss: 17.996569 | Train EDC-L1: 0.478065
+[Epoch 293] Val Loss: 16.879210 | Val EDC-L1: 0.444613
+Checkpoint actual guardado en current_checkpoint.pth
+Época 294/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.50756, gnorm=8659.86, l1=0.00252, loss=20.13404, mrstft=20.13404]
+[Epoch 294] Train Loss: 17.938896 | Train EDC-L1: 0.473936
+[Epoch 294] Val Loss: 16.342672 | Val EDC-L1: 0.466035
+Checkpoint actual guardado en current_checkpoint.pth
+Época 295/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.45802, gnorm=2508.11, l1=0.00126, loss=16.40236, mrstft=16.40236]
+[Epoch 295] Train Loss: 17.819613 | Train EDC-L1: 0.471490
+[Epoch 295] Val Loss: 16.053650 | Val EDC-L1: 0.383905
+Checkpoint actual guardado en current_checkpoint.pth
+Época 296/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.47214, gnorm=11224.17, l1=0.00126, loss=16.36606, mrstft=16.36606]
+[Epoch 296] Train Loss: 17.835030 | Train EDC-L1: 0.471842
+[Epoch 296] Val Loss: 20.204471 | Val EDC-L1: 0.534073
+Checkpoint actual guardado en current_checkpoint.pth
+Época 297/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.46659, gnorm=24015.42, l1=0.00114, loss=15.45834, mrstft=15.45834]
+[Epoch 297] Train Loss: 17.924424 | Train EDC-L1: 0.479008
+[Epoch 297] Val Loss: 20.266252 | Val EDC-L1: 0.541861
+Checkpoint actual guardado en current_checkpoint.pth
+Época 298/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.52259, gnorm=2728.73, l1=0.00185, loss=19.85943, mrstft=19.85943]
+[Epoch 298] Train Loss: 17.829961 | Train EDC-L1: 0.472583
+[Epoch 298] Val Loss: 16.403828 | Val EDC-L1: 0.462213
+Checkpoint actual guardado en current_checkpoint.pth
+Época 299/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.53386, gnorm=1535.51, l1=0.00242, loss=19.99110, mrstft=19.99110]
+[Epoch 299] Train Loss: 17.634405 | Train EDC-L1: 0.471312
+[Epoch 299] Val Loss: 16.288426 | Val EDC-L1: 0.424515
+Checkpoint actual guardado en current_checkpoint.pth
+Época 300/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.44536, gnorm=9645.76, l1=0.00170, loss=16.59468, mrstft=16.59468]
+[Epoch 300] Train Loss: 17.475789 | Train EDC-L1: 0.464524
+[Epoch 300] Val Loss: 15.946348 | Val EDC-L1: 0.454009
+Checkpoint actual guardado en current_checkpoint.pth
+Época 301/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.47078, gnorm=1901.88, l1=0.00199, loss=16.02161, mrstft=16.02161]
+[Epoch 301] Train Loss: 17.644877 | Train EDC-L1: 0.469387
+[Epoch 301] Val Loss: 20.707105 | Val EDC-L1: 0.524135
+Checkpoint actual guardado en current_checkpoint.pth
+Época 302/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.41147, gnorm=8090.45, l1=0.00254, loss=16.05367, mrstft=16.05367]
+[Epoch 302] Train Loss: 18.169244 | Train EDC-L1: 0.477416
+[Epoch 302] Val Loss: 20.988812 | Val EDC-L1: 0.555420
+Checkpoint actual guardado en current_checkpoint.pth
+Época 303/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.53606, gnorm=1537.50, l1=0.00107, loss=19.86466, mrstft=19.86466]
+[Epoch 303] Train Loss: 18.288338 | Train EDC-L1: 0.479789
+[Epoch 303] Val Loss: 16.835656 | Val EDC-L1: 0.445782
+Checkpoint actual guardado en current_checkpoint.pth
+Época 304/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.51276, gnorm=1598.09, l1=0.00275, loss=21.24491, mrstft=21.24491]
+[Epoch 304] Train Loss: 17.816414 | Train EDC-L1: 0.466782
+[Epoch 304] Val Loss: 16.506527 | Val EDC-L1: 0.474960
+Checkpoint actual guardado en current_checkpoint.pth
+Época 305/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.44742, gnorm=2051.56, l1=0.00200, loss=16.74583, mrstft=16.74583]
+[Epoch 305] Train Loss: 17.830795 | Train EDC-L1: 0.470367
+[Epoch 305] Val Loss: 15.795985 | Val EDC-L1: 0.414763
+Checkpoint actual guardado en current_checkpoint.pth
+Época 306/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.40456, gnorm=2365.89, l1=0.00308, loss=16.46649, mrstft=16.46649]
+[Epoch 306] Train Loss: 17.824468 | Train EDC-L1: 0.470663
+[Epoch 306] Val Loss: 20.247874 | Val EDC-L1: 0.548196
+Checkpoint actual guardado en current_checkpoint.pth
+Época 307/540: 100% 43/43 [00:09<00:00,  4.38it/s, edc_l1=0.44428, gnorm=13112.12, l1=0.00196, loss=16.10381, mrstft=16.10381]
+[Epoch 307] Train Loss: 17.861644 | Train EDC-L1: 0.473140
+[Epoch 307] Val Loss: 20.333220 | Val EDC-L1: 0.527316
+Checkpoint actual guardado en current_checkpoint.pth
+Época 308/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.51574, gnorm=7230.20, l1=0.00195, loss=20.51133, mrstft=20.51133]
+[Epoch 308] Train Loss: 17.986237 | Train EDC-L1: 0.475017
+[Epoch 308] Val Loss: 16.521923 | Val EDC-L1: 0.456103
+Checkpoint actual guardado en current_checkpoint.pth
+Época 309/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.54998, gnorm=1454.06, l1=0.00142, loss=19.98434, mrstft=19.98434]
+[Epoch 309] Train Loss: 17.743292 | Train EDC-L1: 0.465804
+[Epoch 309] Val Loss: 15.928595 | Val EDC-L1: 0.408305
+Checkpoint actual guardado en current_checkpoint.pth
+Época 310/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.42000, gnorm=3760.89, l1=0.00309, loss=16.69727, mrstft=16.69727]
+[Epoch 310] Train Loss: 17.726920 | Train EDC-L1: 0.461902
+[Epoch 310] Val Loss: 16.286641 | Val EDC-L1: 0.441826
+Checkpoint actual guardado en current_checkpoint.pth
+Época 311/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.41670, gnorm=6451.78, l1=0.00217, loss=15.91233, mrstft=15.91233]
+[Epoch 311] Train Loss: 17.808459 | Train EDC-L1: 0.461356
+[Epoch 311] Val Loss: 19.543441 | Val EDC-L1: 0.500599
+Checkpoint actual guardado en current_checkpoint.pth
+Época 312/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.40070, gnorm=4737.92, l1=0.00262, loss=16.34055, mrstft=16.34055]
+[Epoch 312] Train Loss: 17.676174 | Train EDC-L1: 0.452485
+[Epoch 312] Val Loss: 19.767373 | Val EDC-L1: 0.508510
+Checkpoint actual guardado en current_checkpoint.pth
+Época 313/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.49788, gnorm=10499.75, l1=0.00228, loss=19.79266, mrstft=19.79266]
+[Epoch 313] Train Loss: 17.462829 | Train EDC-L1: 0.449402
+[Epoch 313] Val Loss: 16.436140 | Val EDC-L1: 0.424008
+Checkpoint actual guardado en current_checkpoint.pth
+Época 314/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.51215, gnorm=1513.30, l1=0.00298, loss=20.16730, mrstft=20.16730]
+[Epoch 314] Train Loss: 17.512659 | Train EDC-L1: 0.453305
+[Epoch 314] Val Loss: 16.087397 | Val EDC-L1: 0.414966
+Checkpoint actual guardado en current_checkpoint.pth
+Época 315/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.45210, gnorm=20847.32, l1=0.00223, loss=16.49981, mrstft=16.49981]
+[Epoch 315] Train Loss: 17.583719 | Train EDC-L1: 0.462044
+[Epoch 315] Val Loss: 15.590809 | Val EDC-L1: 0.405629
+Checkpoint actual guardado en current_checkpoint.pth
+Época 316/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.42754, gnorm=3531.60, l1=0.00225, loss=16.54373, mrstft=16.54373]
+[Epoch 316] Train Loss: 17.598843 | Train EDC-L1: 0.458992
+[Epoch 316] Val Loss: 19.581939 | Val EDC-L1: 0.526560
+Checkpoint actual guardado en current_checkpoint.pth
+Época 317/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.40632, gnorm=6984.68, l1=0.00208, loss=15.86067, mrstft=15.86067]
+[Epoch 317] Train Loss: 17.635320 | Train EDC-L1: 0.458201
+[Epoch 317] Val Loss: 19.780323 | Val EDC-L1: 0.508312
+Checkpoint actual guardado en current_checkpoint.pth
+Época 318/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.51260, gnorm=3530.66, l1=0.00101, loss=19.27403, mrstft=19.27403]
+[Epoch 318] Train Loss: 17.687623 | Train EDC-L1: 0.459316
+[Epoch 318] Val Loss: 17.176196 | Val EDC-L1: 0.447316
+Checkpoint actual guardado en current_checkpoint.pth
+Época 319/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.51795, gnorm=4763.50, l1=0.00250, loss=21.04100, mrstft=21.04100]
+[Epoch 319] Train Loss: 18.053884 | Train EDC-L1: 0.455261
+[Epoch 319] Val Loss: 17.463942 | Val EDC-L1: 0.415367
+Checkpoint actual guardado en current_checkpoint.pth
+Época 320/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.44127, gnorm=4257.19, l1=0.00196, loss=16.45742, mrstft=16.45742]
+[Epoch 320] Train Loss: 18.622429 | Train EDC-L1: 0.478212
+[Epoch 320] Val Loss: 16.204981 | Val EDC-L1: 0.479485
+Checkpoint actual guardado en current_checkpoint.pth
+Época 321/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.46313, gnorm=7097.20, l1=0.00150, loss=16.71267, mrstft=16.71267]
+[Epoch 321] Train Loss: 17.757993 | Train EDC-L1: 0.478743
+[Epoch 321] Val Loss: 18.822939 | Val EDC-L1: 0.475739
+Checkpoint actual guardado en current_checkpoint.pth
+Época 322/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.46364, gnorm=2407.01, l1=0.00189, loss=17.00557, mrstft=17.00557]
+[Epoch 322] Train Loss: 18.157005 | Train EDC-L1: 0.453328
+[Epoch 322] Val Loss: 21.789302 | Val EDC-L1: 0.557310
+Checkpoint actual guardado en current_checkpoint.pth
+Época 323/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.49191, gnorm=6629.29, l1=0.00197, loss=19.57264, mrstft=19.57264]
+[Epoch 323] Train Loss: 19.139597 | Train EDC-L1: 0.488721
+[Epoch 323] Val Loss: 17.373212 | Val EDC-L1: 0.482856
+Checkpoint actual guardado en current_checkpoint.pth
+Época 324/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.52573, gnorm=1384.01, l1=0.00196, loss=20.85971, mrstft=20.85971]
+[Epoch 324] Train Loss: 19.004847 | Train EDC-L1: 0.465793
+[Epoch 324] Val Loss: 17.658039 | Val EDC-L1: 0.450396
+Checkpoint actual guardado en current_checkpoint.pth
+Época 325/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.46722, gnorm=4684.16, l1=0.00225, loss=16.82517, mrstft=16.82517]
+[Epoch 325] Train Loss: 18.917876 | Train EDC-L1: 0.488137
+[Epoch 325] Val Loss: 16.591894 | Val EDC-L1: 0.435251
+Checkpoint actual guardado en current_checkpoint.pth
+Época 326/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.46277, gnorm=7272.93, l1=0.00267, loss=16.77807, mrstft=16.77807]
+[Epoch 326] Train Loss: 18.031306 | Train EDC-L1: 0.488589
+[Epoch 326] Val Loss: 19.941890 | Val EDC-L1: 0.530637
+Checkpoint actual guardado en current_checkpoint.pth
+Época 327/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.43013, gnorm=6945.47, l1=0.00250, loss=15.88947, mrstft=15.88947]
+[Epoch 327] Train Loss: 17.608909 | Train EDC-L1: 0.479746
+[Epoch 327] Val Loss: 19.253447 | Val EDC-L1: 0.526084
+Checkpoint actual guardado en current_checkpoint.pth
+Época 328/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.48096, gnorm=3120.00, l1=0.00316, loss=18.98920, mrstft=18.98920]
+[Epoch 328] Train Loss: 17.250651 | Train EDC-L1: 0.461400
+[Epoch 328] Val Loss: 16.779431 | Val EDC-L1: 0.448443
+Checkpoint actual guardado en current_checkpoint.pth
+Época 329/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.53085, gnorm=3217.60, l1=0.00133, loss=19.15314, mrstft=19.15314]
+[Epoch 329] Train Loss: 17.123881 | Train EDC-L1: 0.460868
+[Epoch 329] Val Loss: 15.818359 | Val EDC-L1: 0.437505
+Checkpoint actual guardado en current_checkpoint.pth
+Época 330/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.39273, gnorm=21577.90, l1=0.00305, loss=16.64478, mrstft=16.64478]
+[Epoch 330] Train Loss: 17.376693 | Train EDC-L1: 0.462260
+[Epoch 330] Val Loss: 15.580075 | Val EDC-L1: 0.423599
+Checkpoint actual guardado en current_checkpoint.pth
+Época 331/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.44363, gnorm=2993.29, l1=0.00191, loss=15.58767, mrstft=15.58767]
+[Epoch 331] Train Loss: 17.342908 | Train EDC-L1: 0.459022
+[Epoch 331] Val Loss: 19.823079 | Val EDC-L1: 0.506329
+Checkpoint actual guardado en current_checkpoint.pth
+Época 332/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.38768, gnorm=34585.25, l1=0.00227, loss=16.09548, mrstft=16.09548]
+[Epoch 332] Train Loss: 17.275590 | Train EDC-L1: 0.459811
+[Epoch 332] Val Loss: 18.786704 | Val EDC-L1: 0.513127
+Checkpoint actual guardado en current_checkpoint.pth
+Época 333/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.51397, gnorm=1841.09, l1=0.00209, loss=18.86746, mrstft=18.86746]
+[Epoch 333] Train Loss: 17.187232 | Train EDC-L1: 0.450342
+[Epoch 333] Val Loss: 15.789596 | Val EDC-L1: 0.404379
+Checkpoint actual guardado en current_checkpoint.pth
+Época 334/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.48369, gnorm=4876.14, l1=0.00243, loss=19.66832, mrstft=19.66832]
+[Epoch 334] Train Loss: 17.193199 | Train EDC-L1: 0.454197
+[Epoch 334] Val Loss: 15.775190 | Val EDC-L1: 0.443989
+Checkpoint actual guardado en current_checkpoint.pth
+Época 335/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.43287, gnorm=4134.44, l1=0.00158, loss=15.88916, mrstft=15.88916]
+[Epoch 335] Train Loss: 16.986471 | Train EDC-L1: 0.442017
+[Epoch 335] Val Loss: 16.109590 | Val EDC-L1: 0.410667
+Checkpoint actual guardado en current_checkpoint.pth
+Época 336/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.38414, gnorm=12280.52, l1=0.00253, loss=15.82351, mrstft=15.82351]
+[Epoch 336] Train Loss: 17.098157 | Train EDC-L1: 0.448582
+[Epoch 336] Val Loss: 19.464347 | Val EDC-L1: 0.514324
+Checkpoint actual guardado en current_checkpoint.pth
+Época 337/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.44263, gnorm=12305.07, l1=0.00227, loss=15.78571, mrstft=15.78571]
+[Epoch 337] Train Loss: 17.225558 | Train EDC-L1: 0.457212
+[Epoch 337] Val Loss: 19.851785 | Val EDC-L1: 0.531819
+Checkpoint actual guardado en current_checkpoint.pth
+Época 338/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.51859, gnorm=3245.28, l1=0.00272, loss=18.87597, mrstft=18.87597]
+[Epoch 338] Train Loss: 17.307476 | Train EDC-L1: 0.475438
+[Epoch 338] Val Loss: 16.041276 | Val EDC-L1: 0.448637
+Checkpoint actual guardado en current_checkpoint.pth
+Época 339/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.50040, gnorm=1225.87, l1=0.00165, loss=21.44095, mrstft=21.44095]
+[Epoch 339] Train Loss: 17.848680 | Train EDC-L1: 0.448548
+[Epoch 339] Val Loss: 16.569843 | Val EDC-L1: 0.441325
+Checkpoint actual guardado en current_checkpoint.pth
+Época 340/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.44745, gnorm=3049.16, l1=0.00289, loss=17.60537, mrstft=17.60537]
+[Epoch 340] Train Loss: 18.804840 | Train EDC-L1: 0.470187
+[Epoch 340] Val Loss: 16.451786 | Val EDC-L1: 0.394005
+Checkpoint actual guardado en current_checkpoint.pth
+Época 341/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.45007, gnorm=3049.17, l1=0.00243, loss=17.25128, mrstft=17.25128]
+[Epoch 341] Train Loss: 18.205034 | Train EDC-L1: 0.458768
+[Epoch 341] Val Loss: 20.061443 | Val EDC-L1: 0.520300
+Checkpoint actual guardado en current_checkpoint.pth
+Época 342/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.37390, gnorm=28101.61, l1=0.00236, loss=16.18087, mrstft=16.18087]
+[Epoch 342] Train Loss: 18.117702 | Train EDC-L1: 0.470760
+[Epoch 342] Val Loss: 20.192157 | Val EDC-L1: 0.529886
+Checkpoint actual guardado en current_checkpoint.pth
+Época 343/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.47487, gnorm=1548.63, l1=0.00263, loss=19.08882, mrstft=19.08882]
+[Epoch 343] Train Loss: 17.477201 | Train EDC-L1: 0.449502
+[Epoch 343] Val Loss: 17.292053 | Val EDC-L1: 0.445755
+Checkpoint actual guardado en current_checkpoint.pth
+Época 344/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.50615, gnorm=1229.95, l1=0.00294, loss=20.89668, mrstft=20.89668]
+[Epoch 344] Train Loss: 18.020251 | Train EDC-L1: 0.458235
+[Epoch 344] Val Loss: 16.261053 | Val EDC-L1: 0.410528
+Checkpoint actual guardado en current_checkpoint.pth
+Época 345/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.41154, gnorm=2708.55, l1=0.00190, loss=15.75254, mrstft=15.75254]
+[Epoch 345] Train Loss: 17.550169 | Train EDC-L1: 0.454050
+[Epoch 345] Val Loss: 16.307710 | Val EDC-L1: 0.442153
+Checkpoint actual guardado en current_checkpoint.pth
+Época 346/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.42729, gnorm=9383.81, l1=0.00244, loss=16.43935, mrstft=16.43935]
+[Epoch 346] Train Loss: 17.187530 | Train EDC-L1: 0.458723
+[Epoch 346] Val Loss: 18.677349 | Val EDC-L1: 0.483005
+Checkpoint actual guardado en current_checkpoint.pth
+Época 347/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.39212, gnorm=2811.26, l1=0.00207, loss=15.71333, mrstft=15.71333]
+[Epoch 347] Train Loss: 18.152336 | Train EDC-L1: 0.456413
+[Epoch 347] Val Loss: 20.549065 | Val EDC-L1: 0.513278
+Checkpoint actual guardado en current_checkpoint.pth
+Época 348/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.53232, gnorm=13857.67, l1=0.00152, loss=19.02389, mrstft=19.02389]
+[Epoch 348] Train Loss: 17.828649 | Train EDC-L1: 0.456193
+[Epoch 348] Val Loss: 17.988168 | Val EDC-L1: 0.481899
+Checkpoint actual guardado en current_checkpoint.pth
+Época 349/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.51430, gnorm=1342.48, l1=0.00230, loss=21.22689, mrstft=21.22689]
+[Epoch 349] Train Loss: 18.340419 | Train EDC-L1: 0.468822
+[Epoch 349] Val Loss: 16.831032 | Val EDC-L1: 0.410650
+Checkpoint actual guardado en current_checkpoint.pth
+Época 350/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.38902, gnorm=9400.90, l1=0.00274, loss=17.02091, mrstft=17.02091]
+[Epoch 350] Train Loss: 18.338783 | Train EDC-L1: 0.440834
+[Epoch 350] Val Loss: 17.685807 | Val EDC-L1: 0.400835
+Checkpoint actual guardado en current_checkpoint.pth
+Época 351/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.39760, gnorm=11550.26, l1=0.00237, loss=17.47108, mrstft=17.47108]
+[Epoch 351] Train Loss: 17.946612 | Train EDC-L1: 0.436521
+[Epoch 351] Val Loss: 18.924642 | Val EDC-L1: 0.481689
+Checkpoint actual guardado en current_checkpoint.pth
+Época 352/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.41220, gnorm=43953.37, l1=0.00118, loss=15.16163, mrstft=15.16163]
+[Epoch 352] Train Loss: 17.852244 | Train EDC-L1: 0.443155
+[Epoch 352] Val Loss: 19.931259 | Val EDC-L1: 0.503873
+Checkpoint actual guardado en current_checkpoint.pth
+Época 353/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.49183, gnorm=4127.17, l1=0.00229, loss=21.45232, mrstft=21.45232]
+[Epoch 353] Train Loss: 17.770629 | Train EDC-L1: 0.449398
+[Epoch 353] Val Loss: 16.353611 | Val EDC-L1: 0.432834
+Checkpoint actual guardado en current_checkpoint.pth
+Época 354/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.52715, gnorm=16917.88, l1=0.00116, loss=19.42271, mrstft=19.42271]
+[Epoch 354] Train Loss: 18.486546 | Train EDC-L1: 0.451122
+[Epoch 354] Val Loss: 16.056308 | Val EDC-L1: 0.430458
+Checkpoint actual guardado en current_checkpoint.pth
+Época 355/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.39724, gnorm=21907.62, l1=0.00185, loss=15.83436, mrstft=15.83436]
+[Epoch 355] Train Loss: 17.814927 | Train EDC-L1: 0.433894
+[Epoch 355] Val Loss: 16.427592 | Val EDC-L1: 0.404818
+Checkpoint actual guardado en current_checkpoint.pth
+Época 356/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.42235, gnorm=39654.33, l1=0.00166, loss=15.95385, mrstft=15.95385]
+[Epoch 356] Train Loss: 17.700238 | Train EDC-L1: 0.426439
+[Epoch 356] Val Loss: 20.036290 | Val EDC-L1: 0.440856
+Checkpoint actual guardado en current_checkpoint.pth
+Época 357/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.36710, gnorm=5341.32, l1=0.00241, loss=15.50408, mrstft=15.50408]
+[Epoch 357] Train Loss: 17.255494 | Train EDC-L1: 0.430511
+[Epoch 357] Val Loss: 19.285518 | Val EDC-L1: 0.484874
+Checkpoint actual guardado en current_checkpoint.pth
+Época 358/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.48314, gnorm=1633.70, l1=0.00205, loss=20.06959, mrstft=20.06959]
+[Epoch 358] Train Loss: 17.548912 | Train EDC-L1: 0.437465
+[Epoch 358] Val Loss: 18.125268 | Val EDC-L1: 0.439194
+Checkpoint actual guardado en current_checkpoint.pth
+Época 359/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.50725, gnorm=1435.23, l1=0.00273, loss=20.73492, mrstft=20.73492]
+[Epoch 359] Train Loss: 18.016417 | Train EDC-L1: 0.448465
+[Epoch 359] Val Loss: 17.354066 | Val EDC-L1: 0.379472
+Checkpoint actual guardado en current_checkpoint.pth
+Época 360/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.41510, gnorm=37195.42, l1=0.00170, loss=15.73280, mrstft=15.73280]
+[Epoch 360] Train Loss: 17.974979 | Train EDC-L1: 0.434412
+[Epoch 360] Val Loss: 16.154147 | Val EDC-L1: 0.403694
+Checkpoint actual guardado en current_checkpoint.pth
+Época 361/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.32993, gnorm=44533.76, l1=0.00236, loss=17.37682, mrstft=17.37682]
+[Epoch 361] Train Loss: 17.074013 | Train EDC-L1: 0.427064
+[Epoch 361] Val Loss: 18.285892 | Val EDC-L1: 0.506651
+Checkpoint actual guardado en current_checkpoint.pth
+Época 362/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.40822, gnorm=12292.76, l1=0.00180, loss=16.50802, mrstft=16.50802]
+[Epoch 362] Train Loss: 18.125553 | Train EDC-L1: 0.444928
+[Epoch 362] Val Loss: 21.629714 | Val EDC-L1: 0.537872
+Checkpoint actual guardado en current_checkpoint.pth
+Época 363/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.48089, gnorm=7539.01, l1=0.00249, loss=18.78508, mrstft=18.78508]
+[Epoch 363] Train Loss: 17.793248 | Train EDC-L1: 0.439315
+[Epoch 363] Val Loss: 17.216389 | Val EDC-L1: 0.414128
+Checkpoint actual guardado en current_checkpoint.pth
+Época 364/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.47548, gnorm=3571.29, l1=0.00165, loss=18.93268, mrstft=18.93268]
+[Epoch 364] Train Loss: 17.479909 | Train EDC-L1: 0.431696
+[Epoch 364] Val Loss: 16.687458 | Val EDC-L1: 0.387926
+Checkpoint actual guardado en current_checkpoint.pth
+Época 365/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.40046, gnorm=57055.82, l1=0.00261, loss=16.77608, mrstft=16.77608]
+[Epoch 365] Train Loss: 17.684124 | Train EDC-L1: 0.441411
+[Epoch 365] Val Loss: 15.993312 | Val EDC-L1: 0.380464
+Checkpoint actual guardado en current_checkpoint.pth
+Época 366/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.42352, gnorm=3138.33, l1=0.00181, loss=16.28769, mrstft=16.28769]
+[Epoch 366] Train Loss: 17.747063 | Train EDC-L1: 0.445531
+[Epoch 366] Val Loss: 19.494429 | Val EDC-L1: 0.512926
+Checkpoint actual guardado en current_checkpoint.pth
+Época 367/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.41868, gnorm=2296.99, l1=0.00277, loss=16.38534, mrstft=16.38534]
+[Epoch 367] Train Loss: 16.989407 | Train EDC-L1: 0.445502
+[Epoch 367] Val Loss: 20.498664 | Val EDC-L1: 0.502452
+Checkpoint actual guardado en current_checkpoint.pth
+Época 368/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.46448, gnorm=2434.98, l1=0.00266, loss=18.55977, mrstft=18.55977]
+[Epoch 368] Train Loss: 17.758668 | Train EDC-L1: 0.455816
+[Epoch 368] Val Loss: 16.971611 | Val EDC-L1: 0.424005
+Checkpoint actual guardado en current_checkpoint.pth
+Época 369/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.47815, gnorm=1073.50, l1=0.00344, loss=21.88893, mrstft=21.88893]
+[Epoch 369] Train Loss: 17.599103 | Train EDC-L1: 0.420469
+[Epoch 369] Val Loss: 15.897335 | Val EDC-L1: 0.414888
+Checkpoint actual guardado en current_checkpoint.pth
+Época 370/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.37977, gnorm=7146.83, l1=0.00239, loss=17.89992, mrstft=17.89992]
+[Epoch 370] Train Loss: 17.858949 | Train EDC-L1: 0.443477
+[Epoch 370] Val Loss: 17.086666 | Val EDC-L1: 0.444421
+Checkpoint actual guardado en current_checkpoint.pth
+Época 371/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.35987, gnorm=36900.94, l1=0.00200, loss=15.65961, mrstft=15.65961]
+[Epoch 371] Train Loss: 17.985593 | Train EDC-L1: 0.440355
+[Epoch 371] Val Loss: 20.613922 | Val EDC-L1: 0.484297
+Checkpoint actual guardado en current_checkpoint.pth
+Época 372/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.43308, gnorm=5244.64, l1=0.00151, loss=15.23274, mrstft=15.23274]
+[Epoch 372] Train Loss: 17.324130 | Train EDC-L1: 0.441103
+[Epoch 372] Val Loss: 19.789936 | Val EDC-L1: 0.509278
+Checkpoint actual guardado en current_checkpoint.pth
+Época 373/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.48240, gnorm=5663.44, l1=0.00181, loss=19.75812, mrstft=19.75812]
+[Epoch 373] Train Loss: 17.459793 | Train EDC-L1: 0.447899
+[Epoch 373] Val Loss: 15.895054 | Val EDC-L1: 0.437531
+Checkpoint actual guardado en current_checkpoint.pth
+Época 374/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.49643, gnorm=3741.97, l1=0.00205, loss=19.96777, mrstft=19.96777]
+[Epoch 374] Train Loss: 17.194540 | Train EDC-L1: 0.441874
+[Epoch 374] Val Loss: 15.650405 | Val EDC-L1: 0.406742
+Checkpoint actual guardado en current_checkpoint.pth
+Época 375/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.41027, gnorm=2980.81, l1=0.00170, loss=15.63940, mrstft=15.63940]
+[Epoch 375] Train Loss: 17.160841 | Train EDC-L1: 0.442052
+[Epoch 375] Val Loss: 15.724196 | Val EDC-L1: 0.421848
+Checkpoint actual guardado en current_checkpoint.pth
+Época 376/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.42299, gnorm=10786.92, l1=0.00176, loss=15.94771, mrstft=15.94771]
+[Epoch 376] Train Loss: 17.261685 | Train EDC-L1: 0.439700
+[Epoch 376] Val Loss: 20.452376 | Val EDC-L1: 0.503921
+Checkpoint actual guardado en current_checkpoint.pth
+Época 377/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.37455, gnorm=7289.72, l1=0.00200, loss=15.50021, mrstft=15.50021]
+[Epoch 377] Train Loss: 17.492171 | Train EDC-L1: 0.444605
+[Epoch 377] Val Loss: 19.862936 | Val EDC-L1: 0.485673
+Checkpoint actual guardado en current_checkpoint.pth
+Época 378/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.47977, gnorm=1500.71, l1=0.00292, loss=18.81206, mrstft=18.81206]
+[Epoch 378] Train Loss: 17.241529 | Train EDC-L1: 0.441097
+[Epoch 378] Val Loss: 16.131722 | Val EDC-L1: 0.400835
+Checkpoint actual guardado en current_checkpoint.pth
+Época 379/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.46192, gnorm=1743.39, l1=0.00208, loss=19.06798, mrstft=19.06798]
+[Epoch 379] Train Loss: 16.709366 | Train EDC-L1: 0.426244
+[Epoch 379] Val Loss: 15.361695 | Val EDC-L1: 0.404189
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=15.361695)
+Época 380/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.41546, gnorm=31795.71, l1=0.00152, loss=16.09721, mrstft=16.09721]
+[Epoch 380] Train Loss: 16.946740 | Train EDC-L1: 0.427138
+[Epoch 380] Val Loss: 15.205876 | Val EDC-L1: 0.394667
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=15.205876)
+Época 381/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.34647, gnorm=4469.38, l1=0.00214, loss=17.71596, mrstft=17.71596]
+[Epoch 381] Train Loss: 17.174542 | Train EDC-L1: 0.435305
+[Epoch 381] Val Loss: 19.375517 | Val EDC-L1: 0.509654
+Checkpoint actual guardado en current_checkpoint.pth
+Época 382/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.44000, gnorm=3542.65, l1=0.00170, loss=16.56832, mrstft=16.56832]
+[Epoch 382] Train Loss: 18.007990 | Train EDC-L1: 0.441901
+[Epoch 382] Val Loss: 20.954209 | Val EDC-L1: 0.502227
+Checkpoint actual guardado en current_checkpoint.pth
+Época 383/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.48323, gnorm=3647.08, l1=0.00201, loss=18.96253, mrstft=18.96253]
+[Epoch 383] Train Loss: 17.711469 | Train EDC-L1: 0.444739
+[Epoch 383] Val Loss: 16.170447 | Val EDC-L1: 0.402118
+Checkpoint actual guardado en current_checkpoint.pth
+Época 384/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.47820, gnorm=3360.08, l1=0.00175, loss=18.33737, mrstft=18.33737]
+[Epoch 384] Train Loss: 17.009817 | Train EDC-L1: 0.436259
+[Epoch 384] Val Loss: 15.729776 | Val EDC-L1: 0.421724
+Checkpoint actual guardado en current_checkpoint.pth
+Época 385/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.44154, gnorm=6457.82, l1=0.00200, loss=16.46073, mrstft=16.46073]
+[Epoch 385] Train Loss: 17.051954 | Train EDC-L1: 0.439730
+[Epoch 385] Val Loss: 14.995509 | Val EDC-L1: 0.351808
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=14.995509)
+Época 386/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.38915, gnorm=4233.66, l1=0.00107, loss=14.40240, mrstft=14.40240]
+[Epoch 386] Train Loss: 16.723179 | Train EDC-L1: 0.423636
+[Epoch 386] Val Loss: 19.169298 | Val EDC-L1: 0.479630
+Checkpoint actual guardado en current_checkpoint.pth
+Época 387/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.35514, gnorm=9548.46, l1=0.00318, loss=15.91951, mrstft=15.91951]
+[Epoch 387] Train Loss: 16.743533 | Train EDC-L1: 0.422893
+[Epoch 387] Val Loss: 18.743498 | Val EDC-L1: 0.472575
+Checkpoint actual guardado en current_checkpoint.pth
+Época 388/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.48725, gnorm=10066.88, l1=0.00109, loss=18.87716, mrstft=18.87716]
+[Epoch 388] Train Loss: 16.908181 | Train EDC-L1: 0.425734
+[Epoch 388] Val Loss: 16.377988 | Val EDC-L1: 0.441658
+Checkpoint actual guardado en current_checkpoint.pth
+Época 389/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.49320, gnorm=1419.75, l1=0.00221, loss=19.63488, mrstft=19.63488]
+[Epoch 389] Train Loss: 16.912974 | Train EDC-L1: 0.431640
+[Epoch 389] Val Loss: 15.086622 | Val EDC-L1: 0.374853
+Checkpoint actual guardado en current_checkpoint.pth
+Época 390/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.37539, gnorm=3451.84, l1=0.00264, loss=16.36791, mrstft=16.36791]
+[Epoch 390] Train Loss: 16.602058 | Train EDC-L1: 0.425861
+[Epoch 390] Val Loss: 15.222519 | Val EDC-L1: 0.390238
+Checkpoint actual guardado en current_checkpoint.pth
+Época 391/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.44828, gnorm=3642.84, l1=0.00137, loss=15.94602, mrstft=15.94602]
+[Epoch 391] Train Loss: 16.820308 | Train EDC-L1: 0.431683
+[Epoch 391] Val Loss: 18.076322 | Val EDC-L1: 0.482706
+Checkpoint actual guardado en current_checkpoint.pth
+Época 392/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.38366, gnorm=29783.26, l1=0.00250, loss=16.52973, mrstft=16.52973]
+[Epoch 392] Train Loss: 17.626163 | Train EDC-L1: 0.436010
+[Epoch 392] Val Loss: 20.513272 | Val EDC-L1: 0.512434
+Checkpoint actual guardado en current_checkpoint.pth
+Época 393/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.44360, gnorm=5342.90, l1=0.00261, loss=19.01815, mrstft=19.01815]
+[Epoch 393] Train Loss: 18.071230 | Train EDC-L1: 0.437800
+[Epoch 393] Val Loss: 17.842944 | Val EDC-L1: 0.422176
+Checkpoint actual guardado en current_checkpoint.pth
+Época 394/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.51228, gnorm=3103.83, l1=0.00202, loss=20.05927, mrstft=20.05927]
+[Epoch 394] Train Loss: 17.990150 | Train EDC-L1: 0.424448
+[Epoch 394] Val Loss: 16.305024 | Val EDC-L1: 0.397183
+Checkpoint actual guardado en current_checkpoint.pth
+Época 395/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.42253, gnorm=7609.71, l1=0.00147, loss=16.27154, mrstft=16.27154]
+[Epoch 395] Train Loss: 18.124697 | Train EDC-L1: 0.436983
+[Epoch 395] Val Loss: 15.399820 | Val EDC-L1: 0.390484
+Checkpoint actual guardado en current_checkpoint.pth
+Época 396/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.41072, gnorm=7335.66, l1=0.00184, loss=16.56361, mrstft=16.56361]
+[Epoch 396] Train Loss: 17.819305 | Train EDC-L1: 0.418651
+[Epoch 396] Val Loss: 18.985323 | Val EDC-L1: 0.468262
+Checkpoint actual guardado en current_checkpoint.pth
+Época 397/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.37640, gnorm=5720.00, l1=0.00227, loss=15.99773, mrstft=15.99773]
+[Epoch 397] Train Loss: 17.532282 | Train EDC-L1: 0.407066
+[Epoch 397] Val Loss: 20.541366 | Val EDC-L1: 0.425753
+Checkpoint actual guardado en current_checkpoint.pth
+Época 398/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.46324, gnorm=14836.14, l1=0.00122, loss=19.32122, mrstft=19.32122]
+[Epoch 398] Train Loss: 17.393887 | Train EDC-L1: 0.397798
+[Epoch 398] Val Loss: 15.897140 | Val EDC-L1: 0.368454
+Checkpoint actual guardado en current_checkpoint.pth
+Época 399/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.47799, gnorm=1187.09, l1=0.00161, loss=20.35162, mrstft=20.35162]
+[Epoch 399] Train Loss: 17.084950 | Train EDC-L1: 0.392783
+[Epoch 399] Val Loss: 15.673004 | Val EDC-L1: 0.418204
+Checkpoint actual guardado en current_checkpoint.pth
+Época 400/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.39998, gnorm=36560.64, l1=0.00200, loss=15.96769, mrstft=15.96769]
+[Epoch 400] Train Loss: 17.478330 | Train EDC-L1: 0.435677
+[Epoch 400] Val Loss: 15.950995 | Val EDC-L1: 0.400034
+Checkpoint actual guardado en current_checkpoint.pth
+Época 401/540: 100% 43/43 [00:09<00:00,  4.37it/s, edc_l1=0.36808, gnorm=24584.09, l1=0.00214, loss=14.76011, mrstft=14.76011]
+[Epoch 401] Train Loss: 17.659232 | Train EDC-L1: 0.430346
+[Epoch 401] Val Loss: 19.673708 | Val EDC-L1: 0.496469
+Checkpoint actual guardado en current_checkpoint.pth
+Época 402/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.37674, gnorm=2383.81, l1=0.00203, loss=16.96346, mrstft=16.96346]
+[Epoch 402] Train Loss: 17.858285 | Train EDC-L1: 0.409702
+[Epoch 402] Val Loss: 19.854447 | Val EDC-L1: 0.480198
+Checkpoint actual guardado en current_checkpoint.pth
+Época 403/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.50431, gnorm=1658.33, l1=0.00225, loss=20.76774, mrstft=20.76774]
+[Epoch 403] Train Loss: 17.545558 | Train EDC-L1: 0.436187
+[Epoch 403] Val Loss: 15.848740 | Val EDC-L1: 0.423072
+Checkpoint actual guardado en current_checkpoint.pth
+Época 404/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.52434, gnorm=2015.08, l1=0.00150, loss=20.32057, mrstft=20.32057]
+[Epoch 404] Train Loss: 17.282891 | Train EDC-L1: 0.448075
+[Epoch 404] Val Loss: 15.355201 | Val EDC-L1: 0.396859
+Checkpoint actual guardado en current_checkpoint.pth
+Época 405/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.43418, gnorm=3613.19, l1=0.00119, loss=14.86107, mrstft=14.86107]
+[Epoch 405] Train Loss: 17.169995 | Train EDC-L1: 0.448550
+[Epoch 405] Val Loss: 15.046947 | Val EDC-L1: 0.398024
+Checkpoint actual guardado en current_checkpoint.pth
+Época 406/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.42846, gnorm=3069.43, l1=0.00135, loss=14.74817, mrstft=14.74817]
+[Epoch 406] Train Loss: 16.346748 | Train EDC-L1: 0.440351
+[Epoch 406] Val Loss: 18.062553 | Val EDC-L1: 0.509619
+Checkpoint actual guardado en current_checkpoint.pth
+Época 407/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.41274, gnorm=18691.92, l1=0.00212, loss=15.23407, mrstft=15.23407]
+[Epoch 407] Train Loss: 17.027560 | Train EDC-L1: 0.438253
+[Epoch 407] Val Loss: 19.659646 | Val EDC-L1: 0.462098
+Checkpoint actual guardado en current_checkpoint.pth
+Época 408/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.46615, gnorm=2110.23, l1=0.00231, loss=20.76243, mrstft=20.76243]
+[Epoch 408] Train Loss: 17.299541 | Train EDC-L1: 0.418131
+[Epoch 408] Val Loss: 15.269879 | Val EDC-L1: 0.396241
+Checkpoint actual guardado en current_checkpoint.pth
+Época 409/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.36648, gnorm=7672.40, l1=0.00187, loss=19.20710, mrstft=19.20710]
+[Epoch 409] Train Loss: 17.221477 | Train EDC-L1: 0.411317
+[Epoch 409] Val Loss: 16.040592 | Val EDC-L1: 0.339121
+Checkpoint actual guardado en current_checkpoint.pth
+Época 410/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.38668, gnorm=52639.27, l1=0.00227, loss=16.34148, mrstft=16.34148]
+[Epoch 410] Train Loss: 17.082866 | Train EDC-L1: 0.389925
+[Epoch 410] Val Loss: 15.004414 | Val EDC-L1: 0.337986
+Checkpoint actual guardado en current_checkpoint.pth
+Época 411/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.35388, gnorm=24314.65, l1=0.00179, loss=15.38694, mrstft=15.38694]
+[Epoch 411] Train Loss: 17.150899 | Train EDC-L1: 0.390121
+[Epoch 411] Val Loss: 18.253819 | Val EDC-L1: 0.446679
+Checkpoint actual guardado en current_checkpoint.pth
+Época 412/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.33809, gnorm=36629.58, l1=0.00284, loss=15.80151, mrstft=15.80151]
+[Epoch 412] Train Loss: 16.662447 | Train EDC-L1: 0.391342
+[Epoch 412] Val Loss: 18.947415 | Val EDC-L1: 0.444723
+Checkpoint actual guardado en current_checkpoint.pth
+Época 413/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.41539, gnorm=5047.70, l1=0.00161, loss=19.04204, mrstft=19.04204]
+[Epoch 413] Train Loss: 17.258472 | Train EDC-L1: 0.398888
+[Epoch 413] Val Loss: 15.331576 | Val EDC-L1: 0.421141
+Checkpoint actual guardado en current_checkpoint.pth
+Época 414/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.46468, gnorm=1956.90, l1=0.00195, loss=17.51552, mrstft=17.51552]
+[Epoch 414] Train Loss: 16.707820 | Train EDC-L1: 0.400558
+[Epoch 414] Val Loss: 16.023482 | Val EDC-L1: 0.353637
+Checkpoint actual guardado en current_checkpoint.pth
+Época 415/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.37442, gnorm=2647.24, l1=0.00253, loss=16.56066, mrstft=16.56066]
+[Epoch 415] Train Loss: 16.947439 | Train EDC-L1: 0.402342
+[Epoch 415] Val Loss: 15.365361 | Val EDC-L1: 0.379826
+Checkpoint actual guardado en current_checkpoint.pth
+Época 416/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.34509, gnorm=49125.91, l1=0.00229, loss=16.06647, mrstft=16.06647]
+[Epoch 416] Train Loss: 16.619053 | Train EDC-L1: 0.401313
+[Epoch 416] Val Loss: 17.503555 | Val EDC-L1: 0.419486
+Checkpoint actual guardado en current_checkpoint.pth
+Época 417/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.39986, gnorm=8687.20, l1=0.00159, loss=14.66558, mrstft=14.66558]
+[Epoch 417] Train Loss: 16.821652 | Train EDC-L1: 0.401125
+[Epoch 417] Val Loss: 20.350499 | Val EDC-L1: 0.457818
+Checkpoint actual guardado en current_checkpoint.pth
+Época 418/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.45702, gnorm=8129.56, l1=0.00186, loss=17.94397, mrstft=17.94397]
+[Epoch 418] Train Loss: 16.562884 | Train EDC-L1: 0.402893
+[Epoch 418] Val Loss: 15.756198 | Val EDC-L1: 0.444981
+Checkpoint actual guardado en current_checkpoint.pth
+Época 419/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.46263, gnorm=1862.84, l1=0.00222, loss=18.54967, mrstft=18.54967]
+[Epoch 419] Train Loss: 16.710494 | Train EDC-L1: 0.410026
+[Epoch 419] Val Loss: 15.374953 | Val EDC-L1: 0.344025
+Checkpoint actual guardado en current_checkpoint.pth
+Época 420/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.37409, gnorm=17608.79, l1=0.00160, loss=15.73072, mrstft=15.73072]
+[Epoch 420] Train Loss: 16.986847 | Train EDC-L1: 0.407617
+[Epoch 420] Val Loss: 15.391176 | Val EDC-L1: 0.367146
+Checkpoint actual guardado en current_checkpoint.pth
+Época 421/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.37919, gnorm=17084.69, l1=0.00203, loss=15.63400, mrstft=15.63400]
+[Epoch 421] Train Loss: 17.375119 | Train EDC-L1: 0.400864
+[Epoch 421] Val Loss: 19.503354 | Val EDC-L1: 0.452752
+Checkpoint actual guardado en current_checkpoint.pth
+Época 422/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.27924, gnorm=79411.23, l1=0.00300, loss=15.44380, mrstft=15.44380]
+[Epoch 422] Train Loss: 16.466881 | Train EDC-L1: 0.399603
+[Epoch 422] Val Loss: 18.898734 | Val EDC-L1: 0.492034
+Checkpoint actual guardado en current_checkpoint.pth
+Época 423/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.46265, gnorm=6254.63, l1=0.00190, loss=17.57594, mrstft=17.57594]
+[Epoch 423] Train Loss: 16.105341 | Train EDC-L1: 0.403451
+[Epoch 423] Val Loss: 15.222636 | Val EDC-L1: 0.362416
+Checkpoint actual guardado en current_checkpoint.pth
+Época 424/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.42264, gnorm=2935.42, l1=0.00167, loss=17.93662, mrstft=17.93662]
+[Epoch 424] Train Loss: 16.210390 | Train EDC-L1: 0.379241
+[Epoch 424] Val Loss: 15.205087 | Val EDC-L1: 0.323464
+Checkpoint actual guardado en current_checkpoint.pth
+Época 425/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.31931, gnorm=56407.92, l1=0.00162, loss=14.66917, mrstft=14.66917]
+[Epoch 425] Train Loss: 16.517181 | Train EDC-L1: 0.394212
+[Epoch 425] Val Loss: 14.541331 | Val EDC-L1: 0.404569
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=14.541331)
+Época 426/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.38555, gnorm=28938.58, l1=0.00344, loss=15.27097, mrstft=15.27097]
+[Epoch 426] Train Loss: 16.056298 | Train EDC-L1: 0.388462
+[Epoch 426] Val Loss: 17.527158 | Val EDC-L1: 0.401304
+Checkpoint actual guardado en current_checkpoint.pth
+Época 427/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.30491, gnorm=53733.31, l1=0.00123, loss=14.94276, mrstft=14.94276]
+[Epoch 427] Train Loss: 16.099748 | Train EDC-L1: 0.389662
+[Epoch 427] Val Loss: 18.082409 | Val EDC-L1: 0.458669
+Checkpoint actual guardado en current_checkpoint.pth
+Época 428/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.40067, gnorm=2757.62, l1=0.00201, loss=17.34465, mrstft=17.34465]
+[Epoch 428] Train Loss: 16.234843 | Train EDC-L1: 0.387396
+[Epoch 428] Val Loss: 15.395306 | Val EDC-L1: 0.390253
+Checkpoint actual guardado en current_checkpoint.pth
+Época 429/540: 100% 43/43 [00:10<00:00,  4.30it/s, edc_l1=0.45985, gnorm=3103.41, l1=0.00203, loss=18.11342, mrstft=18.11342]
+[Epoch 429] Train Loss: 16.290065 | Train EDC-L1: 0.391665
+[Epoch 429] Val Loss: 14.844316 | Val EDC-L1: 0.343305
+Checkpoint actual guardado en current_checkpoint.pth
+Época 430/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.32486, gnorm=51551.30, l1=0.00283, loss=15.64536, mrstft=15.64536]
+[Epoch 430] Train Loss: 16.801565 | Train EDC-L1: 0.390428
+[Epoch 430] Val Loss: 15.079681 | Val EDC-L1: 0.365609
+Checkpoint actual guardado en current_checkpoint.pth
+Época 431/540: 100% 43/43 [00:09<00:00,  4.39it/s, edc_l1=0.31102, gnorm=89273.73, l1=0.00141, loss=14.44281, mrstft=14.44281]
+[Epoch 431] Train Loss: 16.277461 | Train EDC-L1: 0.380685
+[Epoch 431] Val Loss: 17.448950 | Val EDC-L1: 0.379123
+Checkpoint actual guardado en current_checkpoint.pth
+Época 432/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.37569, gnorm=5668.73, l1=0.00286, loss=15.47894, mrstft=15.47894]
+[Epoch 432] Train Loss: 16.382249 | Train EDC-L1: 0.387183
+[Epoch 432] Val Loss: 18.798186 | Val EDC-L1: 0.458478
+Checkpoint actual guardado en current_checkpoint.pth
+Época 433/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.46713, gnorm=3864.36, l1=0.00239, loss=19.77519, mrstft=19.77519]
+[Epoch 433] Train Loss: 17.024653 | Train EDC-L1: 0.407879
+[Epoch 433] Val Loss: 14.745356 | Val EDC-L1: 0.363917
+Checkpoint actual guardado en current_checkpoint.pth
+Época 434/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.36084, gnorm=31653.59, l1=0.00205, loss=17.11073, mrstft=17.11073]
+[Epoch 434] Train Loss: 16.392897 | Train EDC-L1: 0.378113
+[Epoch 434] Val Loss: 15.857911 | Val EDC-L1: 0.327132
+Checkpoint actual guardado en current_checkpoint.pth
+Época 435/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.35561, gnorm=23054.84, l1=0.00272, loss=15.26870, mrstft=15.26870]
+[Epoch 435] Train Loss: 16.331178 | Train EDC-L1: 0.372215
+[Epoch 435] Val Loss: 14.780943 | Val EDC-L1: 0.323044
+Checkpoint actual guardado en current_checkpoint.pth
+Época 436/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.34485, gnorm=4502.46, l1=0.00126, loss=15.72123, mrstft=15.72123]
+[Epoch 436] Train Loss: 16.648384 | Train EDC-L1: 0.382596
+[Epoch 436] Val Loss: 18.084237 | Val EDC-L1: 0.472746
+Checkpoint actual guardado en current_checkpoint.pth
+Época 437/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.36338, gnorm=5166.23, l1=0.00236, loss=15.33506, mrstft=15.33506]
+[Epoch 437] Train Loss: 16.405995 | Train EDC-L1: 0.388530
+[Epoch 437] Val Loss: 18.701571 | Val EDC-L1: 0.439493
+Checkpoint actual guardado en current_checkpoint.pth
+Época 438/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.43656, gnorm=15123.58, l1=0.00137, loss=17.85644, mrstft=17.85644]
+[Epoch 438] Train Loss: 16.531565 | Train EDC-L1: 0.388634
+[Epoch 438] Val Loss: 14.922408 | Val EDC-L1: 0.376257
+Checkpoint actual guardado en current_checkpoint.pth
+Época 439/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.44139, gnorm=3184.92, l1=0.00183, loss=17.51031, mrstft=17.51031]
+[Epoch 439] Train Loss: 15.813878 | Train EDC-L1: 0.390286
+[Epoch 439] Val Loss: 14.177759 | Val EDC-L1: 0.326247
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=14.177759)
+Época 440/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.36735, gnorm=7837.98, l1=0.00251, loss=15.51555, mrstft=15.51555]
+[Epoch 440] Train Loss: 15.537943 | Train EDC-L1: 0.377260
+[Epoch 440] Val Loss: 14.462357 | Val EDC-L1: 0.349017
+Checkpoint actual guardado en current_checkpoint.pth
+Época 441/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.35644, gnorm=7728.21, l1=0.00310, loss=15.31298, mrstft=15.31298]
+[Epoch 441] Train Loss: 16.072333 | Train EDC-L1: 0.399053
+[Epoch 441] Val Loss: 17.804527 | Val EDC-L1: 0.442125
+Checkpoint actual guardado en current_checkpoint.pth
+Época 442/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.36250, gnorm=61629.35, l1=0.00229, loss=14.04395, mrstft=14.04395]
+[Epoch 442] Train Loss: 15.719594 | Train EDC-L1: 0.407227
+[Epoch 442] Val Loss: 19.043736 | Val EDC-L1: 0.503390
+Checkpoint actual guardado en current_checkpoint.pth
+Época 443/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.46815, gnorm=3585.61, l1=0.00225, loss=17.61215, mrstft=17.61215]
+[Epoch 443] Train Loss: 16.003197 | Train EDC-L1: 0.426127
+[Epoch 443] Val Loss: 14.680588 | Val EDC-L1: 0.402427
+Checkpoint actual guardado en current_checkpoint.pth
+Época 444/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.47758, gnorm=3768.56, l1=0.00184, loss=18.21298, mrstft=18.21298]
+[Epoch 444] Train Loss: 15.973315 | Train EDC-L1: 0.432232
+[Epoch 444] Val Loss: 13.898066 | Val EDC-L1: 0.373478
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=13.898066)
+Época 445/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.41275, gnorm=4586.27, l1=0.00223, loss=14.61437, mrstft=14.61437]
+[Epoch 445] Train Loss: 15.952494 | Train EDC-L1: 0.431530
+[Epoch 445] Val Loss: 14.785989 | Val EDC-L1: 0.388374
+Checkpoint actual guardado en current_checkpoint.pth
+Época 446/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.41371, gnorm=35581.04, l1=0.00110, loss=13.89332, mrstft=13.89332]
+[Epoch 446] Train Loss: 15.766175 | Train EDC-L1: 0.426728
+[Epoch 446] Val Loss: 17.050460 | Val EDC-L1: 0.455820
+Checkpoint actual guardado en current_checkpoint.pth
+Época 447/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.38068, gnorm=4380.98, l1=0.00249, loss=14.26743, mrstft=14.26743]
+[Epoch 447] Train Loss: 15.802958 | Train EDC-L1: 0.401390
+[Epoch 447] Val Loss: 18.239460 | Val EDC-L1: 0.442715
+Checkpoint actual guardado en current_checkpoint.pth
+Época 448/540: 100% 43/43 [00:10<00:00,  4.13it/s, edc_l1=0.37404, gnorm=22374.74, l1=0.00260, loss=16.20602, mrstft=16.20602]
+[Epoch 448] Train Loss: 15.581928 | Train EDC-L1: 0.373555
+[Epoch 448] Val Loss: 15.687558 | Val EDC-L1: 0.355656
+Checkpoint actual guardado en current_checkpoint.pth
+Época 449/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.42865, gnorm=6407.09, l1=0.00207, loss=20.15431, mrstft=20.15431]
+[Epoch 449] Train Loss: 16.120002 | Train EDC-L1: 0.376177
+[Epoch 449] Val Loss: 14.501734 | Val EDC-L1: 0.344625
+Checkpoint actual guardado en current_checkpoint.pth
+Época 450/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.36862, gnorm=3002.87, l1=0.00180, loss=15.48995, mrstft=15.48995]
+[Epoch 450] Train Loss: 16.109494 | Train EDC-L1: 0.381049
+[Epoch 450] Val Loss: 14.859354 | Val EDC-L1: 0.320733
+Checkpoint actual guardado en current_checkpoint.pth
+Época 451/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.34333, gnorm=41864.13, l1=0.00120, loss=13.88986, mrstft=13.88986]
+[Epoch 451] Train Loss: 15.852409 | Train EDC-L1: 0.403664
+[Epoch 451] Val Loss: 19.339453 | Val EDC-L1: 0.472718
+Checkpoint actual guardado en current_checkpoint.pth
+Época 452/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.41076, gnorm=37187.85, l1=0.00166, loss=14.80754, mrstft=14.80754]
+[Epoch 452] Train Loss: 15.722331 | Train EDC-L1: 0.404980
+[Epoch 452] Val Loss: 17.081232 | Val EDC-L1: 0.433734
+Checkpoint actual guardado en current_checkpoint.pth
+Época 453/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.44848, gnorm=3127.24, l1=0.00146, loss=17.07922, mrstft=17.07922]
+[Epoch 453] Train Loss: 15.580752 | Train EDC-L1: 0.396619
+[Epoch 453] Val Loss: 14.587336 | Val EDC-L1: 0.395424
+Checkpoint actual guardado en current_checkpoint.pth
+Época 454/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.45817, gnorm=2397.31, l1=0.00248, loss=16.77890, mrstft=16.77890]
+[Epoch 454] Train Loss: 15.083381 | Train EDC-L1: 0.397777
+[Epoch 454] Val Loss: 14.647728 | Val EDC-L1: 0.354973
+Checkpoint actual guardado en current_checkpoint.pth
+Época 455/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.30201, gnorm=58587.24, l1=0.00264, loss=14.65390, mrstft=14.65390]
+[Epoch 455] Train Loss: 15.693331 | Train EDC-L1: 0.375506
+[Epoch 455] Val Loss: 14.582455 | Val EDC-L1: 0.332612
+Checkpoint actual guardado en current_checkpoint.pth
+Época 456/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.38224, gnorm=25395.74, l1=0.00199, loss=14.36392, mrstft=14.36392]
+[Epoch 456] Train Loss: 15.646803 | Train EDC-L1: 0.370599
+[Epoch 456] Val Loss: 16.829892 | Val EDC-L1: 0.429968
+Checkpoint actual guardado en current_checkpoint.pth
+Época 457/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.31074, gnorm=85416.87, l1=0.00242, loss=13.83083, mrstft=13.83083]
+[Epoch 457] Train Loss: 15.078476 | Train EDC-L1: 0.363060
+[Epoch 457] Val Loss: 17.298775 | Val EDC-L1: 0.444367
+Checkpoint actual guardado en current_checkpoint.pth
+Época 458/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.36865, gnorm=5042.37, l1=0.00301, loss=16.79322, mrstft=16.79322]
+[Epoch 458] Train Loss: 15.201471 | Train EDC-L1: 0.379055
+[Epoch 458] Val Loss: 14.337872 | Val EDC-L1: 0.312950
+Checkpoint actual guardado en current_checkpoint.pth
+Época 459/540: 100% 43/43 [00:10<00:00,  4.19it/s, edc_l1=0.49550, gnorm=2553.40, l1=0.00175, loss=17.41660, mrstft=17.41660]
+[Epoch 459] Train Loss: 15.239340 | Train EDC-L1: 0.393930
+[Epoch 459] Val Loss: 13.507924 | Val EDC-L1: 0.311139
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=13.507924)
+Época 460/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.33374, gnorm=36183.36, l1=0.00262, loss=13.94265, mrstft=13.94265]
+[Epoch 460] Train Loss: 14.950165 | Train EDC-L1: 0.403056
+[Epoch 460] Val Loss: 13.663122 | Val EDC-L1: 0.372360
+Checkpoint actual guardado en current_checkpoint.pth
+Época 461/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.40735, gnorm=2370.89, l1=0.00220, loss=13.91377, mrstft=13.91377]
+[Epoch 461] Train Loss: 15.030812 | Train EDC-L1: 0.405173
+[Epoch 461] Val Loss: 17.443243 | Val EDC-L1: 0.471031
+Checkpoint actual guardado en current_checkpoint.pth
+Época 462/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.34279, gnorm=138052.92, l1=0.00233, loss=13.76582, mrstft=13.76582]
+[Epoch 462] Train Loss: 15.102593 | Train EDC-L1: 0.412520
+[Epoch 462] Val Loss: 16.752498 | Val EDC-L1: 0.459436
+Checkpoint actual guardado en current_checkpoint.pth
+Época 463/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.45613, gnorm=2005.40, l1=0.00149, loss=16.19052, mrstft=16.19052]
+[Epoch 463] Train Loss: 14.989078 | Train EDC-L1: 0.405472
+[Epoch 463] Val Loss: 13.935119 | Val EDC-L1: 0.372382
+Checkpoint actual guardado en current_checkpoint.pth
+Época 464/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.44741, gnorm=3943.19, l1=0.00245, loss=16.88773, mrstft=16.88773]
+[Epoch 464] Train Loss: 14.893540 | Train EDC-L1: 0.398702
+[Epoch 464] Val Loss: 13.640307 | Val EDC-L1: 0.394693
+Checkpoint actual guardado en current_checkpoint.pth
+Época 465/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.40079, gnorm=3516.80, l1=0.00231, loss=15.34908, mrstft=15.34908]
+[Epoch 465] Train Loss: 15.198813 | Train EDC-L1: 0.389633
+[Epoch 465] Val Loss: 13.888209 | Val EDC-L1: 0.326076
+Checkpoint actual guardado en current_checkpoint.pth
+Época 466/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.35285, gnorm=14753.40, l1=0.00187, loss=13.27895, mrstft=13.27895]
+[Epoch 466] Train Loss: 15.396270 | Train EDC-L1: 0.399074
+[Epoch 466] Val Loss: 16.585329 | Val EDC-L1: 0.446872
+Checkpoint actual guardado en current_checkpoint.pth
+Época 467/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.36510, gnorm=5294.25, l1=0.00234, loss=13.64585, mrstft=13.64585]
+[Epoch 467] Train Loss: 14.902098 | Train EDC-L1: 0.393473
+[Epoch 467] Val Loss: 16.649807 | Val EDC-L1: 0.441559
+Checkpoint actual guardado en current_checkpoint.pth
+Época 468/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.43909, gnorm=4482.08, l1=0.00210, loss=16.39145, mrstft=16.39145]
+[Epoch 468] Train Loss: 14.962290 | Train EDC-L1: 0.399239
+[Epoch 468] Val Loss: 14.103290 | Val EDC-L1: 0.376535
+Checkpoint actual guardado en current_checkpoint.pth
+Época 469/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.42136, gnorm=9751.04, l1=0.00223, loss=16.64570, mrstft=16.64570]
+[Epoch 469] Train Loss: 14.749265 | Train EDC-L1: 0.391770
+[Epoch 469] Val Loss: 13.419976 | Val EDC-L1: 0.366684
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=13.419976)
+Época 470/540: 100% 43/43 [00:09<00:00,  4.36it/s, edc_l1=0.33819, gnorm=8891.94, l1=0.00239, loss=13.97436, mrstft=13.97436]
+[Epoch 470] Train Loss: 14.753358 | Train EDC-L1: 0.388911
+[Epoch 470] Val Loss: 13.626729 | Val EDC-L1: 0.346145
+Checkpoint actual guardado en current_checkpoint.pth
+Época 471/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.37918, gnorm=2720.96, l1=0.00150, loss=13.34722, mrstft=13.34722]
+[Epoch 471] Train Loss: 14.508622 | Train EDC-L1: 0.379451
+[Epoch 471] Val Loss: 15.767010 | Val EDC-L1: 0.413456
+Checkpoint actual guardado en current_checkpoint.pth
+Época 472/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.33381, gnorm=17765.21, l1=0.00329, loss=14.83303, mrstft=14.83303]
+[Epoch 472] Train Loss: 14.971842 | Train EDC-L1: 0.363425
+[Epoch 472] Val Loss: 17.397499 | Val EDC-L1: 0.427633
+Checkpoint actual guardado en current_checkpoint.pth
+Época 473/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.43399, gnorm=19873.15, l1=0.00097, loss=15.32514, mrstft=15.32514]
+[Epoch 473] Train Loss: 15.493463 | Train EDC-L1: 0.376091
+[Epoch 473] Val Loss: 14.969430 | Val EDC-L1: 0.373876
+Checkpoint actual guardado en current_checkpoint.pth
+Época 474/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.44735, gnorm=3169.74, l1=0.00146, loss=16.90445, mrstft=16.90445]
+[Epoch 474] Train Loss: 15.211418 | Train EDC-L1: 0.375610
+[Epoch 474] Val Loss: 13.470362 | Val EDC-L1: 0.309940
+Checkpoint actual guardado en current_checkpoint.pth
+Época 475/540: 100% 43/43 [00:10<00:00,  4.20it/s, edc_l1=0.31697, gnorm=87046.23, l1=0.00250, loss=14.32346, mrstft=14.32346]
+[Epoch 475] Train Loss: 15.028324 | Train EDC-L1: 0.367527
+[Epoch 475] Val Loss: 13.851228 | Val EDC-L1: 0.350205
+Checkpoint actual guardado en current_checkpoint.pth
+Época 476/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.35972, gnorm=3943.94, l1=0.00137, loss=12.92558, mrstft=12.92558]
+[Epoch 476] Train Loss: 15.204608 | Train EDC-L1: 0.362570
+[Epoch 476] Val Loss: 16.932736 | Val EDC-L1: 0.409271
+Checkpoint actual guardado en current_checkpoint.pth
+Época 477/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.31478, gnorm=30288.25, l1=0.00278, loss=15.23873, mrstft=15.23873]
+[Epoch 477] Train Loss: 15.068281 | Train EDC-L1: 0.370896
+[Epoch 477] Val Loss: 17.132309 | Val EDC-L1: 0.423204
+Checkpoint actual guardado en current_checkpoint.pth
+Época 478/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.41586, gnorm=4092.36, l1=0.00144, loss=17.82317, mrstft=17.82317]
+[Epoch 478] Train Loss: 15.511962 | Train EDC-L1: 0.348770
+[Epoch 478] Val Loss: 13.994925 | Val EDC-L1: 0.312346
+Checkpoint actual guardado en current_checkpoint.pth
+Época 479/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.38260, gnorm=6500.94, l1=0.00188, loss=16.53570, mrstft=16.53570]
+[Epoch 479] Train Loss: 15.048715 | Train EDC-L1: 0.349678
+[Epoch 479] Val Loss: 13.733624 | Val EDC-L1: 0.296522
+Checkpoint actual guardado en current_checkpoint.pth
+Época 480/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.31739, gnorm=21775.24, l1=0.00197, loss=14.86999, mrstft=14.86999]
+[Epoch 480] Train Loss: 14.955502 | Train EDC-L1: 0.329034
+[Epoch 480] Val Loss: 14.231127 | Val EDC-L1: 0.316271
+Checkpoint actual guardado en current_checkpoint.pth
+Época 481/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.28913, gnorm=109962.80, l1=0.00194, loss=13.43665, mrstft=13.43665]
+[Epoch 481] Train Loss: 15.280374 | Train EDC-L1: 0.360527
+[Epoch 481] Val Loss: 18.198152 | Val EDC-L1: 0.417506
+Checkpoint actual guardado en current_checkpoint.pth
+Época 482/540: 100% 43/43 [00:09<00:00,  4.35it/s, edc_l1=0.38097, gnorm=46327.01, l1=0.00148, loss=13.91553, mrstft=13.91553]
+[Epoch 482] Train Loss: 15.076333 | Train EDC-L1: 0.361381
+[Epoch 482] Val Loss: 16.548617 | Val EDC-L1: 0.376931
+Checkpoint actual guardado en current_checkpoint.pth
+Época 483/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.40271, gnorm=6575.74, l1=0.00366, loss=18.00288, mrstft=18.00288]
+[Epoch 483] Train Loss: 15.078051 | Train EDC-L1: 0.357330
+[Epoch 483] Val Loss: 13.673471 | Val EDC-L1: 0.280529
+Checkpoint actual guardado en current_checkpoint.pth
+Época 484/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.39446, gnorm=9448.58, l1=0.00247, loss=16.21239, mrstft=16.21239]
+[Epoch 484] Train Loss: 14.954436 | Train EDC-L1: 0.348420
+[Epoch 484] Val Loss: 13.552243 | Val EDC-L1: 0.304664
+Checkpoint actual guardado en current_checkpoint.pth
+Época 485/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.28260, gnorm=15088.71, l1=0.00230, loss=13.45942, mrstft=13.45942]
+[Epoch 485] Train Loss: 14.557767 | Train EDC-L1: 0.339200
+[Epoch 485] Val Loss: 13.523209 | Val EDC-L1: 0.297555
+Checkpoint actual guardado en current_checkpoint.pth
+Época 486/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.33531, gnorm=7478.91, l1=0.00185, loss=14.55214, mrstft=14.55214]
+[Epoch 486] Train Loss: 14.495142 | Train EDC-L1: 0.341898
+[Epoch 486] Val Loss: 16.228098 | Val EDC-L1: 0.427603
+Checkpoint actual guardado en current_checkpoint.pth
+Época 487/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.32032, gnorm=34998.27, l1=0.00252, loss=13.82055, mrstft=13.82055]
+[Epoch 487] Train Loss: 14.648995 | Train EDC-L1: 0.361137
+[Epoch 487] Val Loss: 17.066998 | Val EDC-L1: 0.426930
+Checkpoint actual guardado en current_checkpoint.pth
+Época 488/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.43736, gnorm=2250.22, l1=0.00246, loss=16.81174, mrstft=16.81174]
+[Epoch 488] Train Loss: 14.574068 | Train EDC-L1: 0.369317
+[Epoch 488] Val Loss: 13.051797 | Val EDC-L1: 0.294309
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=13.051797)
+Época 489/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.38976, gnorm=3328.17, l1=0.00328, loss=16.20749, mrstft=16.20749]
+[Epoch 489] Train Loss: 14.392220 | Train EDC-L1: 0.367740
+[Epoch 489] Val Loss: 13.557951 | Val EDC-L1: 0.356355
+Checkpoint actual guardado en current_checkpoint.pth
+Época 490/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.33787, gnorm=20248.09, l1=0.00179, loss=13.60379, mrstft=13.60379]
+[Epoch 490] Train Loss: 14.216481 | Train EDC-L1: 0.361969
+[Epoch 490] Val Loss: 12.952142 | Val EDC-L1: 0.319509
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.952142)
+Época 491/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.33339, gnorm=26584.54, l1=0.00127, loss=11.68683, mrstft=11.68683]
+[Epoch 491] Train Loss: 14.105626 | Train EDC-L1: 0.357687
+[Epoch 491] Val Loss: 15.927473 | Val EDC-L1: 0.412647
+Checkpoint actual guardado en current_checkpoint.pth
+Época 492/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.31606, gnorm=53255.45, l1=0.00188, loss=12.46970, mrstft=12.46970]
+[Epoch 492] Train Loss: 14.095171 | Train EDC-L1: 0.356956
+[Epoch 492] Val Loss: 17.097321 | Val EDC-L1: 0.421937
+Checkpoint actual guardado en current_checkpoint.pth
+Época 493/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.41728, gnorm=2227.79, l1=0.00201, loss=15.96888, mrstft=15.96888]
+[Epoch 493] Train Loss: 14.428149 | Train EDC-L1: 0.362858
+[Epoch 493] Val Loss: 13.287467 | Val EDC-L1: 0.343815
+Checkpoint actual guardado en current_checkpoint.pth
+Época 494/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.42798, gnorm=9421.70, l1=0.00227, loss=16.45357, mrstft=16.45357]
+[Epoch 494] Train Loss: 14.256697 | Train EDC-L1: 0.361408
+[Epoch 494] Val Loss: 12.984686 | Val EDC-L1: 0.320556
+Checkpoint actual guardado en current_checkpoint.pth
+Época 495/540: 100% 43/43 [00:10<00:00,  4.24it/s, edc_l1=0.33924, gnorm=5379.53, l1=0.00144, loss=12.32758, mrstft=12.32758]
+[Epoch 495] Train Loss: 14.250942 | Train EDC-L1: 0.358153
+[Epoch 495] Val Loss: 13.220682 | Val EDC-L1: 0.335131
+Checkpoint actual guardado en current_checkpoint.pth
+Época 496/540: 100% 43/43 [00:10<00:00,  4.27it/s, edc_l1=0.33267, gnorm=9398.04, l1=0.00245, loss=13.16956, mrstft=13.16956]
+[Epoch 496] Train Loss: 14.192161 | Train EDC-L1: 0.360665
+[Epoch 496] Val Loss: 15.683069 | Val EDC-L1: 0.419195
+Checkpoint actual guardado en current_checkpoint.pth
+Época 497/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.31292, gnorm=30720.39, l1=0.00240, loss=13.64825, mrstft=13.64825]
+[Epoch 497] Train Loss: 14.194934 | Train EDC-L1: 0.363601
+[Epoch 497] Val Loss: 16.382109 | Val EDC-L1: 0.430515
+Checkpoint actual guardado en current_checkpoint.pth
+Época 498/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.40924, gnorm=2578.22, l1=0.00245, loss=15.95228, mrstft=15.95228]
+[Epoch 498] Train Loss: 14.586475 | Train EDC-L1: 0.362654
+[Epoch 498] Val Loss: 14.178159 | Val EDC-L1: 0.333571
+Checkpoint actual guardado en current_checkpoint.pth
+Época 499/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.42201, gnorm=4821.05, l1=0.00197, loss=17.73096, mrstft=17.73096]
+[Epoch 499] Train Loss: 14.935597 | Train EDC-L1: 0.362699
+[Epoch 499] Val Loss: 13.647471 | Val EDC-L1: 0.344198
+Checkpoint actual guardado en current_checkpoint.pth
+Época 500/540: 100% 43/43 [00:10<00:00,  4.21it/s, edc_l1=0.33647, gnorm=18746.71, l1=0.00309, loss=14.42958, mrstft=14.42958]
+[Epoch 500] Train Loss: 14.654335 | Train EDC-L1: 0.349727
+[Epoch 500] Val Loss: 13.805416 | Val EDC-L1: 0.292674
+Checkpoint actual guardado en current_checkpoint.pth
+Época 501/540: 100% 43/43 [00:09<00:00,  4.30it/s, edc_l1=0.32853, gnorm=33305.59, l1=0.00197, loss=13.91765, mrstft=13.91765]
+[Epoch 501] Train Loss: 14.622117 | Train EDC-L1: 0.336845
+[Epoch 501] Val Loss: 16.486748 | Val EDC-L1: 0.398896
+Checkpoint actual guardado en current_checkpoint.pth
+Época 502/540: 100% 43/43 [00:10<00:00,  4.29it/s, edc_l1=0.33929, gnorm=9102.77, l1=0.00176, loss=13.24899, mrstft=13.24899]
+[Epoch 502] Train Loss: 14.709268 | Train EDC-L1: 0.347599
+[Epoch 502] Val Loss: 16.351570 | Val EDC-L1: 0.405997
+Checkpoint actual guardado en current_checkpoint.pth
+Época 503/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.35914, gnorm=3084.97, l1=0.00190, loss=15.36738, mrstft=15.36738]
+[Epoch 503] Train Loss: 14.338171 | Train EDC-L1: 0.346307
+[Epoch 503] Val Loss: 14.337788 | Val EDC-L1: 0.349230
+Checkpoint actual guardado en current_checkpoint.pth
+Época 504/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.38007, gnorm=2659.74, l1=0.00204, loss=15.74785, mrstft=15.74785]
+[Epoch 504] Train Loss: 14.363433 | Train EDC-L1: 0.338103
+[Epoch 504] Val Loss: 13.763190 | Val EDC-L1: 0.314439
+Checkpoint actual guardado en current_checkpoint.pth
+Época 505/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.30540, gnorm=101433.73, l1=0.00194, loss=13.65339, mrstft=13.65339]
+[Epoch 505] Train Loss: 14.830133 | Train EDC-L1: 0.352633
+[Epoch 505] Val Loss: 13.536065 | Val EDC-L1: 0.326764
+Checkpoint actual guardado en current_checkpoint.pth
+Época 506/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.29204, gnorm=12654.92, l1=0.00366, loss=15.03345, mrstft=15.03345]
+[Epoch 506] Train Loss: 14.925098 | Train EDC-L1: 0.348588
+[Epoch 506] Val Loss: 15.571959 | Val EDC-L1: 0.394916
+Checkpoint actual guardado en current_checkpoint.pth
+Época 507/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.28177, gnorm=7233.55, l1=0.00175, loss=12.71093, mrstft=12.71093]
+[Epoch 507] Train Loss: 14.390875 | Train EDC-L1: 0.318181
+[Epoch 507] Val Loss: 16.299449 | Val EDC-L1: 0.380153
+Checkpoint actual guardado en current_checkpoint.pth
+Época 508/540: 100% 43/43 [00:09<00:00,  4.34it/s, edc_l1=0.37263, gnorm=10225.68, l1=0.00351, loss=15.85233, mrstft=15.85233]
+[Epoch 508] Train Loss: 14.160415 | Train EDC-L1: 0.339076
+[Epoch 508] Val Loss: 13.228681 | Val EDC-L1: 0.323516
+Checkpoint actual guardado en current_checkpoint.pth
+Época 509/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.39604, gnorm=3221.74, l1=0.00155, loss=15.12552, mrstft=15.12552]
+[Epoch 509] Train Loss: 13.777091 | Train EDC-L1: 0.338652
+[Epoch 509] Val Loss: 12.838078 | Val EDC-L1: 0.286049
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.838078)
+Época 510/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.29576, gnorm=37085.71, l1=0.00249, loss=12.44185, mrstft=12.44185]
+[Epoch 510] Train Loss: 13.737468 | Train EDC-L1: 0.330643
+[Epoch 510] Val Loss: 12.837181 | Val EDC-L1: 0.312289
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.837181)
+Época 511/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.30876, gnorm=41958.99, l1=0.00221, loss=12.37285, mrstft=12.37285]
+[Epoch 511] Train Loss: 13.519384 | Train EDC-L1: 0.331257
+[Epoch 511] Val Loss: 15.288635 | Val EDC-L1: 0.390938
+Checkpoint actual guardado en current_checkpoint.pth
+Época 512/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.27387, gnorm=3382.91, l1=0.00328, loss=13.32875, mrstft=13.32875]
+[Epoch 512] Train Loss: 13.679346 | Train EDC-L1: 0.338078
+[Epoch 512] Val Loss: 14.939438 | Val EDC-L1: 0.399440
+Checkpoint actual guardado en current_checkpoint.pth
+Época 513/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.38501, gnorm=3117.75, l1=0.00207, loss=14.69924, mrstft=14.69924]
+[Epoch 513] Train Loss: 13.603564 | Train EDC-L1: 0.330022
+[Epoch 513] Val Loss: 13.036272 | Val EDC-L1: 0.293360
+Checkpoint actual guardado en current_checkpoint.pth
+Época 514/540: 100% 43/43 [00:10<00:00,  4.26it/s, edc_l1=0.35854, gnorm=14534.54, l1=0.00290, loss=15.89223, mrstft=15.89223]
+[Epoch 514] Train Loss: 13.524279 | Train EDC-L1: 0.324650
+[Epoch 514] Val Loss: 12.661750 | Val EDC-L1: 0.306378
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.661750)
+Época 515/540: 100% 43/43 [00:09<00:00,  4.33it/s, edc_l1=0.32535, gnorm=12198.81, l1=0.00106, loss=11.45974, mrstft=11.45974]
+[Epoch 515] Train Loss: 13.426052 | Train EDC-L1: 0.326001
+[Epoch 515] Val Loss: 12.632272 | Val EDC-L1: 0.293427
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.632272)
+Época 516/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.28063, gnorm=51491.48, l1=0.00302, loss=12.92340, mrstft=12.92340]
+[Epoch 516] Train Loss: 13.544523 | Train EDC-L1: 0.327160
+[Epoch 516] Val Loss: 15.315980 | Val EDC-L1: 0.389689
+Checkpoint actual guardado en current_checkpoint.pth
+Época 517/540: 100% 43/43 [00:10<00:00,  4.16it/s, edc_l1=0.29635, gnorm=28237.36, l1=0.00251, loss=13.37119, mrstft=13.37119]
+[Epoch 517] Train Loss: 13.431053 | Train EDC-L1: 0.325271
+[Epoch 517] Val Loss: 14.886520 | Val EDC-L1: 0.372475
+Checkpoint actual guardado en current_checkpoint.pth
+Época 518/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.36980, gnorm=3630.38, l1=0.00197, loss=14.99123, mrstft=14.99123]
+[Epoch 518] Train Loss: 13.457603 | Train EDC-L1: 0.325786
+[Epoch 518] Val Loss: 12.771290 | Val EDC-L1: 0.313357
+Checkpoint actual guardado en current_checkpoint.pth
+Época 519/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.37737, gnorm=3736.29, l1=0.00285, loss=15.49305, mrstft=15.49305]
+[Epoch 519] Train Loss: 13.520305 | Train EDC-L1: 0.331009
+[Epoch 519] Val Loss: 12.369496 | Val EDC-L1: 0.283822
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.369496)
+Época 520/540: 100% 43/43 [00:10<00:00,  4.22it/s, edc_l1=0.29140, gnorm=32194.74, l1=0.00236, loss=12.84992, mrstft=12.84992]
+[Epoch 520] Train Loss: 13.479566 | Train EDC-L1: 0.327604
+[Epoch 520] Val Loss: 12.821016 | Val EDC-L1: 0.307760
+Checkpoint actual guardado en current_checkpoint.pth
+Época 521/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.28743, gnorm=78443.82, l1=0.00197, loss=13.18220, mrstft=13.18220]
+[Epoch 521] Train Loss: 13.687121 | Train EDC-L1: 0.319370
+[Epoch 521] Val Loss: 15.659654 | Val EDC-L1: 0.386292
+Checkpoint actual guardado en current_checkpoint.pth
+Época 522/540: 100% 43/43 [00:10<00:00,  4.23it/s, edc_l1=0.25734, gnorm=59006.54, l1=0.00251, loss=13.12018, mrstft=13.12018]
+[Epoch 522] Train Loss: 13.895331 | Train EDC-L1: 0.346718
+[Epoch 522] Val Loss: 14.885727 | Val EDC-L1: 0.410023
+Checkpoint actual guardado en current_checkpoint.pth
+Época 523/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.43172, gnorm=5215.17, l1=0.00194, loss=14.13399, mrstft=14.13399]
+[Epoch 523] Train Loss: 13.348164 | Train EDC-L1: 0.349938
+[Epoch 523] Val Loss: 12.585802 | Val EDC-L1: 0.297298
+Checkpoint actual guardado en current_checkpoint.pth
+Época 524/540: 100% 43/43 [00:10<00:00,  4.28it/s, edc_l1=0.39155, gnorm=9337.62, l1=0.00194, loss=14.22783, mrstft=14.22783]
+[Epoch 524] Train Loss: 13.412712 | Train EDC-L1: 0.356273
+[Epoch 524] Val Loss: 12.708731 | Val EDC-L1: 0.351779
+Checkpoint actual guardado en current_checkpoint.pth
+Época 525/540: 100% 43/43 [00:10<00:00,  4.25it/s, edc_l1=0.35200, gnorm=2341.30, l1=0.00173, loss=12.44587, mrstft=12.44587]
+[Epoch 525] Train Loss: 13.242856 | Train EDC-L1: 0.350035
+[Epoch 525] Val Loss: 12.390001 | Val EDC-L1: 0.288101
+Checkpoint actual guardado en current_checkpoint.pth
+Época 526/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.26820, gnorm=88020.50, l1=0.00208, loss=12.56376, mrstft=12.56376]
+[Epoch 526] Train Loss: 13.527187 | Train EDC-L1: 0.353962
+[Epoch 526] Val Loss: 15.121983 | Val EDC-L1: 0.388075
+Checkpoint actual guardado en current_checkpoint.pth
+Época 527/540: 100% 43/43 [00:09<00:00,  4.31it/s, edc_l1=0.31996, gnorm=2883.13, l1=0.00170, loss=12.27874, mrstft=12.27874]
+[Epoch 527] Train Loss: 13.614199 | Train EDC-L1: 0.352049
+[Epoch 527] Val Loss: 15.496681 | Val EDC-L1: 0.426457
+Checkpoint actual guardado en current_checkpoint.pth
+Época 528/540: 100% 43/43 [00:09<00:00,  4.32it/s, edc_l1=0.43609, gnorm=5093.23, l1=0.00188, loss=15.28235, mrstft=15.28235]
+[Epoch 528] Train Loss: 13.620379 | Train EDC-L1: 0.357530
+[Epoch 528] Val Loss: 12.297285 | Val EDC-L1: 0.281144
+Checkpoint actual guardado en current_checkpoint.pth
+Nuevo mejor modelo guardado en checkpoint.pth (mejor val_loss=12.297285)
+Dispositivo: cuda
+Split sintetico aleatorio: train=5400 | val=600
+Reanudando desde /content/drive/MyDrive/TFG_Checkpoints/Sintetico_540_Epocas/mejor_checkpoint.pth ...
+  Reanudando desde época 529/600  |  mejor val_loss conocida: 12.297285
+Época 529/600: 100% 43/43 [00:47<00:00,  1.11s/it, edc_l1=0.27172, gnorm=115999.59, l1=0.00128, loss=11.22612, mrstft=11.22599]
+[Epoch 529] Train Loss: 13.111766 | Train EDC-L1: 0.333689
+[Epoch 529] Val Loss: 14.473497 | Val EDC-L1: 0.396745
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 530/600: 100% 43/43 [00:09<00:00,  4.49it/s, edc_l1=0.30351, gnorm=31635.43, l1=0.00211, loss=12.82115, mrstft=12.82094]
+[Epoch 530] Train Loss: 13.456518 | Train EDC-L1: 0.321478
+[Epoch 530] Val Loss: 14.301010 | Val EDC-L1: 0.364177
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 531/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.36605, gnorm=4386.36, l1=0.00245, loss=16.03029, mrstft=16.03004]
+[Epoch 531] Train Loss: 13.559353 | Train EDC-L1: 0.328672
+[Epoch 531] Val Loss: 12.900590 | Val EDC-L1: 0.318037
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 532/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.37174, gnorm=4062.11, l1=0.00226, loss=14.46144, mrstft=14.46122]
+[Epoch 532] Train Loss: 13.332536 | Train EDC-L1: 0.313273
+[Epoch 532] Val Loss: 12.925728 | Val EDC-L1: 0.298219
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 533/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.25824, gnorm=72948.36, l1=0.00204, loss=12.25822, mrstft=12.25802]
+[Epoch 533] Train Loss: 13.395948 | Train EDC-L1: 0.316795
+[Epoch 533] Val Loss: 12.469319 | Val EDC-L1: 0.302142
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 534/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.32745, gnorm=25231.85, l1=0.00116, loss=12.00389, mrstft=12.00377]
+[Epoch 534] Train Loss: 13.147455 | Train EDC-L1: 0.334136
+[Epoch 534] Val Loss: 14.383011 | Val EDC-L1: 0.390270
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 535/600: 100% 43/43 [00:09<00:00,  4.40it/s, edc_l1=0.27209, gnorm=16339.26, l1=0.00211, loss=12.66765, mrstft=12.66744]
+[Epoch 535] Train Loss: 13.401429 | Train EDC-L1: 0.345759
+[Epoch 535] Val Loss: 14.832391 | Val EDC-L1: 0.357776
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 536/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.35771, gnorm=4297.74, l1=0.00235, loss=14.69340, mrstft=14.69316]
+[Epoch 536] Train Loss: 13.395967 | Train EDC-L1: 0.312032
+[Epoch 536] Val Loss: 12.730612 | Val EDC-L1: 0.284285
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 537/600: 100% 43/43 [00:09<00:00,  4.44it/s, edc_l1=0.35518, gnorm=4107.54, l1=0.00164, loss=15.94463, mrstft=15.94447]
+[Epoch 537] Train Loss: 13.489801 | Train EDC-L1: 0.312408
+[Epoch 537] Val Loss: 12.552067 | Val EDC-L1: 0.287007
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 538/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.26520, gnorm=124016.20, l1=0.00291, loss=13.21583, mrstft=13.21554]
+[Epoch 538] Train Loss: 13.428032 | Train EDC-L1: 0.312147
+[Epoch 538] Val Loss: 12.462424 | Val EDC-L1: 0.267600
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 539/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.27853, gnorm=27672.72, l1=0.00263, loss=12.29453, mrstft=12.29427]
+[Epoch 539] Train Loss: 13.224872 | Train EDC-L1: 0.292884
+[Epoch 539] Val Loss: 14.019316 | Val EDC-L1: 0.369573
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 540/600: 100% 43/43 [00:09<00:00,  4.47it/s, edc_l1=0.34407, gnorm=10961.36, l1=0.00206, loss=12.42035, mrstft=12.42014]
+[Epoch 540] Train Loss: 13.258859 | Train EDC-L1: 0.338567
+[Epoch 540] Val Loss: 14.707742 | Val EDC-L1: 0.393078
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 541/600: 100% 43/43 [00:09<00:00,  4.46it/s, edc_l1=0.35505, gnorm=8615.45, l1=0.00267, loss=14.00733, mrstft=14.00706]
+[Epoch 541] Train Loss: 13.087492 | Train EDC-L1: 0.343298
+[Epoch 541] Val Loss: 12.520281 | Val EDC-L1: 0.352831
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 542/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.35090, gnorm=4530.11, l1=0.00166, loss=13.37967, mrstft=13.37951]
+[Epoch 542] Train Loss: 13.019257 | Train EDC-L1: 0.325231
+[Epoch 542] Val Loss: 12.916514 | Val EDC-L1: 0.277050
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 543/600: 100% 43/43 [00:09<00:00,  4.54it/s, edc_l1=0.31036, gnorm=8098.08, l1=0.00173, loss=12.30546, mrstft=12.30529]
+[Epoch 543] Train Loss: 13.379145 | Train EDC-L1: 0.302922
+[Epoch 543] Val Loss: 12.224905 | Val EDC-L1: 0.273276
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Nuevo mejor modelo guardado en checkpoint_finetuned.pth (mejor val_loss=12.224905)
+Época 544/600: 100% 43/43 [00:09<00:00,  4.41it/s, edc_l1=0.27904, gnorm=18249.95, l1=0.00206, loss=13.40559, mrstft=13.40538]
+[Epoch 544] Train Loss: 13.305350 | Train EDC-L1: 0.315537
+[Epoch 544] Val Loss: 14.511470 | Val EDC-L1: 0.320954
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 545/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.25640, gnorm=7406.08, l1=0.00278, loss=13.42985, mrstft=13.42957]
+[Epoch 545] Train Loss: 13.278571 | Train EDC-L1: 0.305417
+[Epoch 545] Val Loss: 14.506017 | Val EDC-L1: 0.363478
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 546/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.37057, gnorm=11336.22, l1=0.00151, loss=13.63990, mrstft=13.63975]
+[Epoch 546] Train Loss: 13.361000 | Train EDC-L1: 0.325681
+[Epoch 546] Val Loss: 12.431343 | Val EDC-L1: 0.318464
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 547/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.36207, gnorm=2460.40, l1=0.00188, loss=14.19019, mrstft=14.19000]
+[Epoch 547] Train Loss: 13.096117 | Train EDC-L1: 0.324896
+[Epoch 547] Val Loss: 12.445436 | Val EDC-L1: 0.286150
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 548/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.25193, gnorm=35359.18, l1=0.00201, loss=12.73536, mrstft=12.73516]
+[Epoch 548] Train Loss: 13.026004 | Train EDC-L1: 0.314375
+[Epoch 548] Val Loss: 12.520328 | Val EDC-L1: 0.267680
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 549/600: 100% 43/43 [00:09<00:00,  4.42it/s, edc_l1=0.32196, gnorm=15004.51, l1=0.00245, loss=13.13405, mrstft=13.13380]
+[Epoch 549] Train Loss: 13.321099 | Train EDC-L1: 0.308575
+[Epoch 549] Val Loss: 14.046726 | Val EDC-L1: 0.367000
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 550/600: 100% 43/43 [00:09<00:00,  4.49it/s, edc_l1=0.27738, gnorm=34773.71, l1=0.00193, loss=12.33922, mrstft=12.33902]
+[Epoch 550] Train Loss: 13.113607 | Train EDC-L1: 0.328898
+[Epoch 550] Val Loss: 14.067402 | Val EDC-L1: 0.395095
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 551/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.39935, gnorm=11794.66, l1=0.00214, loss=13.66702, mrstft=13.66680]
+[Epoch 551] Train Loss: 12.916150 | Train EDC-L1: 0.333649
+[Epoch 551] Val Loss: 12.141596 | Val EDC-L1: 0.259374
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Nuevo mejor modelo guardado en checkpoint_finetuned.pth (mejor val_loss=12.141596)
+Época 552/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.35948, gnorm=3264.28, l1=0.00208, loss=13.82121, mrstft=13.82100]
+[Epoch 552] Train Loss: 12.802459 | Train EDC-L1: 0.330882
+[Epoch 552] Val Loss: 12.340432 | Val EDC-L1: 0.330084
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 553/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.34309, gnorm=10095.64, l1=0.00124, loss=11.89227, mrstft=11.89214]
+[Epoch 553] Train Loss: 12.774999 | Train EDC-L1: 0.334357
+[Epoch 553] Val Loss: 11.994763 | Val EDC-L1: 0.272209
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Nuevo mejor modelo guardado en checkpoint_finetuned.pth (mejor val_loss=11.994763)
+Época 554/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.25994, gnorm=32401.77, l1=0.00288, loss=12.64380, mrstft=12.64352]
+[Epoch 554] Train Loss: 12.765564 | Train EDC-L1: 0.328187
+[Epoch 554] Val Loss: 13.870939 | Val EDC-L1: 0.381397
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 555/600: 100% 43/43 [00:09<00:00,  4.54it/s, edc_l1=0.25759, gnorm=46721.68, l1=0.00244, loss=12.55723, mrstft=12.55698]
+[Epoch 555] Train Loss: 12.882784 | Train EDC-L1: 0.315733
+[Epoch 555] Val Loss: 14.435209 | Val EDC-L1: 0.345037
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 556/600: 100% 43/43 [00:09<00:00,  4.42it/s, edc_l1=0.38364, gnorm=3683.97, l1=0.00176, loss=12.65744, mrstft=12.65726]
+[Epoch 556] Train Loss: 12.890191 | Train EDC-L1: 0.322558
+[Epoch 556] Val Loss: 12.744038 | Val EDC-L1: 0.317861
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 557/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.38228, gnorm=8274.68, l1=0.00127, loss=14.81536, mrstft=14.81524]
+[Epoch 557] Train Loss: 13.124105 | Train EDC-L1: 0.328350
+[Epoch 557] Val Loss: 12.137135 | Val EDC-L1: 0.275981
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 558/600: 100% 43/43 [00:09<00:00,  4.52it/s, edc_l1=0.25070, gnorm=145713.42, l1=0.00261, loss=12.71964, mrstft=12.71938]
+[Epoch 558] Train Loss: 13.014711 | Train EDC-L1: 0.324287
+[Epoch 558] Val Loss: 12.505221 | Val EDC-L1: 0.298819
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 559/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.27448, gnorm=31472.88, l1=0.00294, loss=13.26531, mrstft=13.26501]
+[Epoch 559] Train Loss: 13.091440 | Train EDC-L1: 0.298516
+[Epoch 559] Val Loss: 14.119936 | Val EDC-L1: 0.347831
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 560/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.25880, gnorm=24548.86, l1=0.00147, loss=11.63469, mrstft=11.63455]
+[Epoch 560] Train Loss: 13.209692 | Train EDC-L1: 0.299375
+[Epoch 560] Val Loss: 14.710890 | Val EDC-L1: 0.352831
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 561/600: 100% 43/43 [00:09<00:00,  4.52it/s, edc_l1=0.35889, gnorm=33413.81, l1=0.00177, loss=13.36001, mrstft=13.35983]
+[Epoch 561] Train Loss: 13.052061 | Train EDC-L1: 0.295490
+[Epoch 561] Val Loss: 12.535405 | Val EDC-L1: 0.292859
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 562/600: 100% 43/43 [00:09<00:00,  4.55it/s, edc_l1=0.36865, gnorm=6915.27, l1=0.00278, loss=14.99770, mrstft=14.99742]
+[Epoch 562] Train Loss: 13.199427 | Train EDC-L1: 0.318817
+[Epoch 562] Val Loss: 12.535166 | Val EDC-L1: 0.260873
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 563/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.28209, gnorm=66465.18, l1=0.00217, loss=13.03976, mrstft=13.03955]
+[Epoch 563] Train Loss: 13.285517 | Train EDC-L1: 0.300009
+[Epoch 563] Val Loss: 12.630515 | Val EDC-L1: 0.272589
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 564/600: 100% 43/43 [00:09<00:00,  4.54it/s, edc_l1=0.28824, gnorm=63360.11, l1=0.00173, loss=12.50413, mrstft=12.50396]
+[Epoch 564] Train Loss: 13.656598 | Train EDC-L1: 0.305156
+[Epoch 564] Val Loss: 15.610633 | Val EDC-L1: 0.357162
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 565/600: 100% 43/43 [00:09<00:00,  4.49it/s, edc_l1=0.25927, gnorm=36833.65, l1=0.00208, loss=12.95587, mrstft=12.95566]
+[Epoch 565] Train Loss: 13.432045 | Train EDC-L1: 0.311864
+[Epoch 565] Val Loss: 14.427685 | Val EDC-L1: 0.295324
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 566/600: 100% 43/43 [00:09<00:00,  4.49it/s, edc_l1=0.36789, gnorm=3047.88, l1=0.00248, loss=14.72443, mrstft=14.72418]
+[Epoch 566] Train Loss: 13.234445 | Train EDC-L1: 0.308946
+[Epoch 566] Val Loss: 12.813946 | Val EDC-L1: 0.339628
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 567/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.41903, gnorm=2921.14, l1=0.00221, loss=14.73891, mrstft=14.73869]
+[Epoch 567] Train Loss: 13.341165 | Train EDC-L1: 0.354584
+[Epoch 567] Val Loss: 12.420355 | Val EDC-L1: 0.299594
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 568/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.25304, gnorm=25655.19, l1=0.00251, loss=12.24745, mrstft=12.24720]
+[Epoch 568] Train Loss: 13.063637 | Train EDC-L1: 0.345408
+[Epoch 568] Val Loss: 12.602560 | Val EDC-L1: 0.352291
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 569/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.29224, gnorm=38027.78, l1=0.00286, loss=13.70191, mrstft=13.70163]
+[Epoch 569] Train Loss: 13.068784 | Train EDC-L1: 0.337249
+[Epoch 569] Val Loss: 13.786738 | Val EDC-L1: 0.351232
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 570/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.30399, gnorm=79919.71, l1=0.00118, loss=11.78470, mrstft=11.78458]
+[Epoch 570] Train Loss: 13.241506 | Train EDC-L1: 0.311047
+[Epoch 570] Val Loss: 15.379058 | Val EDC-L1: 0.356842
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 571/600: 100% 43/43 [00:09<00:00,  4.46it/s, edc_l1=0.34957, gnorm=33069.77, l1=0.00236, loss=15.33195, mrstft=15.33172]
+[Epoch 571] Train Loss: 13.500325 | Train EDC-L1: 0.317673
+[Epoch 571] Val Loss: 12.865231 | Val EDC-L1: 0.306141
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 572/600: 100% 43/43 [00:09<00:00,  4.44it/s, edc_l1=0.30983, gnorm=8845.19, l1=0.00181, loss=14.27927, mrstft=14.27909]
+[Epoch 572] Train Loss: 13.211206 | Train EDC-L1: 0.308798
+[Epoch 572] Val Loss: 12.722178 | Val EDC-L1: 0.272904
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 573/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.23984, gnorm=152456.61, l1=0.00282, loss=13.16928, mrstft=13.16900]
+[Epoch 573] Train Loss: 13.185452 | Train EDC-L1: 0.307004
+[Epoch 573] Val Loss: 12.778912 | Val EDC-L1: 0.282618
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 574/600: 100% 43/43 [00:09<00:00,  4.46it/s, edc_l1=0.26028, gnorm=42383.95, l1=0.00323, loss=12.51966, mrstft=12.51934]
+[Epoch 574] Train Loss: 13.037204 | Train EDC-L1: 0.313598
+[Epoch 574] Val Loss: 15.096843 | Val EDC-L1: 0.357637
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 575/600: 100% 43/43 [00:09<00:00,  4.47it/s, edc_l1=0.29053, gnorm=22822.90, l1=0.00282, loss=12.33754, mrstft=12.33726]
+[Epoch 575] Train Loss: 13.266534 | Train EDC-L1: 0.305827
+[Epoch 575] Val Loss: 14.403465 | Val EDC-L1: 0.347340
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 576/600: 100% 43/43 [00:09<00:00,  4.47it/s, edc_l1=0.30022, gnorm=5194.11, l1=0.00229, loss=13.81878, mrstft=13.81855]
+[Epoch 576] Train Loss: 13.137642 | Train EDC-L1: 0.295053
+[Epoch 576] Val Loss: 12.461443 | Val EDC-L1: 0.263522
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 577/600: 100% 43/43 [00:09<00:00,  4.39it/s, edc_l1=0.33584, gnorm=12709.76, l1=0.00250, loss=15.79260, mrstft=15.79235]
+[Epoch 577] Train Loss: 13.170050 | Train EDC-L1: 0.300794
+[Epoch 577] Val Loss: 12.600849 | Val EDC-L1: 0.289359
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 578/600: 100% 43/43 [00:09<00:00,  4.42it/s, edc_l1=0.30333, gnorm=6213.18, l1=0.00162, loss=12.58207, mrstft=12.58190]
+[Epoch 578] Train Loss: 13.208066 | Train EDC-L1: 0.308465
+[Epoch 578] Val Loss: 12.632624 | Val EDC-L1: 0.290065
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 579/600: 100% 43/43 [00:09<00:00,  4.44it/s, edc_l1=0.27101, gnorm=16252.37, l1=0.00267, loss=12.99562, mrstft=12.99535]
+[Epoch 579] Train Loss: 13.214345 | Train EDC-L1: 0.305249
+[Epoch 579] Val Loss: 14.598584 | Val EDC-L1: 0.351675
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 580/600: 100% 43/43 [00:09<00:00,  4.43it/s, edc_l1=0.30023, gnorm=67817.55, l1=0.00173, loss=12.16028, mrstft=12.16011]
+[Epoch 580] Train Loss: 13.250600 | Train EDC-L1: 0.316522
+[Epoch 580] Val Loss: 14.083368 | Val EDC-L1: 0.337249
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 581/600: 100% 43/43 [00:09<00:00,  4.46it/s, edc_l1=0.33627, gnorm=22760.57, l1=0.00166, loss=13.62757, mrstft=13.62740]
+[Epoch 581] Train Loss: 12.967544 | Train EDC-L1: 0.299243
+[Epoch 581] Val Loss: 12.432883 | Val EDC-L1: 0.298765
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 582/600: 100% 43/43 [00:09<00:00,  4.48it/s, edc_l1=0.33135, gnorm=6047.91, l1=0.00194, loss=14.25674, mrstft=14.25655]
+[Epoch 582] Train Loss: 13.038193 | Train EDC-L1: 0.307683
+[Epoch 582] Val Loss: 12.733933 | Val EDC-L1: 0.248816
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 583/600: 100% 43/43 [00:09<00:00,  4.42it/s, edc_l1=0.30440, gnorm=79166.85, l1=0.00245, loss=12.82297, mrstft=12.82273]
+[Epoch 583] Train Loss: 13.156286 | Train EDC-L1: 0.304160
+[Epoch 583] Val Loss: 12.250426 | Val EDC-L1: 0.262310
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 584/600: 100% 43/43 [00:09<00:00,  4.42it/s, edc_l1=0.26554, gnorm=2909.42, l1=0.00189, loss=12.26820, mrstft=12.26801]
+[Epoch 584] Train Loss: 13.501005 | Train EDC-L1: 0.311632
+[Epoch 584] Val Loss: 15.160377 | Val EDC-L1: 0.363532
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 585/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.30062, gnorm=29125.80, l1=0.00164, loss=11.95550, mrstft=11.95534]
+[Epoch 585] Train Loss: 13.327934 | Train EDC-L1: 0.310405
+[Epoch 585] Val Loss: 14.216567 | Val EDC-L1: 0.353505
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 586/600: 100% 43/43 [00:09<00:00,  4.55it/s, edc_l1=0.33163, gnorm=13945.10, l1=0.00185, loss=13.44204, mrstft=13.44186]
+[Epoch 586] Train Loss: 13.030200 | Train EDC-L1: 0.292863
+[Epoch 586] Val Loss: 12.505917 | Val EDC-L1: 0.255984
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 587/600: 100% 43/43 [00:09<00:00,  4.56it/s, edc_l1=0.43158, gnorm=3385.65, l1=0.00199, loss=13.88320, mrstft=13.88300]
+[Epoch 587] Train Loss: 12.953925 | Train EDC-L1: 0.309579
+[Epoch 587] Val Loss: 12.448459 | Val EDC-L1: 0.316472
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 588/600: 100% 43/43 [00:09<00:00,  4.52it/s, edc_l1=0.33545, gnorm=7477.41, l1=0.00205, loss=12.19294, mrstft=12.19274]
+[Epoch 588] Train Loss: 13.451534 | Train EDC-L1: 0.360507
+[Epoch 588] Val Loss: 12.434972 | Val EDC-L1: 0.300070
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 589/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.31641, gnorm=5022.66, l1=0.00206, loss=12.20189, mrstft=12.20168]
+[Epoch 589] Train Loss: 13.095423 | Train EDC-L1: 0.329076
+[Epoch 589] Val Loss: 14.079876 | Val EDC-L1: 0.369218
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 590/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.27966, gnorm=38828.23, l1=0.00164, loss=11.49906, mrstft=11.49890]
+[Epoch 590] Train Loss: 13.171745 | Train EDC-L1: 0.328313
+[Epoch 590] Val Loss: 14.732512 | Val EDC-L1: 0.384231
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 591/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.35762, gnorm=6193.05, l1=0.00253, loss=14.68145, mrstft=14.68120]
+[Epoch 591] Train Loss: 12.999799 | Train EDC-L1: 0.322886
+[Epoch 591] Val Loss: 12.503677 | Val EDC-L1: 0.257601
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 592/600: 100% 43/43 [00:09<00:00,  4.55it/s, edc_l1=0.36951, gnorm=6213.59, l1=0.00146, loss=13.67191, mrstft=13.67176]
+[Epoch 592] Train Loss: 13.024241 | Train EDC-L1: 0.304595
+[Epoch 592] Val Loss: 12.494549 | Val EDC-L1: 0.297679
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 593/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.26797, gnorm=6313.89, l1=0.00237, loss=12.12617, mrstft=12.12593]
+[Epoch 593] Train Loss: 13.103308 | Train EDC-L1: 0.305812
+[Epoch 593] Val Loss: 12.698138 | Val EDC-L1: 0.289094
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 594/600: 100% 43/43 [00:09<00:00,  4.46it/s, edc_l1=0.27855, gnorm=7178.21, l1=0.00263, loss=12.63646, mrstft=12.63620]
+[Epoch 594] Train Loss: 13.025770 | Train EDC-L1: 0.290669
+[Epoch 594] Val Loss: 14.291804 | Val EDC-L1: 0.355043
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 595/600: 100% 43/43 [00:09<00:00,  4.51it/s, edc_l1=0.25231, gnorm=14691.29, l1=0.00338, loss=12.85023, mrstft=12.84989]
+[Epoch 595] Train Loss: 12.912966 | Train EDC-L1: 0.306126
+[Epoch 595] Val Loss: 14.135386 | Val EDC-L1: 0.356518
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 596/600: 100% 43/43 [00:09<00:00,  4.50it/s, edc_l1=0.33467, gnorm=3120.53, l1=0.00151, loss=14.27357, mrstft=14.27342]
+[Epoch 596] Train Loss: 12.844236 | Train EDC-L1: 0.302787
+[Epoch 596] Val Loss: 12.170660 | Val EDC-L1: 0.261861
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 597/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.39437, gnorm=3124.15, l1=0.00176, loss=13.31473, mrstft=13.31456]
+[Epoch 597] Train Loss: 12.964713 | Train EDC-L1: 0.305769
+[Epoch 597] Val Loss: 12.248699 | Val EDC-L1: 0.290695
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 598/600: 100% 43/43 [00:09<00:00,  4.54it/s, edc_l1=0.29031, gnorm=19597.94, l1=0.00189, loss=12.05331, mrstft=12.05312]
+[Epoch 598] Train Loss: 13.054616 | Train EDC-L1: 0.288756
+[Epoch 598] Val Loss: 12.355735 | Val EDC-L1: 0.264709
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 599/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.28889, gnorm=34988.25, l1=0.00196, loss=12.39465, mrstft=12.39445]
+[Epoch 599] Train Loss: 13.187233 | Train EDC-L1: 0.324048
+[Epoch 599] Val Loss: 14.376390 | Val EDC-L1: 0.390934
+Checkpoint actual guardado en current_checkpoint_finetuned.pth
+Época 600/600: 100% 43/43 [00:09<00:00,  4.53it/s, edc_l1=0.31028, gnorm=40612.55, l1=0.00232, loss=12.95766, mrstft=12.95743]
+[Epoch 600] Train Loss: 13.474885 | Train EDC-L1: 0.355555
+[Epoch 600] Val Loss: 15.519956 | Val EDC-L1: 0.408947
+Checkpoint actual guardado en current_checkpoint_finetuned.pth

@@ -192,3 +192,18 @@ En la etapa final se mantuvieron fijos el tamaño de lote en 256 y el peso tempo
 	--checkpoint "$NUEVO_CHECKPOINT"
 \end{lstlisting}
 \end{enumerate}
+
+Por otro lado, el dataset sintético se entrenó en un experimento completamente independiente y desde cero, sin reutilizar pesos del entrenamiento sobre BIRD. Esta separación metodológica se adoptó porque ambos conjuntos responden a distribuciones acústicas distintas y a supuestos de generación no equivalentes. Además, este diseño experimental permite demostrar de forma explícita cómo actúa el modelo frente a datasets no vistos y cuantificar su capacidad real de generalización fuera del dominio de entrenamiento principal. Bajo este enfoque, el comportamiento observado en sintético se interpreta como resultado intrínseco de ese dominio y no como efecto de transferencia entre datasets.
+
+\begin{lstlisting}[style=pythoncell,caption={Entrenamiento desde cero sobre el conjunto sintético.},label={lst:train_sintetico}]
+!python scripts/train.py \
+    --data-root /content/raw_train_sintetico_v1 \
+    --epochs 600 \
+    --batch-size 128 \
+    --lr 1e-4 \
+    --latent-dim 128 \
+    --loss-alpha 0.1 \
+    --loss-beta 1.0 \
+    --num-workers 0 \
+    --checkpoint checkpoint.pth
+\end{lstlisting}

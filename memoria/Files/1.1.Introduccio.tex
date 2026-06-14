@@ -46,9 +46,9 @@ Las especificaciones del sistema se formulan con criterios medibles y verificabl
 
     \item \textbf{Requisitos del Entrenamiento}
     \begin{itemize}
-        \item Estabilidad numérica absoluta, con ausencia de valores NaN o Inf.
-        \item Repetibilidad experimental mediante fijación estricta de semillas pseudoaleatorias.
-        \item Mecanismos automatizados de \textit{checkpointing} basados en minimización de pérdida de validación.
+        \item El entrenamiento debe ser estable de principio a fin, sin errores que paren el proceso.
+        \item Si repetimos el experimento en las mismas condiciones, los resultados deben salir prácticamente iguales.
+        \item El sistema debe ir guardando automáticamente la mejor versión del modelo durante el entrenamiento.
     \end{itemize}
 \end{itemize}
 

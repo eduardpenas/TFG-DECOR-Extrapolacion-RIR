@@ -4,6 +4,8 @@
 
 \section{Convergencia}
 
+\subsection{Conjunto BIRD}
+
 El entrenamiento se extendió a lo largo de 590 épocas, observándose un régimen de estabilización asintótica en el tramo final. La evolución de la función de coste compuesta (MSTFT + EDC) muestra un descenso sostenido y coherente entre entrenamiento y validación. Tal como se aprecia en la Figura~\ref{fig:loss_curves}, la curva de validación sigue de manera estrecha la trayectoria de entrenamiento y se mantiene en valores equivalentes o inferiores, alcanzando niveles en el entorno de 9.42. Este patrón descarta de forma consistente la presencia de sobreajuste (\textit{overfitting}) y respalda la capacidad de generalización del modelo ante recintos no observados. Las oscilaciones de alta frecuencia, visibles tras superponer una tendencia suavizada por media móvil, se interpretan como un efecto inherente a la sensibilidad paramétrica de arquitecturas de Procesamiento Digital de Señal Diferenciable (DDSP).
 
 \begin{figure}[htbp]
@@ -26,18 +28,33 @@ La métrica física principal, definida como error absoluto medio sobre la Curva
 \label{fig:edc_curves}
 \end{figure}
 
-Desde la perspectiva de estabilidad numérica, la predicción de tasas de decaimiento exponencial $b_k$ en el decodificador induce una superficie de pérdida fuertemente no convexa. La monitorización de la norma del gradiente, representada en la Figura~\ref{fig:gnorm}, evidencia picos transitorios severos que superan magnitudes del orden de $10^{4}$. Esta observación empírica justifica con rigor la necesidad técnica de emplear recorte de gradientes (\textit{gradient clipping}) dentro de Ranger21, mecanismo que resultó determinante para absorber inestabilidades locales y prevenir colapso numérico en los tensores durante fases críticas del aprendizaje.
+\subsection{Conjunto sintético}
+
+El comportamiento observado en el entrenamiento sobre el conjunto sintético replica la misma tendencia de descenso progresivo en entrenamiento y validación. Como se muestra en la Figura~\ref{fig:loss_curves_sintetico}, ambas curvas presentan una dinámica estable, con oscilaciones locales compatibles con la naturaleza no convexa del problema y con el esquema de optimización empleado.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{../Figures/gnorm_log.png}
-\caption[Norma del gradiente]{Evolución de la norma del gradiente en escala logarítmica durante el entrenamiento.}
-\label{fig:gnorm}
+\includegraphics[width=0.48\textwidth]{../Figures/sintetico/train_loss.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{../Figures/sintetico/val_loss.png}
+\caption[Evolución de pérdidas en sintético]{Evolución de la pérdida compuesta de entrenamiento y validación para el entrenamiento sobre el conjunto sintético.}
+\label{fig:loss_curves_sintetico}
+\end{figure}
+
+Análogamente, en el experimento sintético la métrica EDC-L1 mantiene una convergencia monótona a escala global, tal como se observa en la Figura~\ref{fig:edc_curves_sintetico}, reforzando que la optimización también progresa de forma consistente bajo esta configuración de datos.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{../Figures/sintetico/train_edc.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{../Figures/sintetico/val_edc.png}
+\caption[Convergencia EDC-L1 en sintético]{Convergencia del error EDC-L1 en entrenamiento y validación para el conjunto sintético.}
+\label{fig:edc_curves_sintetico}
 \end{figure}
 
 \section{Evaluación}
 
-La validación cuantitativa del sistema se ha llevado a cabo sobre el subconjunto de test, compuesto por 40.000 muestras correspondientes a recintos no observados durante la fase de optimización. Para la inferencia se ha empleado el punto de control óptimo (\textit{checkpoint}) extraído en la época 540. El rendimiento se cuantifica mediante una doble perspectiva: por un lado, la fidelidad espectral global de la respuesta sintetizada y, por otro, la consistencia de descriptores acústicos físicos derivados de la Curva de Decaimiento de Energía (EDF).
+La validación cuantitativa del sistema se ha llevado a cabo sobre dos escenarios complementarios. Por un lado, se ha evaluado el modelo sobre el subconjunto de test del conjunto BIRD, compuesto por 40.000 muestras correspondientes a recintos no observados durante la fase de optimización. Por otro, se ha realizado una evaluación adicional sobre el conjunto sintético, formado por 6.000 muestras generadas proceduralmente a partir de salas también no vistas durante el entrenamiento. Para la inferencia se ha empleado el punto de control óptimo (\textit{checkpoint}) extraído en la época 540. El rendimiento se cuantifica mediante una doble perspectiva: por un lado, la fidelidad espectral global de la respuesta sintetizada y, por otro, la consistencia de descriptores acústicos físicos derivados de la Curva de Decaimiento de Energía (EDF).
 
 \begin{lstlisting}[style=pythoncell,caption={Ejecución de la evaluación cuantitativa sobre el conjunto de test/validación.},label={lst:eval_run}]
 CHECKPOINT_FINAL="/content/drive/MyDrive/TFG_Checkpoints/decor_v5_FINAL_ORO.pth"
@@ -51,24 +68,28 @@ python scripts/eval.py \
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
-\begin{tabular}{p{0.72\textwidth}r}
+\begin{tabular}{p{0.58\textwidth}rr}
 \toprule
-\textbf{Métrica} & \textbf{Valor Medio ($\mu$)} \\
+\textbf{Métrica} & \textbf{BIRD} & \textbf{Sintético} \\
 \midrule
-Error Espectral Multiresolución (MSTFT) & 8.6108 \\
-Error Absoluto Medio de la EDF (EDF MAE) [dB] & 5.39 \\
-Raíz del Error Cuadrático Medio de la EDF (EDF RMSE) [dB] & 7.26 \\
-Error Porcentual Absoluto Medio del $T_{60}$ ($T_{60}$ MAPE) [\%] & 8.1 \\
-Error Cuadrático Medio de la Relación Directo-Reverberante (DRR MSE) [dB] & 7.24 \\
+Error Espectral Multiresolución (MSTFT) & 8.6108 & 12.1918 \\
+Error Absoluto Medio de la EDC (EDC MAE) [dB] & 5.39 & 22.58 \\
+Raíz del Error Cuadrático Medio de la EDC (EDC RMSE) [dB] & 7.26 & 28.21 \\
+Error Porcentual Absoluto Medio del $T_{60}$ ($T_{60}$ MAPE) [\%] & 8.1 & 1683.3 \\
+Error Cuadrático Medio de la Relación Directo-Reverberante (DRR MSE) [dB] & 7.24 & 2086.27 \\
 \bottomrule
 \end{tabular}
-\caption{Métricas de evaluación objetiva sobre el conjunto de test.}
-\label{tab:eval_objetiva}
+\caption{Comparativa de métricas objetivas entre la evaluación sobre BIRD y la evaluación sobre el conjunto sintético.}
+\label{tab:eval_comparativa_datasets}
 \end{table}
 
-Tal como se resume en la Tabla~\ref{tab:eval_objetiva}, el error MSTFT de 8.6108 cuantifica la fidelidad global de la distribución de energía espectral y refleja una correspondencia robusta entre las envolventes espectro-temporales de referencia y las extrapoladas. De forma complementaria, los valores de EDF MAE (5.39~dB) y EDF RMSE (7.26~dB) evidencian un desajuste reducido en la pendiente de la cola reverberante en escala logarítmica, resultado que respalda una coherencia energética en la representación del decaimiento tardío.
+Tal como se resume en la Tabla~\ref{tab:eval_comparativa_datasets}, la evaluación sobre BIRD presenta un comportamiento claramente favorable. En este conjunto, el error MSTFT de 8.6108 cuantifica una buena fidelidad global de la distribución de energía espectral y los valores de EDF MAE (5.39~dB) y EDF RMSE (7.26~dB) reflejan un desajuste contenido en la pendiente de la cola reverberante, lo que respalda una representación energéticamente coherente del decaimiento tardío.
 
-En el plano de descriptores macroscópicos, el rendimiento alcanzado mantiene un comportamiento estable independientemente del volumen de la sala. El Error Porcentual Absoluto Medio del tiempo de reverberación, expresado como $T_{60}$ MAPE, se asienta en 8.1\%, y un margen confinado a un único dígito constituye evidencia empírica de que el decodificador logra aproximar el volumen efectivo y la absorción equivalente de la sala. Finalmente, el DRR MSE de 7.24~dB constata la preservación del balance energético entre el campo acústico directo y el campo difuso, reforzando la validez física de las respuestas impulsionales reconstruidas.
+En cambio, la evaluación sobre el conjunto sintético muestra un deterioro muy acusado. Aunque el error MSTFT se mantiene en un valor finito, los errores derivados de la EDC aumentan de forma marcada, con un EDC MAE de 22.58~dB y un EDC RMSE de 28.21~dB. La desviación es todavía más severa en las métricas físicas de alto nivel: el $T_{60}$ MAPE alcanza 1683.3\% y el DRR MSE asciende a 2086.27~dB, lo que indica que el modelo no preserva de manera fiable ni el tiempo de reverberación ni el balance entre energía directa y reverberante en este dominio. 
+
+En conjunto, la comparación entre ambos escenarios sugiere que DECOR generaliza de forma razonable al dominio BIRD, pero presenta una degradación severa cuando se traslada al dominio sintético, donde la distribución de salas y condiciones acústicas resulta más exigente para el modelo.
+
+Respecto al entrenamiento en BIRD, el rendimiento alcanzado mantiene un comportamiento estable independientemente del volumen de la sala. El Error Porcentual Absoluto Medio del tiempo de reverberación, expresado como $T_{60}$ MAPE, se asienta en 8.1\%, y un margen confinado a un único dígito constituye evidencia empírica de que el decodificador logra aproximar el volumen efectivo y la absorción equivalente de la sala. Finalmente, el DRR MSE de 7.24~dB constata la preservación del balance energético entre el campo acústico directo y el campo difuso, reforzando la validez física de las respuestas impulsionales reconstruidas.
 
 La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comparativa_modelos}, permite situar el comportamiento del sistema en un marco competitivo. Aunque el modelo propuesto registra un error espectral (MSTFT) superior al de los baselines, lo que indica que el ajuste espectral agregado a corto plazo no constituye el núcleo de su optimización, DECOR demuestra una notable precisión en la captura de las propiedades físicas y temporales de la sala. El sistema mejora los reultados de  la línea base estocástica (\textit{Naive}) en los descriptores energéticos y macroscópicos, y logra reducir el error en la estimación del tiempo de reverberación ($T_{60}$ MAPE) a un 8.1\%, en contraste con el 20.1\% de FiNS y el 29.0\% de \textit{Naive}. Este patrón de resultados respalda que la arquitectura está orientada a preservar con mayor fidelidad la estructura física del decaimiento reverberante y el balance energético global, objetivos centrales del presente trabajo.
 
@@ -82,7 +103,7 @@ La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comp
 \toprule
 \textbf{Modelo} & \textbf{MSTFT ($\downarrow$)} & \textbf{EDF (MAE, dB, $\downarrow$)} & \textbf{EDF (RMSE, dB, $\downarrow$)} & \textbf{$T_{60}$ (MAPE, \%, $\downarrow$)} & \textbf{DRR (MSE, dB, $\downarrow$)} \\
 \midrule
-DECOR (propuesto) & 8.6108 & 5.39 & 7.26 & 8.1 & 7.24 \\
+DECOR (BIRD) & 8.6108 & 5.39 & 7.26 & 8.1 & 7.24 \\
 Naive & 2.60 & 10.4 & 13.0 & 29.0 & 13.9 \\
 FiNS & 1.05 & 5.21 & 7.56 & 20.1 & 1.69 \\
 \bottomrule
@@ -94,7 +115,7 @@ FiNS & 1.05 & 5.21 & 7.56 & 20.1 & 1.69 \\
 
 \section{Caso cualitativo}
 
-Con el propósito de interpretar el comportamiento del modelo más allá de las métricas numéricas agregadas, se examina cualitativamente un caso de estudio extraído del subconjunto de evaluación. Este análisis permite inspeccionar de forma directa la correspondencia entre señal de referencia y señal extrapolada en tres planos complementarios: la forma de onda temporal, la distribución espectro-temporal de energía y la dinámica de decaimiento energético acumulado.
+Con el propósito de interpretar el comportamiento del modelo más allá de las métricas numéricas agregadas, se examina cualitativamente un caso de estudio extraído del subconjunto de evaluación. Este análisis permite inspeccionar de forma directa la correspondencia entre señal de referencia y señal extrapolada en tres planos complementarios: la forma de onda temporal, la distribución espectro-temporal de energía y la dinámica de decaimiento energético acumulado. No se ha incluido un caso cualitativo del conjunto sintético, ya que los resultados obtenidos en ese conjunto de datos muestran un mal desempeño suficientemente pronunciado como para no aportar una interpretación visual representativa. Este análisis permite inspeccionar de forma directa la correspondencia entre señal de referencia y señal extrapolada en tres planos complementarios: la forma de onda temporal, la distribución espectro-temporal de energía y la dinámica de decaimiento energético acumulado.
 
 \begin{figure}[htbp]
 \centering
@@ -107,8 +128,8 @@ Tal como se observa en la Figura~\ref{fig:caso_estudio}, la comparación de la f
 
 \textbf{Aciertos del modelo}
 \begin{itemize}
-\item \textbf{Envolvente de decaimiento.} DECOR reproduce con elevada fidelidad la estructura macro-temporal de la reverberación. La atenuación progresiva de la amplitud a lo largo del tiempo, asociada a la cola reverberante, resulta prácticamente coincidente con la respuesta real.
-\item \textbf{Densidad de la cola reverberante.} A partir del régimen de campo difuso (aproximadamente desde 200 ms), la síntesis mantiene un patrón denso y estocástico coherente con la señal de referencia, convergiendo hacia niveles próximos a cero en un horizonte temporal equivalente.
+\item \textbf{Envolvente de decaimiento.} DECOR reproduce la estructura macro-temporal de la reverberación. La atenuación progresiva de la amplitud a lo largo del tiempo, asociada a la cola reverberante, resulta prácticamente coincidente con la respuesta real.
+\item \textbf{Densidad de la cola reverberante.} A partir del régimen de campo difuso (aproximadamente desde 200 ms), la síntesis mantiene un patrón denso y estocástico coherente con la señal de referencia, convergiendo hacia niveles próximos a cero en un horizonte temporal.
 \end{itemize}
 
 \textbf{Puntos de mejora y limitaciones}
@@ -158,9 +179,8 @@ Otra forma de evaluar la viabilidad práctica del modelo es analizar su coste co
 \begin{table}[htbp]
 \centering
 \small
-\setlength{\tabcolsep}{4pt}
+\setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.15}
-\resizebox{0.96\textwidth}{!}{%
 \begin{tabular}{lrr}
 \toprule
 \textbf{Modelo} & \textbf{Parámetros (M)} & \textbf{Memoria [MB]} \\
@@ -168,8 +188,7 @@ Otra forma de evaluar la viabilidad práctica del modelo es analizar su coste co
 DECOR -- Propuesto & 17.57 & 67.03 \\
 FiNS -- Referencia & $\approx$ 340.0 & 1300.0 \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \caption[Comparativa de complejidad]{Comparativa de complejidad computacional, tiempo de inferencia y el Factor de Tiempo Real (RTF) entre el modelo propuesto (DECOR) y el modelo de referencia FiNS.}
 \label{tab:complejidad}
 \end{table}
