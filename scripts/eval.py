@@ -7,7 +7,8 @@ Evaluación DECOR con las 5 métricas del paper :
   5. DRR MSE (dB, ↓) — Error cuadrático medio del Direct-to-Reverberant Ratio
 
 Uso:
-  python3 scripts/eval.py --checkpoint checkpoint.pth --data-root data/BIRD
+    python3 scripts/eval.py --checkpoint checkpoint.pth --dataset-type synthetic --data-root data/raw_train_sintetico_v1
+    python3 scripts/eval.py --checkpoint checkpoint.pth --dataset-type bird --data-root data/BIRD
 """
 
 import argparse
@@ -22,7 +23,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.bird_loader import BirdDataset, schroeder_integration
+from scripts.bird_loader import BirdDataset
+from scripts.synthetic_loader import SyntheticRIRDataset
 from scripts.train import batch_schroeder_integration
 from models.encoder import DecorEncoder
 from models.decoder import DecorDecoder
@@ -230,10 +232,28 @@ def evaluate(encoder, decoder, dataloader, device, mrstft_criterion):
 def main():
     parser = argparse.ArgumentParser(description="Evaluación DECOR (5 métricas del paper)")
     parser.add_argument("--checkpoint", type=str, default="checkpoint.pth", help="Ruta al checkpoint.")
-    parser.add_argument("--data-root", type=str, default="data/BIRD", help="Raíz del dataset BIRD.")
+    parser.add_argument(
+        "--dataset-type",
+        type=str,
+        default="synthetic",
+        choices=["synthetic", "bird"],
+        help="Tipo de dataset a evaluar: 'synthetic' para .npy o 'bird' para audios .wav/.flac.",
+    )
+    parser.add_argument(
+        "--data-root",
+        type=str,
+        default="data/raw_train_sintetico_v1",
+        help="Ruta raíz del dataset seleccionado.",
+    )
     parser.add_argument("--batch-size", type=int, default=8, help="Tamaño de batch para evaluación.")
     parser.add_argument("--num-workers", type=int, default=0, help="Workers del DataLoader.")
     parser.add_argument("--latent-dim", type=int, default=128, help="Dimensión latente (debe coincidir con el checkpoint).")
+    parser.add_argument(
+        "--folds",
+        type=str,
+        default="auto",
+        help="Solo para BIRD: lista de folds separada por comas (ej: fold001,2,3) o 'auto'.",
+    )
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -255,8 +275,18 @@ def main():
     encoder.load_state_dict(ckpt["encoder_state_dict"])
     decoder.load_state_dict(ckpt["decoder_state_dict"])
 
-    # Dataset (auto-discovery)
-    dataset = BirdDataset(root_dir=args.data_root, folds=None)
+    # Dataset seleccionado
+    if args.dataset_type == "synthetic":
+        dataset = SyntheticRIRDataset(root_dir=args.data_root)
+    else:
+        folds = None if args.folds.strip().lower() in {"auto", "none", ""} else [
+            int(token) if token.strip().isdigit() else token.strip()
+            for token in args.folds.split(",")
+            if token.strip()
+        ]
+        dataset = BirdDataset(root_dir=args.data_root, folds=folds)
+
+    print(f"Tipo de dataset: {args.dataset_type}")
     print(f"Muestras de evaluación: {len(dataset)}")
 
     dataloader = DataLoader(

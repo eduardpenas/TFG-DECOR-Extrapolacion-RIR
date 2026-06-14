@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from scripts.synthetic_loader import SyntheticRIRDataset
 from scripts.synthetic_loader import schroeder_integration
+from scripts.bird_loader import BirdDataset
 from models.encoder import DecorEncoder
 from models.decoder import DecorDecoder
 from models.loss import DecorLoss
@@ -52,6 +53,20 @@ def batch_schroeder_integration(tails: torch.Tensor) -> torch.Tensor:
 	return torch.stack(edc_batch, dim=0).unsqueeze(1)
 
 
+def parse_folds_arg(folds_arg: str):
+	if not folds_arg or folds_arg.strip().lower() in {"auto", "none", ""}:
+		return None
+
+	parsed = []
+	for token in folds_arg.split(","):
+		token = token.strip()
+		if not token:
+			continue
+		parsed.append(int(token) if token.isdigit() else token)
+
+	return parsed or None
+
+
 def run_validation(encoder, decoder, criterion, val_loader, device):
 	encoder.eval()
 	decoder.eval()
@@ -78,12 +93,37 @@ def run_validation(encoder, decoder, criterion, val_loader, device):
 
 
 def main():
-	parser = argparse.ArgumentParser(description="Entrenamiento DECOR sobre dataset sintetico (.npy)")
+	parser = argparse.ArgumentParser(description="Entrenamiento DECOR sobre datasets synthetic (.npy) o BIRD (.wav/.flac)")
+	parser.add_argument(
+		"--dataset-type",
+		type=str,
+		default="synthetic",
+		choices=["synthetic", "bird"],
+		help="Tipo de dataset: 'synthetic' (.npy + metadata.csv) o 'bird' (audios).",
+	)
 	parser.add_argument(
 		"--data-root",
 		type=str,
 		default="data/raw_train_sintetico_v1",
-		help="Ruta raíz del dataset sintetico con metadata.csv",
+		help="Ruta raíz del dataset seleccionado.",
+	)
+	parser.add_argument(
+		"--folds",
+		type=str,
+		default="auto",
+		help="Solo para BIRD: folds separados por comas (ej: fold001,2,3) o 'auto'.",
+	)
+	parser.add_argument(
+		"--bird-augment",
+		action="store_true",
+		help="Solo para BIRD: activa augmentación con lowpass aleatorio.",
+	)
+	parser.add_argument(
+		"--bird-channel-select",
+		type=str,
+		default="omni",
+		choices=["omni", "random", "mean"],
+		help="Solo para BIRD: selección de canal al convertir a mono.",
 	)
 	parser.add_argument("--epochs", type=int, default=20, help="Número de épocas de entrenamiento.")
 	parser.add_argument("--batch-size", type=int, default=32, help="Tamaño de batch.")
@@ -122,10 +162,23 @@ def main():
 	if device.type == "cuda":
 		torch.backends.cudnn.benchmark = True
 
-	dataset_base = SyntheticRIRDataset(root_dir=args.data_root, max_samples=args.max_samples)
+	if args.dataset_type == "synthetic":
+		dataset_base = SyntheticRIRDataset(root_dir=args.data_root, max_samples=args.max_samples)
+	else:
+		folds = parse_folds_arg(args.folds)
+		dataset_base = BirdDataset(
+			root_dir=args.data_root,
+			folds=folds,
+			augment=args.bird_augment,
+			channel_select=args.bird_channel_select,
+		)
+		if args.max_samples is not None and args.max_samples > 0:
+			n_limited = min(args.max_samples, len(dataset_base))
+			dataset_base = Subset(dataset_base, list(range(n_limited)))
+
 	train_subset, val_subset = build_train_val_subsets(dataset_base, val_ratio=args.val_ratio, seed=args.seed)
 	print(
-		"Split sintetico aleatorio: "
+		f"Split {args.dataset_type} aleatorio: "
 		f"train={len(train_subset)} | val={len(val_subset) if val_subset is not None else 0}"
 	)
 

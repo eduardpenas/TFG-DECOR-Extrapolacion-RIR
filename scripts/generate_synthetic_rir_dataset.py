@@ -31,7 +31,7 @@ def sample_band_absorption(
     mode: str = "uniform",
     wall_variability: float = 0.08,
     band_variability: float = 0.05,
-) -> tuple[dict[str, pra.Material], np.ndarray, str]:
+) -> tuple[dict[str, pra.Material], dict[str, np.ndarray], str]:
     if not (0.0 <= low < high <= 1.0):
         raise ValueError("Los límites de absorción deben cumplir 0 <= low < high <= 1.")
 
@@ -39,6 +39,7 @@ def sample_band_absorption(
         raise ValueError("mode debe ser 'uniform' o 'profiled'.")
 
     materials = {}
+    wall_coeffs: dict[str, np.ndarray] = {}
     all_coeffs = []
 
     if mode == "uniform":
@@ -65,11 +66,12 @@ def sample_band_absorption(
             coeffs_arr = np.clip(base_curve + wall_offset + band_noise, low, high)
 
         coeffs = coeffs_arr.tolist()
+        wall_coeffs[wall] = np.asarray(coeffs_arr, dtype=np.float64)
         all_coeffs.extend(coeffs)
         materials[wall] = pra.Material(
             energy_absorption={"coeffs": coeffs, "center_freqs": CENTER_FREQS}
         )
-    return materials, np.asarray(all_coeffs, dtype=np.float64), profile_name
+    return materials, wall_coeffs, profile_name
 
 
 def random_point_in_room(
@@ -217,6 +219,13 @@ def generate_dataset(
         "source_receiver_distance_m",
         "absorption_profile",
         "mean_absorption",
+        "absorption_center_freqs_hz",
+        "absorption_east_coeffs",
+        "absorption_west_coeffs",
+        "absorption_north_coeffs",
+        "absorption_south_coeffs",
+        "absorption_ceiling_coeffs",
+        "absorption_floor_coeffs",
         "rt60_estimated_s",
         "rir_path",
         "head_path",
@@ -250,7 +259,7 @@ def generate_dataset(
             for attempt in range(1, max_retries_per_room + 1):
                 try:
                     room_dims = sample_room_dimensions(rng)
-                    materials, all_coeffs, profile_name = sample_band_absorption(
+                    materials, wall_coeffs, profile_name = sample_band_absorption(
                         rng,
                         low=absorption_low,
                         high=absorption_high,
@@ -272,6 +281,10 @@ def generate_dataset(
                     head, tail = split_head_tail(rir, fs=fs, head_ms=50.0)
                     edc_tail = schroeder_edc(tail)
                     rt60 = estimate_rt60_from_rir(rir, fs=fs)
+                    all_coeffs = np.concatenate([wall_coeffs[wall] for wall in WALL_NAMES], dtype=np.float64)
+
+                    def _format_coeffs(values: np.ndarray) -> str:
+                        return ",".join(f"{float(value):.6f}" for value in values)
 
                     sample_name = f"sample_{sample_idx:05d}"
                     rir_path = subdirs["rirs"] / f"{sample_name}.npy"
@@ -299,6 +312,13 @@ def generate_dataset(
                             "source_receiver_distance_m": float(np.linalg.norm(source - receiver)),
                             "absorption_profile": profile_name,
                             "mean_absorption": float(np.mean(all_coeffs)),
+                            "absorption_center_freqs_hz": ",".join(str(freq) for freq in CENTER_FREQS),
+                            "absorption_east_coeffs": _format_coeffs(wall_coeffs["east"]),
+                            "absorption_west_coeffs": _format_coeffs(wall_coeffs["west"]),
+                            "absorption_north_coeffs": _format_coeffs(wall_coeffs["north"]),
+                            "absorption_south_coeffs": _format_coeffs(wall_coeffs["south"]),
+                            "absorption_ceiling_coeffs": _format_coeffs(wall_coeffs["ceiling"]),
+                            "absorption_floor_coeffs": _format_coeffs(wall_coeffs["floor"]),
                             "rt60_estimated_s": rt60,
                             "rir_path": str(rir_path),
                             "head_path": str(head_path),

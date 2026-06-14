@@ -18,7 +18,7 @@ El uso de este corpus presenta ventajas sustanciales para la tarea que nos ocupa
     \label{fig:bird_setup}
 \end{figure}
 
-No obstante, la utilización de BIRD para la extrapolación de la cola reverberante conlleva limitaciones inherentes a su naturaleza sintética que es crucial documentar. La topología del corpus representa una abstracción espacial simplificada: el algoritmo de simulación genera exclusivamente habitaciones vacías estrictamente rectangulares. De igual modo, el modelado acústico asume un único coeficiente de absorción ($\alpha$) idéntico para todas las superficies (suelo, techo y paredes) dentro de una misma sala. 
+No obstante, la utilización de BIRD para la extrapolación de la cola reverberante conlleva limitaciones inherentes a su naturaleza sintética que es crucial documentar. La topología del corpus representa una abstracción espacial simplificada: el algoritmo de simulación genera exclusivamente habitaciones vacías estrictamente rectangulares. En BIRD, la absorción de materiales no se modifica en sus RIRs: dentro de una misma sala se emplea un único coeficiente de absorción ($\alpha$) idéntico para todas las superficies (suelo, techo y paredes). 
 
 Esta simplificación ignora la heterogeneidad de materiales presentes en entornos reales, lo que limita la variabilidad frecuencial y direccional de las reflexiones tardías que la red debe aprender a completar.  Desde el punto de vista operativo, los archivos de audio originales—generados a una frecuencia de muestreo nativa de 16 kHz y con 1 segundo exacto de duración (16.000 muestras)—son sometidos a una secuencia estricta de adecuación previa a su paso por la red neuronal. 
 
@@ -39,13 +39,58 @@ En resumen, el corpus BIRD ofrece un entorno de simulación controlado y de gran
 
 \section{Dataset sintético}
 
-Con objeto de disponer de un entorno de control plenamente trazable, se generó un corpus sintético propio compuesto por 6000 recintos rectangulares. Este subconjunto no pretende sustituir la diversidad geométrica y material del corpus principal, sino proporcionar un banco de simulación pura en el que todas las variables relevantes quedan explícitamente determinadas. Tal circunstancia resulta especialmente valiosa para estudios de ablación y para la verificación de la consistencia física de la tubería de datos antes del inicio de las rutinas de aprendizaje.
+Para contrastar la escasa variabilidad de la absorción del conjunto de datos BIRD, se generó un corpus sintético propio compuesto por 6000 recintos rectangulares. Este subconjunto nos permite evaluar la capacidad de generalización del modelo ante salas no vistas con características acústicas significativamente distintas a las presentes en BIRD. La generación de estas RIRs sintéticas se llevó a cabo mediante un procedimiento automatizado que combina la simulación acústica con un muestreo aleatorio de parámetros geométricos y materiales, garantizando así una diversidad representativa de escenarios.
 
 La obtención de las respuestas impulsionales sintéticas se apoya en el Método de Fuentes Imagen (ISM), según la formulación clásica de \cite{Allen1979}, mediante su implementación en el entorno de código abierto \textit{Pyroomacoustics}. Bajo este marco, las dimensiones tridimensionales del recinto, las coordenadas de la fuente acústica y del receptor, así como los coeficientes de absorción de las superficies, se determinan por muestreo aleatorio dentro de intervalos físicamente realistas. De esta manera, se obtiene un conjunto amplio de escenas acústicas artificiales con control explícito de sus parámetros geométricos y materiales.
 
-La tubería operativa programada en el script \texttt{scripts/generate\_synthetic\_rir\_dataset.py} produce y almacena, para cada muestra, cuatro artefactos en formato binario \texttt{.npy}: la RIR completa, la sección de cabeza correspondiente a los primeros 50 ms, la sección de cola asociada a los 950 ms restantes y la curva EDC derivada de dicha cola. De forma complementaria, las propiedades macroscópicas y los descriptores globales de cada recinto, entre ellos las dimensiones geométricas y el $T_{60}$ estimado, se recogen de manera centralizada en un archivo tabular indexado denominado \texttt{metadata.csv}.
+El proceso de generación implementado en \texttt{scripts/generate\_synthetic\_rir\_dataset.py} genera, para cada muestra, cuatro archivos binarios \texttt{.npy}: la RIR completa, la cabeza temprana (primeros 50 ms), la cola reverberante (950 ms restantes) y la EDC calculada sobre dicha cola. Esta separación resulta especialmente útil para DECOR, ya que desacopla con claridad la condición de entrada (head), el objetivo temporal a extrapolar (tail) y un descriptor físico más estable (EDC). En consecuencia, el entrenamiento se formula con objetivos más coherentes y con menor ambigüedad que la predicción directa, muestra a muestra, de la forma de onda tardía. Además, los descriptores globales de cada recinto (incluyendo dimensiones geométricas y $T_{60}$ estimado) se registran de forma estructurada en \texttt{metadata.csv}, facilitando la trazabilidad experimental y el análisis del rendimiento por régimen acústico.
 
-El control de calidad del conjunto sintético se lleva a cabo mediante el script \texttt{scripts/validate\_generated\_dataset.py}, cuya función consiste en actuar como filtro de sanidad analítica previo al entrenamiento. Esta rutina audita de forma sistemática los rangos geométricos admisibles, la coherencia espacial de las trayectorias fuente-receptor y la validez física del tiempo de reverberación calculado. Mediante este procedimiento se favorece la exclusión temprana de anomalías numéricas, artefactos de simulación o muestras incompatibles con los supuestos acústicos del problema.
+\begin{figure}[htbp]
+    \centering
+    \caption[Estructura del dataset sintético]{Estructura de almacenamiento del dataset sintético generado para DECOR.}
+    \label{fig:synthetic_dataset_structure}
+    \begin{minipage}{0.92\textwidth}
+    \ttfamily
+    data/raw\_train\_sintetico\_v1/\\
+    \hspace*{1em}metadata.csv\\
+    \hspace*{1em}rirs/\\
+    \hspace*{2em}sample\_00000.npy\\
+    \hspace*{2em}\ldots\\
+    \hspace*{1em}head/\\
+    \hspace*{2em}sample\_00000.npy\\
+    \hspace*{2em}\ldots\\
+    \hspace*{1em}tail/\\
+    \hspace*{2em}sample\_00000.npy\\
+    \hspace*{2em}\ldots\\
+    \hspace*{1em}edc\_tail/\\
+    \hspace*{2em}sample\_00000.npy\\
+    \hspace*{2em}\ldots
+    \end{minipage}
+\end{figure}
+
+El resultado de la generación sintética se resume en la Tabla \ref{tab:synthetic_metadata_summary}, donde se presentan los valores mínimo, máximo y medio de las dimensiones de las salas ($L_x$, $L_y$, $L_z$), la distancia entre fuente y receptor ($d_{sr}$), el coeficiente medio de absorción ($\bar{\alpha}$) y el tiempo de reverberación estimado ($T_{60}$). Estos rangos reflejan una diversidad significativa en las características acústicas del conjunto sintético, lo que permite evaluar la capacidad del modelo para generalizar a entornos no vistos durante el entrenamiento.
+
+\begin{table}[htbp]
+\centering
+\caption[Resumen de \texttt{metadata.csv} del dataset sintético]{Resumen estadístico de los campos principales de \texttt{metadata.csv} para las 6000 salas sintéticas generadas.}
+\label{tab:synthetic_metadata_summary}
+\begin{tabular}{lccc}
+\hline
+\textbf{Variable} & \textbf{Mínimo} & \textbf{Máximo} & \textbf{Media} \\
+\hline
+$L_x$ (\texttt{room\_length\_m}) & 3.000 & 6.000 & 4.491 \\
+$L_y$ (\texttt{room\_width\_m}) & 3.000 & 5.999 & 4.516 \\
+$L_z$ (\texttt{room\_height\_m}) & 2.501 & 3.999 & 3.249 \\
+$d_{sr}$ (\texttt{source\_receiver\_distance\_m}) & 1.003 & 6.693 & 2.587 \\
+$\bar{\alpha}$ (\texttt{mean\_absorption}) & 0.042 & 0.883 & 0.464 \\
+$T_{60}$ estimado (\texttt{rt60\_estimated\_s}) & 0.045 & 0.821 & 0.308 \\
+\hline
+\end{tabular}
+\end{table}
+
+Además, la variable \texttt{absorption\_profile} identifica la forma espectral de la absorción empleada en cada sala sintética: \textit{neutral} (respuesta plana), \textit{hf\_absorbente} (mayor absorción en altas frecuencias), \textit{lf\_absorbente} (mayor absorción en bajas frecuencias) y \textit{medio\_absorbente} (énfasis en banda media). Su reparto prácticamente equilibrado contribuye a evitar sesgos de entrenamiento hacia un único patrón espectral de absorción.
+
+El control de calidad del conjunto sintético se lleva a cabo mediante un script de validación, cuya función consiste en actuar como filtro de sanidad analítica previo al entrenamiento. De esta manera, se auditan de forma sistemática los rangos geométricos admisibles, la coherencia espacial de las trayectorias fuente-receptor y la validez física del tiempo de reverberación calculado. Mediante este procedimiento se favorece la exclusión temprana de anomalías numéricas, artefactos de simulación o muestras incompatibles con la arquitectura del modelo. 
 
 \section{Pipeline EDC}
 

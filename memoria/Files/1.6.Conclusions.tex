@@ -68,7 +68,7 @@ Error Cuadrático Medio de la Relación Directo-Reverberante (DRR MSE) [dB] & 7.
 
 Tal como se resume en la Tabla~\ref{tab:eval_objetiva}, el error MSTFT de 8.6108 cuantifica la fidelidad global de la distribución de energía espectral y refleja una correspondencia robusta entre las envolventes espectro-temporales de referencia y las extrapoladas. De forma complementaria, los valores de EDF MAE (5.39~dB) y EDF RMSE (7.26~dB) evidencian un desajuste reducido en la pendiente de la cola reverberante en escala logarítmica, resultado que respalda una coherencia energética en la representación del decaimiento tardío.
 
-En el plano de descriptores macroscópicos, el rendimiento alcanzado mantiene un comportamiento estable desde la perspectiva arquitectónica del sistema. El Error Porcentual Absoluto Medio del tiempo de reverberación, expresado como $T_{60}$ MAPE, se asienta en 8.1\%, y un margen confinado a un único dígito constituye evidencia empírica de que el decodificador logra aproximar el volumen efectivo y la absorción equivalente de la sala. Finalmente, el DRR MSE de 7.24~dB constata la preservación del balance energético entre el campo acústico directo y el campo difuso, reforzando la validez física de las respuestas impulsionales reconstruidas.
+En el plano de descriptores macroscópicos, el rendimiento alcanzado mantiene un comportamiento estable independientemente del volumen de la sala. El Error Porcentual Absoluto Medio del tiempo de reverberación, expresado como $T_{60}$ MAPE, se asienta en 8.1\%, y un margen confinado a un único dígito constituye evidencia empírica de que el decodificador logra aproximar el volumen efectivo y la absorción equivalente de la sala. Finalmente, el DRR MSE de 7.24~dB constata la preservación del balance energético entre el campo acústico directo y el campo difuso, reforzando la validez física de las respuestas impulsionales reconstruidas.
 
 La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comparativa_modelos}, permite situar el comportamiento del sistema en un marco competitivo. Aunque el modelo propuesto registra un error espectral (MSTFT) superior al de los baselines, lo que indica que el ajuste espectral agregado a corto plazo no constituye el núcleo de su optimización, DECOR demuestra una notable precisión en la captura de las propiedades físicas y temporales de la sala. El sistema mejora los reultados de  la línea base estocástica (\textit{Naive}) en los descriptores energéticos y macroscópicos, y logra reducir el error en la estimación del tiempo de reverberación ($T_{60}$ MAPE) a un 8.1\%, en contraste con el 20.1\% de FiNS y el 29.0\% de \textit{Naive}. Este patrón de resultados respalda que la arquitectura está orientada a preservar con mayor fidelidad la estructura física del decaimiento reverberante y el balance energético global, objetivos centrales del presente trabajo.
 
@@ -161,12 +161,12 @@ Otra forma de evaluar la viabilidad práctica del modelo es analizar su coste co
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.15}
 \resizebox{0.96\textwidth}{!}{%
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrr}
 \toprule
-\textbf{Modelo} & \textbf{Parámetros (M)} & \textbf{Memoria [MB]} & \textbf{Inferencia [ms]} & \textbf{RTF} \\
+\textbf{Modelo} & \textbf{Parámetros (M)} & \textbf{Memoria [MB]} \\
 \midrule
-DECOR -- Propuesto & 17.57 & 67.03 & 5.36 & 0.0056 \\
-FiNS -- Referencia & $\approx$ 340.0 & 1300.0 & N/D & N/D \\
+DECOR -- Propuesto & 17.57 & 67.03 \\
+FiNS -- Referencia & $\approx$ 340.0 & 1300.0 \\
 \bottomrule
 \end{tabular}%
 }
@@ -176,6 +176,7 @@ FiNS -- Referencia & $\approx$ 340.0 & 1300.0 & N/D & N/D \\
 
 Si miramos el tamaño del modelo, DECOR tiene 17.57 millones de parámetros, bastante menos que FiNS, que ronda los 340 millones y ocupa unos 1.3 GB. En la práctica, eso significa que DECOR es casi 20 veces más ligero. Esta diferencia se explica porque DECOR no intenta modelar todas las muestras de audio una a una, sino las tasas de decaimiento, que son más fáciles de interpretar físicamente. Así se reduce mucho la memoria necesaria sin perder la forma general de la reverberación.
 
-En cuanto a latencia, DECOR tarda 5.36 ms por inferencia y presenta un RTF de 0.0056. Esto significa que, con hardware acelerado, puede generar la cola reverberante más de 170 veces más rápido que el tiempo real. En la práctica, esto facilita su integración en motores de audio para videojuegos y en sistemas de realidad virtual, donde una latencia baja es clave para mantener la inmersión.
-En resumen, el modelo ofrece buen rendimiento acústico y, además, es viable a nivel computacional para uso práctico.
+En cuanto a latencia, utilizando la aceleración de una GPU A100, DECOR tarda apenas 5.36 ms por inferencia, lo que arroja un Factor de Tiempo Real (RTF) de 0.0056. Aunque  no se dispone de mediciones empíricas de latencia de FiNS bajo estas mismas condiciones exactas para realizar una comparativa directa uno a uno, el contraste del RTF obtenido con los métodos de acústica geométrica clásicos resulta concluyente. Mientras que el trazado de rayos o el Método de Fuentes Imagen (ISM) descritos en el estado de la cuestión requieren desde segundos hasta varios minutos de cálculo intenso para computar la ingente cantidad de reflexiones necesarias para poblar una reverberación tardía densa, el modelo que se ha empleado sintetiza la cola completa de manera coherente en poco más de 5 milisegundos.
+
+Este rendimiento equivale a generar la respuesta más de 170 veces más rápido que el tiempo real. En la práctica, esta eficiencia justifica plenamente la viabilidad computacional de la arquitectura propuesta, facilitando su futura integración en motores de simulación acústica para videojuegos y en sistemas inmersivos de realidad virtual, donde operar con restricciones estrictas de baja latencia es indispensable.
 
