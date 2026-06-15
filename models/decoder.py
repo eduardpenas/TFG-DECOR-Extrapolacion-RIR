@@ -88,15 +88,18 @@ class DecorDecoder(nn.Module):
         self.alpha = float(alpha)
 
         self.latent_to_hidden = nn.Linear(in_channels, mlp_hidden_dim)
-        mlp_layers = []
-        for _ in range(int(mlp_hidden_layers)):
-            mlp_layers.append(nn.Linear(mlp_hidden_dim, mlp_hidden_dim))
-            mlp_layers.append(nn.LeakyReLU(negative_slope=self.alpha, inplace=True))
-        self.shared_mlp = nn.Sequential(*mlp_layers)
+        self.shared_mlp = nn.Sequential(
+            nn.Linear(mlp_hidden_dim, 256),
+            nn.BatchNorm1d(256),
+            nn.PReLU(),
+            nn.Linear(256, 256),
+            nn.BatchNorm1d(256),
+            nn.PReLU(),
+        )
 
         head_dim = self.num_bands * self.num_decays
-        self.a_head = nn.Linear(mlp_hidden_dim, head_dim)
-        self.c_head = nn.Linear(mlp_hidden_dim, head_dim)
+        self.a_head = nn.Linear(256, head_dim)
+        self.c_head = nn.Linear(256, head_dim)
 
         kernel_size = int(fir_order) + 1
         self.filterbank = nn.Conv1d(
@@ -108,8 +111,7 @@ class DecorDecoder(nn.Module):
         )
         _init_octave_filterbank(self.filterbank, self.num_bands, fir_order, sample_rate)
 
-        self.band_mixer = nn.Conv1d(self.num_bands, 1, kernel_size=1, bias=True)
-        nn.init.zeros_(self.band_mixer.bias)
+        self.band_mixer = nn.Conv1d(self.num_bands, 1, kernel_size=1, bias=False)
         if output_activation == "sigmoid":
             self.out_act = nn.Sigmoid()
         elif output_activation == "tanh":
@@ -124,7 +126,8 @@ class DecorDecoder(nn.Module):
         )
         # exp(-b * T60) = 1e-3  =>  b = ln(1000) / T60
         b_init = torch.log(torch.tensor(1000.0)) / t60_values
-        self.decay_rates = nn.Parameter(b_init.to(torch.float32))
+        # Inversa de softplus para que softplus(decay_rates) == b_init al inicio.
+        self.decay_rates = nn.Parameter(torch.log(torch.expm1(b_init)).to(torch.float32))
 
         self.register_buffer("_fixed_noise_buffer", torch.empty(0), persistent=False)
 
@@ -168,6 +171,7 @@ class DecorDecoder(nn.Module):
         x = self.shared_mlp(x)
 
         a_prime = self.a_head(x).view(-1, self.num_bands, self.num_decays)
+        a_prime = F.softplus(a_prime)
         c_prime = self.c_head(x).view(-1, self.num_bands, self.num_decays)
         c_mask = torch.sigmoid(c_prime)
         amplitudes = a_prime * c_mask

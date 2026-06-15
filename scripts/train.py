@@ -211,6 +211,7 @@ def main():
 		num_iterations=num_iterations,
 		lr=args.lr,
 	)
+	scaler = torch.cuda.amp.GradScaler(enabled=(device.type == "cuda"))
 
 	start_epoch = 1
 	best_val_loss = float("inf")
@@ -224,9 +225,13 @@ def main():
 		encoder.load_state_dict(ckpt["encoder_state_dict"])
 		decoder.load_state_dict(ckpt["decoder_state_dict"])
 		optimizer.load_state_dict(ckpt["optimizer_state_dict"])
+		if "scaler_state_dict" in ckpt:
+			scaler.load_state_dict(ckpt["scaler_state_dict"])
 		start_epoch = ckpt["epoch"] + 1
 		best_val_loss = ckpt.get("best_val_loss", ckpt.get("best_train_loss", float("inf")))
 		print(f"  Reanudando desde época {start_epoch}/{args.epochs}  |  mejor val_loss conocida: {best_val_loss:.6f}")
+
+	all_params = list(encoder.parameters()) + list(decoder.parameters())
 
 	for epoch in range(start_epoch, args.epochs + 1):
 		encoder.train()
@@ -241,20 +246,22 @@ def main():
 			tail_target = batch["target"].to(device)
 			edc_target = batch["target_edc"].to(device)
 
-			optimizer.zero_grad()
+			optimizer.zero_grad(set_to_none=True)
 
-			z = encoder(head)
-			tail_pred = decoder(z, target_length=tail_target.shape[-1])
-			loss_dict = criterion(tail_pred, tail_target)
-			loss = loss_dict["loss"]
+			with torch.cuda.amp.autocast(enabled=(device.type == "cuda")):
+				z = encoder(head)
+				tail_pred = decoder(z, target_length=tail_target.shape[-1])
+				loss_dict = criterion(tail_pred, tail_target)
+				loss = loss_dict["loss"]
 
-			loss.backward()
-			all_params = list(encoder.parameters()) + list(decoder.parameters())
+			scaler.scale(loss).backward()
+			scaler.unscale_(optimizer)
 			grad_norm = torch.nn.utils.clip_grad_norm_(
 				all_params,
 				max_norm=args.grad_clip if args.grad_clip > 0 else float("inf"),
 			).item()
-			optimizer.step()
+			scaler.step(optimizer)
+			scaler.update()
 
 			with torch.no_grad():
 				edc_pred = batch_schroeder_integration(tail_pred)
@@ -287,6 +294,7 @@ def main():
 			"encoder_state_dict": encoder.state_dict(),
 			"decoder_state_dict": decoder.state_dict(),
 			"optimizer_state_dict": optimizer.state_dict(),
+			"scaler_state_dict": scaler.state_dict(),
 			"best_val_loss": best_val_loss,
 			"train_loss": epoch_train_loss,
 			"val_loss": val_loss,
