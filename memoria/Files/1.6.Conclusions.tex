@@ -94,53 +94,19 @@ Con el propósito de interpretar el comportamiento del modelo más allá de las 
 \label{fig:caso_estudio}
 \end{figure}
 
-Tal como se observa en la Figura~\ref{fig:caso_estudio}, la comparación de la forma de onda temporal puede sintetizarse en los siguientes puntos:
+\subsection*{Forma temporal}
 
-\textbf{Aciertos del modelo}
-\begin{itemize}
-\item \textbf{Envolvente de decaimiento.} El modelo reproduce correctamente cómo disminuye la amplitud con el tiempo, siguiendo la tendencia general aunque con pequeñas diferencias.
-\item \textbf{Densidad de la cola reverberante.} Desde los 200 ms, el modelo mantiene un patrón estocástico similar al real, bajando gradualmente hacia cero.
-\end{itemize}
+La comparación en el dominio temporal muestra que ambas señales comparten una envolvente de decaimiento global coherente con la física de una RIR tardía: alta densidad de reflexiones al inicio de la cola y disipación progresiva de energía hasta la extinción. No obstante, la diferencia principal aparece en la escala de amplitud. La referencia presenta picos iniciales de mayor magnitud (en torno a 0.3), mientras que la salida de DECOR queda aproximadamente en torno a la mitad (alrededor de 0.15 en valor máximo positivo). En consecuencia, la energía total sintetizada resulta inferior, aunque el modelo conserva adecuadamente la duración y la forma general del decaimiento.
 
-\textbf{Puntos de mejora y limitaciones}
-\begin{itemize}
-\item \textbf{Subestimación de amplitud máxima.} La discrepancia más visible aparece en los picos iniciales: la señal real alcanza máximos superiores (del orden de 0.3), mientras que la señal estimada presenta picos más contenidos (en torno a 0.15), lo que equivale a una respuesta atenuada en escala lineal.
-\item \textbf{Pérdida de estructura fina en reflexiones tempranas.} En el intervalo inicial (aproximadamente 0--100 ms), la respuesta real presenta reflexiones tempranas discretas y bien separadas. El modelo las localiza correctamente pero las agrupa más de la cuenta, perdiendo nitidez en los detalles finos.
-\end{itemize}
+\subsection*{EDC multibanda}
 
-En el dominio espectral, la lectura de la Figura~\ref{fig:caso_estudio} puede sintetizarse en los siguientes aspectos:
+En las curvas EDC por bandas, la tendencia de banda completa se mantiene razonablemente próxima entre predicción y referencia, lo que sugiere que el modelo captura la dinámica energética global del recinto. Sin embargo, al analizar el desglose espectral aparecen discrepancias relevantes: menor separación entre bandas, cruces entre curvas en frecuencias medias y bajas (por ejemplo, las líneas de 250 Hz, 500 Hz y 1 kHz colisionan y se superponen entre los 100 y 400 ms) , y pendientes menos estables en tramos intermedios. Frente a la estructura más ordenada y casi paralela observada en la referencia, DECOR tiende a aglomerar bandas y a introducir oscilaciones locales, indicando limitaciones en la reconstrucción precisa del decaimiento dependiente de frecuencia.
 
-\textbf{Aciertos del modelo}
-\begin{itemize}
-\item \textbf{Envolvente macro y distribución de energía.} La predicción preserva la estructura global del espectrograma, reproduciendo tanto el impacto energético inicial como el decaimiento progresivo en el eje temporal.
-\item \textbf{Decaimiento dependiente de la frecuencia.} Se mantiene un comportamiento físicamente coherente: las componentes de alta frecuencia se extinguen antes, mientras que las bandas bajas y medias conservan energía durante intervalos más prolongados.
-\item \textbf{Alineación temporal del decaimiento.} El modelo predice correctamente cuándo termina la reverberación, con un tiempo similar al de la referencia.
-\end{itemize}
+\subsection*{Espectrograma}
 
-\textbf{Puntos de mejora y limitaciones}
-\begin{itemize}
-\item \textbf{Artefactos de filtrado multibanda (Efecto persiana).} En las frecuencias de cruce entre bandas (1, 2, 4 y 8 kHz) aparecen franjas de atenuación, lo que evidencia los límites del banco de filtros discreto utilizado.
-\item \textbf{Supresión severa en altas frecuencias.} Por encima de 8 kHz, el modelo atenúa fuertemente la energía porque estas altas frecuencias son impredecibles.
-\item \textbf{Efecto de suavizado.} La RIR sintetizada es más suave y difusa que la medida, perdiendo la textura rugosa de la señal real. 
-\item \textbf{Resolución modal en bajas frecuencias.} En bajas frecuencias (0--128 Hz), los detalles de la estructura modal aparecen menos claros y con separación más marcada.
-\end{itemize}
+El espectrograma confirma este comportamiento. La predicción reproduce la silueta global del decaimiento en tiempo-frecuencia, pero presenta menor riqueza de microestructura respecto a la señal real. En particular, se observa pérdida de detalle fino, mayor suavizado espacial y aparición de franjas horizontales asociadas a artefactos de reconstrucción en determinadas regiones de frecuencia. Además, la energía en altas frecuencias se atenúa de forma más temprana que en la referencia. En conjunto, DECOR representa de forma plausible la envolvente espectro-temporal macroscópica, pero todavía no recupera con fidelidad completa la complejidad fina de las reflexiones reales.
 
-La comparación de las curvas EDC multibanda, igualmente visible en la columna central de la Figura~\ref{fig:caso_estudio}, revela el comportamiento termodinámico del sistema:
-
-\textbf{Aciertos del modelo}
-\begin{itemize}
-\item \textbf{Conservación de la energía global.} La curva de banda completa (\textit{full-band}, trazo más oscuro) se superpone de forma casi idéntica a la curva de referencia, reflejando que la red inyecta y atenúa la cantidad correcta de energía total en el recinto.
-\item \textbf{Coherencia de decaimiento por bandas.} El modelo captura exitosamente la tasa de disipación específica de cada banda de octava, mostrando cómo las altas frecuencias (trazos claros) decaen a un ritmo notablemente superior al de las bajas frecuencias, manteniendo un escalonamiento similar a la referencia.
-\item \textbf{Estabilidad sin desviaciones } No se aprecian saltos bruscos, oscilaciones inestables ni cambios sostenidos de nivel entre curvas, lo que sugiere una normalización energética consistente.
-\end{itemize}
-
-\textbf{Puntos de mejora y limitaciones}
-\begin{itemize}
-\item \textbf{Divergencia en el truncamiento final.} En el entorno previo a la caída abrupta al suelo de ruido, el decaimiento de algunas bandas predichas tiende a suavizarse o retener energía ligeramente más tiempo en comparación con la extinción brusca observada en la referencia empírica.
-\item \textbf{Sensibilidad al ruido de fondo estocástico.} La estimación del instante exacto de corte en la cola final mantiene una dificultad intrínseca elevada en modelos neuronales aplicados a audio, afectando a la precisión del tramo asintótico de las curvas.
-\end{itemize}
-
-En conjunto, la respuesta sintetizada mantiene una forma global compatible con una RIR real, pero no reproduce con fidelidad completa la referencia: persisten diferencias de amplitud y, en el dominio espectral, se observa pérdida de detalle y de energía en ciertas bandas. Por tanto, el modelo captura la dinámica general del decaimiento, aunque todavía presenta limitaciones relevantes en precisión fina.
+En resumen, los resultados muestran que el modelo logra capturar bastante bien la forma general de la reverberación, aunque todavía le cuesta mantener la energía total y los detalles frecuenciales. Al ver que el modelo sacrifica parte de esta precisión a cambio de una aproximación global, la pregunta lógica es si este intercambio realmente merece la pena en la práctica. Por ello, el siguiente paso es analizar su coste computacional para comprobar si esta menor fidelidad acústica se compensa consiguiendo un sistema mucho más rápido y ligero. 
 
 \section{Análisis de Coste Computacional}
 
