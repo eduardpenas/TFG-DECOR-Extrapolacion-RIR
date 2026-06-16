@@ -42,7 +42,7 @@ REORGANIZACION DE MEMORIA (GUIA BREVE)
 
 5. Marco Experimental y Datasets
 5.1 Corpus de datos
-- BIRD + dataset sintetico, calidad y limitaciones.
+- BIRD, calidad y limitaciones.
 
 5.2 Pipeline de procesamiento
 - Preprocesado, head/tail, EDC e instrumentacion.

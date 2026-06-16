@@ -171,7 +171,7 @@ class DecorDecoder(nn.Module):
         x = self.shared_mlp(x)
 
         a_prime = self.a_head(x).view(-1, self.num_bands, self.num_decays)
-        a_prime = F.softplus(a_prime)
+        a_prime = torch.clamp(F.softplus(a_prime), min=0.0, max=30.0)
         c_prime = self.c_head(x).view(-1, self.num_bands, self.num_decays)
         c_mask = torch.sigmoid(c_prime)
         amplitudes = a_prime * c_mask

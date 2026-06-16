@@ -2,7 +2,7 @@
 
 \chapter{Marco Experimental y Datasets}
 
-Este capítulo expone el marco metodológico y experimental  para la aplicación y evaluación de la arquitectura propuesta. En primer lugar, se describen los conjuntos de datos empleados como base de aprendizaje del modelo, detallando tanto el preprocesamiento del corpus masivo BIRD como la generación de un conjunto de datos sintético complementario. A continuación, se define la cadena de procesamiento de la señal, centrada en el cálculo de la Curva de Decaimiento de Energía (EDC) para el correcto acondicionamiento y análisis de las respuestas acústicas. Finalmente, se detalla la fase de entrenamiento, estableciendo las estrategias de optimización y los criterios de evaluación que permiten cuantificar el rendimiento y la capacidad de generalización de la red neuronal.
+Este capítulo expone el marco metodológico y experimental  para la aplicación y evaluación de la arquitectura propuesta. En primer lugar, se describe el conjunto de datos empleado como base de aprendizaje del modelo, detallando el preprocesamiento del corpus masivo BIRD. A continuación, se define la cadena de procesamiento de la señal, centrada en el cálculo de la Curva de Decaimiento de Energía (EDC) para el correcto acondicionamiento y análisis de las respuestas acústicas. Finalmente, se detalla la fase de entrenamiento, estableciendo las estrategias de optimización y los criterios de evaluación que permiten cuantificar el rendimiento y la capacidad de generalización de la red neuronal.
 
 \section{Corpus BIRD}
 
@@ -35,62 +35,7 @@ Una vez acondicionada la señal, se procede a su segmentación en dos regiones d
 
 Finalmente, para prevenir la contaminación cruzada y el solapamiento acústico, la división del subconjunto de 40.000 respuestas impulsionales entre las fases de entrenamiento y validación no se efectúa de manera aleatoria a nivel de impulso individual, sino aprovechando la estructura de bloques independientes (\textit{folds}) del corpus original. Al establecer la separación mediante estas agrupaciones de salas no solapadas, se garantiza que la evaluación se lleve a cabo sobre recintos acústicos no observados durante el ajuste de pesos, lo que proporciona una estimación rigurosa y fiable de la capacidad de generalización del modelo. 
 
-En resumen, el corpus BIRD ofrece un entorno de simulación controlado y de gran escala para el entrenamiento de modelos de aprendizaje profundo en tareas de extrapolación temporal de RIR. Sin embargo, su naturaleza sintética y sus simplificaciones acústicas introducen limitaciones que deben ser consideradas al interpretar los resultados y extrapolar las conclusiones hacia escenarios del mundo real.
-
-\section{Dataset sintético}
-
-Para contrastar la escasa variabilidad de la absorción del conjunto de datos BIRD, se generó un corpus sintético propio compuesto por 6000 recintos rectangulares. Este subconjunto nos permite evaluar la capacidad de generalización del modelo ante salas no vistas con características acústicas significativamente distintas a las presentes en BIRD. La generación de estas RIRs sintéticas se llevó a cabo mediante un procedimiento automatizado que combina la simulación acústica con un muestreo aleatorio de parámetros geométricos y materiales, garantizando así una diversidad representativa de escenarios.
-
-La obtención de las respuestas impulsionales sintéticas se apoya en el Método de Fuentes Imagen (ISM), según la formulación clásica de \cite{Allen1979}, mediante su implementación en el entorno de código abierto \textit{Pyroomacoustics}. Bajo este marco, las dimensiones tridimensionales del recinto, las coordenadas de la fuente acústica y del receptor, así como los coeficientes de absorción de las superficies, se determinan por muestreo aleatorio dentro de intervalos físicamente realistas. De esta manera, se obtiene un conjunto amplio de escenas acústicas artificiales con control explícito de sus parámetros geométricos y materiales.
-
-El proceso de generación implementado en \texttt{scripts/generate\_synthetic\_rir\_dataset.py} genera, para cada muestra, cuatro archivos binarios \texttt{.npy}: la RIR completa, la cabeza temprana (primeros 50 ms), la cola reverberante (950 ms restantes) y la EDC calculada sobre dicha cola. Esta separación resulta especialmente útil para DECOR, ya que desacopla con claridad la condición de entrada (head), el objetivo temporal a extrapolar (tail) y un descriptor físico más estable (EDC). En consecuencia, el entrenamiento se formula con objetivos más coherentes y con menor ambigüedad que la predicción directa, muestra a muestra, de la forma de onda tardía. Además, los descriptores globales de cada recinto (incluyendo dimensiones geométricas y $T_{60}$ estimado) se registran de forma estructurada en \texttt{metadata.csv}, facilitando la trazabilidad experimental y el análisis del rendimiento por régimen acústico.
-
-\begin{figure}[htbp]
-    \centering
-    \caption[Estructura del dataset sintético]{Estructura de almacenamiento del dataset sintético generado para DECOR.}
-    \label{fig:synthetic_dataset_structure}
-    \begin{minipage}{0.92\textwidth}
-    \ttfamily
-    data/raw\_train\_sintetico\_v1/\\
-    \hspace*{1em}metadata.csv\\
-    \hspace*{1em}rirs/\\
-    \hspace*{2em}sample\_00000.npy\\
-    \hspace*{2em}\ldots\\
-    \hspace*{1em}head/\\
-    \hspace*{2em}sample\_00000.npy\\
-    \hspace*{2em}\ldots\\
-    \hspace*{1em}tail/\\
-    \hspace*{2em}sample\_00000.npy\\
-    \hspace*{2em}\ldots\\
-    \hspace*{1em}edc\_tail/\\
-    \hspace*{2em}sample\_00000.npy\\
-    \hspace*{2em}\ldots
-    \end{minipage}
-\end{figure}
-
-El resultado de la generación sintética se resume en la Tabla \ref{tab:synthetic_metadata_summary}, donde se presentan los valores mínimo, máximo y medio de las dimensiones de las salas ($L_x$, $L_y$, $L_z$), la distancia entre fuente y receptor ($d_{sr}$), el coeficiente medio de absorción ($\bar{\alpha}$) y el tiempo de reverberación estimado ($T_{60}$). Estos rangos reflejan una diversidad significativa en las características acústicas del conjunto sintético, lo que permite evaluar la capacidad del modelo para generalizar a entornos no vistos durante el entrenamiento.
-
-\begin{table}[htbp]
-\centering
-\caption[Resumen de \texttt{metadata.csv} del dataset sintético]{Resumen estadístico de los campos principales de \texttt{metadata.csv} para las 6000 salas sintéticas generadas.}
-\label{tab:synthetic_metadata_summary}
-\begin{tabular}{lccc}
-\hline
-\textbf{Variable} & \textbf{Mínimo} & \textbf{Máximo} & \textbf{Media} \\
-\hline
-$L_x$ (\texttt{room\_length\_m}) & 3.000 & 6.000 & 4.491 \\
-$L_y$ (\texttt{room\_width\_m}) & 3.000 & 5.999 & 4.516 \\
-$L_z$ (\texttt{room\_height\_m}) & 2.501 & 3.999 & 3.249 \\
-$d_{sr}$ (\texttt{source\_receiver\_distance\_m}) & 1.003 & 6.693 & 2.587 \\
-$\bar{\alpha}$ (\texttt{mean\_absorption}) & 0.042 & 0.883 & 0.464 \\
-$T_{60}$ estimado (\texttt{rt60\_estimated\_s}) & 0.045 & 0.821 & 0.308 \\
-\hline
-\end{tabular}
-\end{table}
-
-Además, la variable \texttt{absorption\_profile} identifica la forma espectral de la absorción empleada en cada sala sintética: \textit{neutral} (respuesta plana), \textit{hf\_absorbente} (mayor absorción en altas frecuencias), \textit{lf\_absorbente} (mayor absorción en bajas frecuencias) y \textit{medio\_absorbente} (énfasis en banda media). Su reparto prácticamente equilibrado contribuye a evitar sesgos de entrenamiento hacia un único patrón espectral de absorción.
-
-El control de calidad del conjunto sintético se lleva a cabo mediante un script de validación, cuya función consiste en actuar como filtro de sanidad analítica previo al entrenamiento. De esta manera, se auditan de forma sistemática los rangos geométricos admisibles, la coherencia espacial de las trayectorias fuente-receptor y la validez física del tiempo de reverberación calculado. Mediante este procedimiento se favorece la exclusión temprana de anomalías numéricas, artefactos de simulación o muestras incompatibles con la arquitectura del modelo. 
+En resumen, el corpus BIRD ofrece un entorno de simulación controlado y de gran escala para el entrenamiento de modelos de aprendizaje profundo en tareas de extrapolación temporal de RIR. Sin embargo, su naturaleza simulada y sus simplificaciones acústicas introducen limitaciones que deben ser consideradas al interpretar los resultados y extrapolar las conclusiones hacia escenarios del mundo real.
 
 \section{Pipeline EDC}
 
@@ -193,17 +138,38 @@ En la etapa final se mantuvieron fijos el tamaño de lote en 256 y el peso tempo
 \end{lstlisting}
 \end{enumerate}
 
-Por otro lado, el dataset sintético se entrenó en un experimento completamente independiente y desde cero, sin reutilizar pesos del entrenamiento sobre BIRD. Esta separación metodológica se adoptó porque ambos conjuntos responden a distribuciones acústicas distintas y a supuestos de generación no equivalentes. Además, este diseño experimental permite demostrar de forma explícita cómo actúa el modelo frente a datasets no vistos y cuantificar su capacidad real de generalización fuera del dominio de entrenamiento principal. Bajo este enfoque, el comportamiento observado en sintético se interpreta como resultado intrínseco de ese dominio y no como efecto de transferencia entre datasets.
+\section{Métricas de Evaluación}
 
-\begin{lstlisting}[style=pythoncell,caption={Entrenamiento desde cero sobre el conjunto sintético.},label={lst:train_sintetico}]
-!python scripts/train.py \
-    --data-root /content/raw_train_sintetico_v1 \
-    --epochs 600 \
-    --batch-size 128 \
-    --lr 1e-4 \
-    --latent-dim 128 \
-    --loss-alpha 0.1 \
-    --loss-beta 1.0 \
-    --num-workers 0 \
-    --checkpoint checkpoint.pth
-\end{lstlisting}
+Se utilizan cuatro métricas objetivas para evaluar el rendimiento de los modelos: el error de MSTFT, el error de la función de decaimiento de la energía (EDF), el error del tiempo de reverberación (T60) y el error de la relación sonido directo-reverberante (DRR). Estas métricas ofrecen una indicación aproximada de la capacidad para igualar las características acústicas de la sala objetivo.
+
+El error de MSTFT evalúa la similitud de dos espectros RIR en múltiples resoluciones STFT (véase ecuación~\ref{eq:mstft}). Además de utilizarse como función de pérdida durante la fase de entrenamiento, sigue siendo útil como métrica de evaluación, ya que tiene en cuenta las diferencias espectrales y temporales en el dominio STFT. 
+
+El error EDF es el error entre la EDF predicha y la real \cite{Steinmetz2021FiNS}. El modelo se evalúa utilizando el error absoluto medio (MAE) y la raíz del error cuadrático medio (RMSE).
+
+\begin{equation}
+\mathcal{L}_{\mathrm{EDF,MAE}} = \frac{1}{T} \sum_{n=1}^{T} \left| \hat{d}^{(\mathrm{dB})}(n) - d^{(\mathrm{dB})}(n) \right|
+\end{equation}
+
+\begin{equation}
+\mathcal{L}_{\mathrm{EDF,RMSE}} = \sqrt{\frac{1}{T} \sum_{n=1}^{T} \left[ \hat{d}^{(\mathrm{dB})}(n) - d^{(\mathrm{dB})}(n) \right]^2}
+\end{equation}
+
+donde las EDF $\hat{d}^{(\mathrm{dB})}(n)$ y $d^{(\mathrm{dB})}(n)$ se calculan mediante la integración de Schroeder \cite{Schroeder1965} y se representan en una escala logarítmica en dB. El error EDF cuantifica cuánto difiere el decaimiento de la energía sonora entre la RIR real y la predicha.
+
+Por otro lado, el error T60 es una métrica ampliamente utilizada para evaluar la generación de reverberación, ya que captura de manera general la similitud en el tiempo de reverberación, el cual es un indicio perceptual del tamaño de la sala y la absorción acústica. El error T60 es el error porcentual absoluto medio (MAPE) entre el tiempo de reverberación real $T60_c$ y el predicho $\widehat{T60}_c$ a lo largo de $n$ bandas de octava, es decir,
+
+\begin{equation}
+\mathrm{T60}_{\mathrm{MAPE}} = 100 \frac{1}{n} \sum_{c=1}^{n} \left| \frac{\widehat{T60}_c - T60_c}{T60_c} \right|
+\end{equation}
+
+Los valores de $T60$ correspondientes a las RIR de referencia y generadas se estimaron utilizando DecayFitNet, una herramienta introducida por \cite{EDF22}. Dicho análisis abarca las bandas de octava cuyas frecuencias centrales se sitúan en $f_c = \{125, 250, 500, 1000, 2000, 4000\}$.
+
+La última métrica importante para evaluar el modelo es el error DRR, que es el MSE enntre la RIR real y la predicha. El DRR es un ratio de energía, formado por el la enegía del sonido directo dividida por la energía de la reverberación tardía. Se calcula como: 
+
+\begin{equation}
+\mathrm{DRR} = 10 * \log_{10} \left( \frac{\sum_{n=n_d-n_0}^{n_d+n_0} h^2(n)}{\sum_{n=n_d+n_0}^{\infty} h^2(n)} \right)
+\end{equation}     
+
+donde $n_d$ es el índice de la muestra del pico del sonido directo y $n_0$ es el numero de muestras correspondietes a 1 ms de tiempo. 
+
+Para evaluar las métricas de T60 y DRR, se emplea un conjunto de 1000 RIRs de prueba que no se han utilizado durante el entrenamiento. Este conjunto de prueba se selecciona de manera que las salas representadas no se solapen con las utilizadas en la fase de entrenamiento, garantizando así una evaluación objetiva y representativa del rendimiento del modelo en entornos acústicos no vistos previamente. Así verficamos la capacidad de generalización del modelo y su eficacia en la extrapolación de la cola reverberante en escenarios acústicos diversos. Ya que según \cite{Lin25}, el modelo DECOR es capaz de extrapolar la cola reverberante , incluso en salas no vistas durante el entrenamiento, aunque lo hace de manera menos precisa. 

@@ -150,6 +150,7 @@ donde las filas de $\mathbf{H} \in \mathbb{R}^{M \times T}$ son señales de ruid
 Para entrenar y evaluar el modelo, se utilizó una función de pérdida basada en la transformada de Fourier a corto plazo multirresolución (MSTFT, por sus siglas en inglés) \cite{Lin25,Steinmetz2021FiNS}. La pérdida total entre la RIR predicha $\hat{h}$ y la RIR de referencia $h$ se define como
 
 \begin{equation}
+\label{eq:mstft}
 \mathcal{L}_{\mathrm{MSTFT}}(\hat{h}, h)=\sum_{r=1}^{R}\left(\mathcal{L}_{\mathrm{sc}}(\hat{h}, h)+\mathcal{L}_{\mathrm{sm}}(\hat{h}, h)\right),
 \end{equation}
 
