@@ -8,20 +8,21 @@ La caracterización acústica de recintos mediante la Respuesta al Impulso de la
 
 \subsection{Trazado de Rayos (\textit{Ray Tracing})}
 
-Introducido en la acústica de salas a finales de la década de 1960 \cite{Krokstad1968}, el trazado de rayos es un método estadístico que discretiza la energía acústica emitida por una fuente omnidireccional o direccional. El algoritmo emite un número finito de rayos que se propagan por un entorno virtual tridimensional. Cada vez que un rayo colisiona con un polígono, su energía disminuye en función del coeficiente de absorción del material, y se refleja de manera especular (siguiendo la ley de Snell) o se dispersa de manera difusa según el coeficiente de \textit{scattering}. Para registrar la respuesta de impulso, se define un volumen de recepción (habitualmente esférico); cuando un rayo atraviesa este volumen, su energía, tiempo de llegada y dirección se acumulan en la Respuesta al Impulso de la Sala (RIR).
+Introducido en la acústica de salas a finales de la década de 1960 \cite{Krokstad1968}, el trazado de rayos es un método estadístico que discretiza la energía acústica emitida por una fuente omnidireccional o direccional. El algoritmo emite un número finito de rayos que se propagan por un entorno virtual tridimensional. Cada vez que un rayo colisiona con un polígono, su energía disminuye en función del coeficiente de absorción del material, y se refleja de manera especular o se dispersa de manera difusa según el coeficiente de \textit{scattering}. Para registrar la respuesta de impulso, se define un volumen de recepción (habitualmente esférico); cuando un rayo atraviesa este volumen, su energía, tiempo de llegada y dirección se acumulan en la Respuesta al Impulso de la Sala (RIR).
 
 A pesar de ser el estándar en la industria para auralización, el trazado de rayos presenta limitaciones matemáticas y computacionales  cuando se trata de sintetizar colas de reverberación densas y largas. Estudios  sobre la optimización de motores de simulación geométrica, como la evaluación del entorno GSound-SIR \cite{Zang2025GSoundSIR}, han cuantificado empíricamente la ineficiencia de este método:
 
 \begin{itemize}
     \item \textbf{Escalabilidad lineal del coste computacional:} El tiempo de simulación y el procesamiento de rutas válidas crecen de manera estrictamente lineal respecto al número total de rayos emitidos \cite{Zang2025GSoundSIR}. Para lograr una densidad suficiente en la reverberación tardía , se requiere proyectar millones de rayos, lo que satura los recursos de procesamiento e imposibilita su uso dinámico en tiempo real.
+    
     \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.75\linewidth]{Figures/gsound_computation_time.png} % Asegúrate de guardar el recorte con este nombre
     \caption[Coste computacional del trazado de rayos]{Relación entre el tiempo de cálculo computacional y el número total de rayos emitidos, categorizado por el porcentaje de rayos especulares. El escalado estrictamente lineal subraya la limitación del método para simulaciones de alta densidad acústica. \cite{Zang2025GSoundSIR}}
     \label{fig:gsound_computation}
-\end{figure}
-    
-    \item \textbf{Sobrecarga por reflexiones especulares:} La validación de trayectorias físicas libres de obstrucciones entre la fuente y el oyente es computacionalmente costosa. Las configuraciones de simulación que exigen un mayor porcentaje de reflexión especular frente a la difusa incrementan exponencialemente el tiempo de cálculo \cite{Zang2025GSoundSIR}.
+    \end{figure}
+
+    \item \textbf{Sobrecarga por reflexiones especulares:} La validación de trayectorias físicas libres de obstrucciones entre la fuente y el oyente es computacionalmente costosa. Las configuraciones de simulación que exigen un mayor porcentaje de reflexión especular frente a la difusa incrementan exponencialmente el tiempo de cálculo \cite{Zang2025GSoundSIR}.
     
     \begin{figure}[H]
         \centering
@@ -29,14 +30,13 @@ A pesar de ser el estándar en la industria para auralización, el trazado de ra
         \caption[Rendimiento de almacenamiento según porcentaje de rayos]{Relación entre el tiempo de escritura en disco (izquierda) y el tamaño del archivo resultante (derecha) en función del porcentaje de rayos de mayor energía procesados. Aprovechar la redundancia energética descartando la inmensa mayoría de rayos de baja energía permite un ahorro drástico en los costes de almacenamiento y lectura de la simulación. \cite{Zang2025GSoundSIR}}
         \label{fig:gsound_storage}
     \end{figure}
-
-    
-    \item \textbf{Redundancia energética masiva:} El análisis de distribución de energía en simulaciones densas revela que el cálculo exhaustivo de rayos es extremadamente ineficiente. Las mediciones indican que apenas el $0,1\%$ de los rayos capturan el $81,8\%$ de la energía acústica total de la sala, y el $10\%$ superior de los rayos modela el $99,6\%$ de la energía \cite{Zang2025GSoundSIR}. Esto demuestra que los métodos tradicionales invierten la inmensa mayoría de sus ciclos de reloj en trazar decenas de miles de reflexiones tardías que apenas aportan una fracción marginal a la reconstrucción energética de la RIR.
+   
+    \item \textbf{Redundancia energética masiva:} El análisis de distribución de energía en simulaciones densas revela que el cálculo exhaustivo de rayos es extremadamente ineficiente. Las mediciones indican que apenas el $0.1\%$ de los rayos capturan el $81.8\%$ de la energía acústica total de la sala, y el $10\%$ superior de los rayos modela el $99.6\%$ de la energía \cite{Zang2025GSoundSIR}. Esto demuestra que los métodos tradicionales invierten la inmensa mayoría de sus ciclos de reloj en trazar decenas de miles de reflexiones tardías que apenas aportan una fracción marginal a la reconstrucción energética de la RIR.
     
     \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{Figures/gsound_energy_distribution.png} % Asegúrate de guardar el recorte con este nombre
-    \caption[Distribución de energía acústica en trazado de rayos]{Distribución de energía acústica acumulada en función del porcentaje de rayos simulados. Se observa que el 10\% de los rayos de mayor intensidad concentran el 99,6\% de la energía total, evidenciando la redundancia del cálculo exhaustivo para la reverberación tardía. \cite{Zang2025GSoundSIR}}
+    \caption[Distribución de energía acústica en trazado de rayos]{Distribución de energía acústica acumulada en función del porcentaje de rayos simulados. Se observa que el 10\% de los rayos de mayor intensidad concentran el 99.6\% de la energía total, evidenciando la redundancia del cálculo exhaustivo para la reverberación tardía. \cite{Zang2025GSoundSIR}}
     \label{fig:gsound_energy}
     \end{figure}
     \end{itemize}
@@ -102,7 +102,7 @@ Por un lado, estima de manera directa el sonido directo y las reflexiones tempra
 
 Simultáneamente, una señal de ruido blanco continuo $w(n)$ alimenta un banco de filtros convolucionales unidimensionales entrenable (\textit{Learnable filterbank}), generando múltiples componentes de ruido en subbandas $s_1(n), \dots, s_m(n)$. Cada máscara de ruido proyectada por el decodificador modula en amplitud a su respectiva subbanda de ruido para emular el decaimiento exponencial característico de la energía acústica con el tiempo.
 
-Finalmente, el conjunto de las subbandas moduladas por las envolventes y la componente inicial $h_d(n)$ se combinan e integran a través de una última capa convolucional de una dimensión (Conv1d) para producir la estimación completa y final de la respuesta al impulso de la habitación $\hat{h}(n)$.
+Finalmente, el conjunto de las subbandas moduladas por las envolventes y la componente inicial $h_d(n)$ se combinan a través de una última capa convolucional de una dimensión (Conv1d) para producir la estimación completa y final de la respuesta al impulso de la habitación $\hat{h}(n)$.
 
 El aspecto más destacable para la extrapolación acústica reside en el decodificador, el cual descompone la síntesis de la RIR modelando por separado la respuesta temprana y la cola reverberante. Por un lado, la red utiliza un canal de salida dedicado para predecir directamente en el dominio del tiempo las muestras correspondientes al sonido directo y a las primeras reflexiones.
 
@@ -142,7 +142,6 @@ Mientras que el decodificador de FiNS utiliza un enfoque basado en sobremuestreo
 Esta reformulación arquitectónica aporta ventajas significativas frente a FiNS que justifican su adopción para el completado de RIRs:
 
 \begin{itemize}
-    \item \textbf{Eficiencia computacional y tamaño del modelo:} La parametrización física en el decodificador permite que DECOR sea extremadamente ligero. El modelo DECOR ocupa únicamente 37~MB, lo que lo hace más de 30 veces más pequeño que la arquitectura base de FiNS, cuyo peso asciende a 1,3~GB \cite{Lin25}. Esta reducción drástica de parámetros facilita su despliegue en aplicaciones de síntesis en tiempo real para entornos dinámicos de realidad virtual o aumentada.
     
     \item \textbf{Eliminación de artefactos acústicos:} Las redes generativas que no imponen restricciones físicas estrictas sobre la síntesis de la señal suelen presentar problemas perceptuales. FiNS tiende a generar picos dispersos de gran amplitud en la cola de la RIR, lo que introduce una "granulosidad" (\textit{graininess}) poco natural en el audio resultante \cite{Steinmetz2021FiNS,Lin25}. Al forzar a la red a predecir parámetros para un modelo de decaimiento exponencial puro, DECOR garantiza curvas de decaimiento suaves y un sonido más realista y coherente con el comportamiento acústico natural \cite{Lin25}.
     

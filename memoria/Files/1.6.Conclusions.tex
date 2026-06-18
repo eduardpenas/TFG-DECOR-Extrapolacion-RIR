@@ -61,7 +61,7 @@ Tal como se resume en la Tabla~\ref{tab:eval_comparativa_datasets}, la evaluaci�
 
 Respecto al entrenamiento en BIRD, el rendimiento alcanzado mantiene un comportamiento estable independientemente del volumen de la sala. El Error Porcentual Absoluto Medio del tiempo de reverberación, expresado como $T_{60}$ MAPE, se asienta en 8.1\%, y un margen confinado a un único dígito constituye evidencia empírica de que el decodificador logra aproximar el volumen efectivo y la absorción equivalente de la sala. Finalmente, el DRR MSE de 7.24~dB constata la preservación del balance energético entre el campo acústico directo y el campo difuso, reforzando la validez física de las respuestas impulsionales reconstruidas.
 
-La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comparativa_modelos}, permite situar el comportamiento del sistema en un marco competitivo. Aunque el modelo propuesto registra un error espectral (MSTFT) superior al de los baselines, lo que indica que el ajuste espectral agregado a corto plazo no constituye el núcleo de su optimización, DECOR demuestra una notable precisión en la captura de las propiedades físicas y temporales de la sala. El sistema mejora los reultados de  la línea base estocástica (\textit{Naive}) en los descriptores energéticos y macroscópicos, y logra reducir el error en la estimación del tiempo de reverberación ($T_{60}$ MAPE) a un 8.1\%, en contraste con el 20.1\% de FiNS y el 29.0\% de \textit{Naive}. Este patrón de resultados respalda que la arquitectura está orientada a preservar con mayor fidelidad la estructura física del decaimiento reverberante y el balance energético global, objetivos centrales del presente trabajo.
+La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comparativa_modelos}, permite situar el comportamiento del sistema en un marco competitivo. Aunque el modelo propuesto registra un error espectral (MSTFT) superior al de los baselines, lo que indica que el ajuste espectral agregado a corto plazo no constituye el núcleo de su optimización, DECOR captura  las propiedades físicas y temporales de la sala. El sistema mejora los reultados de  la línea base estocástica (\textit{Naive}) en las métricas de evaluación, y logra reducir el error en la estimación del tiempo de reverberación ($T_{60}$ MAPE) a un 8.1\%, en contraste con el 20.1\% de FiNS y el 18.34\% de \textit{Naive}. Este patrón de resultados respalda que la arquitectura está orientada a preservar con mayor fidelidad la estructura física del decaimiento reverberante y el balance energético global, objetivos centrales del presente trabajo.
 
 \begin{table}[htbp]
 \centering
@@ -74,7 +74,7 @@ La comparación con modelos de referencia, sintetizada en la Tabla~\ref{tab:comp
 \textbf{Modelo} & \textbf{MSTFT ($\downarrow$)} & \textbf{EDF (MAE, dB, $\downarrow$)} & \textbf{EDF (RMSE, dB, $\downarrow$)} & \textbf{$T_{60}$ (MAPE, \%, $\downarrow$)} & \textbf{DRR (MSE, dB, $\downarrow$)} \\
 \midrule
 DECOR (BIRD) & 8.6108 & 5.39 & 7.26 & 8.1 & 7.24 \\
-Naive & 2.60 & 10.4 & 13.0 & 29.0 & 13.9 \\
+Naive & 7.33 & 8.18 & 9.47 & 18.34 & 7.48 \\
 FiNS & 1.05 & 5.21 & 7.56 & 20.1 & 1.69 \\
 \bottomrule
 \end{tabular}%
@@ -85,7 +85,7 @@ FiNS & 1.05 & 5.21 & 7.56 & 20.1 & 1.69 \\
 
 \section{Caso cualitativo}
 
-Con el propósito de interpretar el comportamiento del modelo más allá de las métricas numéricas agregadas, se examina cualitativamente un caso de estudio extraído del subconjunto de evaluación. Este análisis permite inspeccionar de forma directa la correspondencia entre señal de referencia y señal extrapolada en tres planos complementarios: la forma de onda temporal, la distribución espectro-temporal de energía y la dinámica de decaimiento energético acumulado.
+Con el propósito de interpretar el comportamiento del modelo más allá de las métricas numéricas agregadas, se examina cualitativamente un caso de estudio extraído del subconjunto de evaluación. Este análisis permite inspeccionar de forma directa la correspondencia entre señal de referencia y señal extrapolada en tres planos complementarios: la forma de onda temporal, la distribución espectro-temporal de energía y la dinámica de decaimiento energético acumulado. A diferencia de \cite{Lin25}, queremos evaluar la red con datos previamente no vistos, por lo que se selecciona un ejemplo de la partición de test de BIRD. La Figura~\ref{fig:caso_estudio} sintetiza esta comparación, mostrando la señal de referencia en la fila superior y la salida generada por DECOR en la fila inferior. Las columnas representan, de izquierda a derecha, la forma de onda temporal de la cola reverberante, las curvas EDC multibanda y el espectrograma de magnitud.
 
 \begin{figure}[htbp]
 \centering
@@ -106,7 +106,7 @@ En las curvas EDC por bandas, la tendencia de banda completa se mantiene razonab
 
 El espectrograma confirma este comportamiento. La predicción reproduce la silueta global del decaimiento en tiempo-frecuencia, pero presenta menor riqueza de microestructura respecto a la señal real. En particular, se observa pérdida de detalle fino, mayor suavizado espacial y aparición de franjas horizontales asociadas a artefactos de reconstrucción en determinadas regiones de frecuencia. Además, la energía en altas frecuencias se atenúa de forma más temprana que en la referencia. En conjunto, DECOR representa de forma plausible la envolvente espectro-temporal macroscópica, pero todavía no recupera con fidelidad completa la complejidad fina de las reflexiones reales.
 
-En resumen, los resultados muestran que el modelo logra capturar bastante bien la forma general de la reverberación, aunque todavía le cuesta mantener la energía total y los detalles frecuenciales. Al ver que el modelo sacrifica parte de esta precisión a cambio de una aproximación global, la pregunta lógica es si este intercambio realmente merece la pena en la práctica. Por ello, el siguiente paso es analizar su coste computacional para comprobar si esta menor fidelidad acústica se compensa consiguiendo un sistema mucho más rápido y ligero. 
+En conclusión, los resultados muestran que el modelo captura la dinámica global de la reverberación tardía y preserva la coherencia física de la envolvente energética, pero aún presenta limitaciones en la fidelidad espectral fina y en la separación de bandas. Esto sugiere que, aunque el enfoque es prometedor, se requiere un refinamiento adicional para mejorar la reconstrucción espectral sin comprometer la estabilidad temporal.
 
 \section{Análisis de Coste Computacional}
 
@@ -125,13 +125,13 @@ DECOR -- Propuesto & 17.57 & 67.03 \\
 FiNS -- Referencia & $\approx$ 340.0 & 1300.0 \\
 \bottomrule
 \end{tabular}
-\caption[Comparativa de complejidad]{Comparativa de complejidad computacional, tiempo de inferencia y el Factor de Tiempo Real (RTF) entre el modelo propuesto (DECOR) y el modelo de referencia FiNS.}
+\caption[Comparativa de complejidad]{Comparativa de parámetros y memoria entre el modelo propuesto (DECOR) y el modelo de referencia FiNS.}
 \label{tab:complejidad}
 \end{table}
 
 Si miramos el tamaño del modelo, DECOR tiene 17.57 millones de parámetros, bastante menos que FiNS, que ronda los 340 millones y ocupa unos 1.3 GB. En la práctica, eso significa que DECOR es casi 20 veces más ligero. Esta diferencia se explica porque DECOR no intenta modelar todas las muestras de audio una a una, sino las tasas de decaimiento, que son más fáciles de interpretar físicamente. Así se reduce mucho la memoria necesaria sin perder la forma general de la reverberación.
 
-En cuanto a latencia, utilizando la aceleración de una GPU A100, DECOR tarda apenas 5.36 ms por inferencia, lo que arroja un Factor de Tiempo Real (RTF) de 0.0056. Aunque  no se dispone de mediciones empíricas de latencia de FiNS bajo estas mismas condiciones exactas para realizar una comparativa directa uno a uno, el contraste del RTF obtenido con los métodos de acústica geométrica clásicos resulta concluyente. Mientras que el trazado de rayos o el Método de Fuentes Imagen (ISM) descritos en el estado de la cuestión requieren desde segundos hasta varios minutos de cálculo intenso para computar la ingente cantidad de reflexiones necesarias para poblar una reverberación tardía densa, el modelo que se ha empleado sintetiza la cola completa de manera coherente en poco más de 5 milisegundos.
+En cuanto a latencia, utilizando la aceleración de una GPU A100, DECOR tarda apenas 5.36 ms por inferencia procesando secuencias individuales (tamaño de lote 1), lo que arroja un Factor de Tiempo Real (RTF) de 0.0056. Aunque  no se dispone de mediciones empíricas de latencia de FiNS bajo estas mismas condiciones exactas para realizar una comparativa directa uno a uno, el contraste del RTF obtenido con los métodos de acústica geométrica clásicos resulta concluyente. Mientras que el trazado de rayos o el Método de Fuentes Imagen (ISM) descritos en el estado de la cuestión requieren desde segundos hasta varios minutos de cálculo intenso para computar la ingente cantidad de reflexiones necesarias para poblar una reverberación tardía densa, el modelo que se ha empleado sintetiza la cola completa de manera coherente en poco más de 5 milisegundos.
 
 Este rendimiento equivale a generar la respuesta más de 170 veces más rápido que el tiempo real. En la práctica, esta eficiencia justifica plenamente la viabilidad computacional de la arquitectura propuesta, facilitando su futura integración en motores de simulación acústica para videojuegos y en sistemas inmersivos de realidad virtual, donde operar con restricciones estrictas de baja latencia es indispensable.
 

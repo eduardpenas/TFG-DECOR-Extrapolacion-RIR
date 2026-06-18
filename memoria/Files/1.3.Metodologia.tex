@@ -6,7 +6,7 @@
 
 La Respuesta al Impulso de la Sala, denotada como $h(t)$, constituye una caracterización útil del comportamiento acústico de un recinto cuando este se aproxima como un sistema lineal e invariante en el tiempo (LTI). Aunque esta idealización no es estricta en cualquier situación real, resulta razonable cuando la geometría del espacio, la posición fuente-receptor y las condiciones ambientales se mantienen estables durante la medida. Bajo dicho marco, $h(t)$ representa la salida del sistema ante una excitación impulsiva ideal y encapsula tanto la propagación directa como los procesos de reflexión sobre fronteras materiales.
 
-La respuesta temporal se descompone en tres contribuciones: sonido directo(\textit{direct sound}), reflexiones tempranas (\textit{early reflections}) y reverberación tardía (\textit{late reverberation}). Esta partición no solo tiene interés descriptivo, sino también metodológico, ya que permite formular el problema de extrapolación de cola reverberante como una tarea condicionada por el contenido temprano.
+La respuesta temporal se descompone en tres contribuciones: sonido directo (\textit{direct sound}), reflexiones tempranas (\textit{early reflections}) y reverberación tardía (\textit{late reverberation}). Esta partición no solo tiene interés descriptivo, sino también metodológico, ya que permite formular el problema de extrapolación de cola reverberante como una tarea condicionada por el contenido temprano.
 
 En tiempo discreto, para una frecuencia de muestreo $f_s$, la señal registrada $y[n]$ se modela como la convolución entre una excitación $x[n]$ y la RIR del recinto:
 
@@ -29,13 +29,13 @@ donde $h_{dir}[n]$ concentra la llegada directa, $h_{early}[n]$ contiene reflexi
 \label{fig:rir_parts}
 \end{figure}
 
-El concepto de tiempo de mezcla, $t_{mix}$, establece el umbral físico a partir del cual la densidad temporal de reflexiones se vuelve suficientemente alta como para que el campo acústico transite hacia un régimen difuso y de naturaleza estocástica \cite{Kuttruff2016}. Antes de dicho instante, las reflexiones mantienen una estructura temporal relativamente resoluble y conservan información geométrica macroscópica del recinto; después de $t_{mix}$, la superposición densa de trayectorias reduce la interpretabilidad determinista individual de cada reflexión.
+El concepto de tiempo de mezcla, $t_{mix}$, establece el umbral físico a partir del cual la densidad temporal de reflexiones se vuelve suficientemente alta como para que el campo acústico transite hacia un régimen difuso y de naturaleza estocástica \cite{Kuttruff2016}. Antes de dicho instante, las reflexiones mantienen una estructura temporal relativamente resoluble y conservan información geométrica macroscópica del recinto; después de $t_{mix}$, la superposición densa de trayectorias reduce la interpretabilidad individual de cada reflexión.
 
-Es importante remarcar que $t_{mix}$ no es universal: depende del volumen, la geometría, el grado de difusión y la absorción del recinto. En consecuencia, salas pequeñas y más absorbentes tienden a presentar una transición temprana, mientras que salas grandes o menos absorbentes pueden desplazar ese umbral a tiempos mayores. En modelos como FINS y DECOR se adopta con frecuencia una frontera de 50 ms por su utilidad práctica y su buen compromiso experimental, pero debe interpretarse como una convención operativa, no como una constante física válida para cualquier sala \cite{DEFRANCE2010777}.
+Es importante remarcar que $t_{mix}$ no es universal: depende del volumen, la geometría, el grado de difusión y la absorción del recinto. En consecuencia, salas pequeñas y más absorbentes tienden a presentar una transición temprana, mientras que salas grandes o menos absorbentes pueden desplazar ese umbral a tiempos mayores. En modelos como FiNS y DECOR se adopta con frecuencia una frontera de 50 ms por su utilidad práctica y su buen compromiso experimental, pero debe interpretarse como una convención operativa, no como una constante física válida para cualquier sala \cite{DEFRANCE2010777}.
 
 Tomando $f_s=48$ kHz, una ventana de 50 ms equivale a 2400 muestras. Esta equivalencia permite fijar una frontera operativa entre parte temprana y parte tardía en el dominio discreto. En el planteamiento del trabajo, dicha frontera se usa como criterio práctico para definir entrada y objetivo del modelo: el segmento inicial contiene información geométrica y energética suficiente para condicionar la estimación de la cola reverberante posterior.
 
-De forma general, la parte tardía suele modelarse de forma aproximada como un proceso aleatorio modulado por una envolvente exponencial decreciente. Esta hipótesis explica por qué la fase puntual de la cola es difícil de predecir de manera determinista, mientras que sus propiedades energéticas globales sí pueden modelarse de forma estable \cite{DEFRANCE2010777}.
+De forma general, la parte tardía suele modelarse de forma aproximada como un proceso aleatorio modulado por una envolvente exponencial decreciente. Esta hipótesis explica por qué la fase puntual de la cola es difícil de predecir, mientras que sus propiedades energéticas globales sí pueden modelarse de forma estable \cite{DEFRANCE2010777}.
 
 Dado que la reverberación tardía presenta un carácter estocástico, su análisis resulta más robusto cuando se formula en términos energéticos. En este contexto, se adopta la Curva de Decaimiento de Energía (EDC) según la formulación de Schroeder \cite{Schroeder1965}:
 
@@ -61,7 +61,7 @@ La estimación de $T_{60}$ suele realizarse mediante ajuste lineal sobre un tram
 
 Además de $T_{60}$, es conveniente considerar métricas complementarias para caracterizar la calidad física de la extrapolación. Entre ellas destacan la relación directo-reverberante (DRR) y, cuando procede, índices de claridad como $C_{50}$ o $C_{80}$, que reflejan la distribución temporal de energía relevante para inteligibilidad y percepción espacial.
 
-En recintos reales, la transición desde el régimen temprano hacia la reverberación tardía rara vez es perfectamente idealizada. Factores como la absorción frecuencial de los materiales, la dispersión de las superficies, la geometría del recinto y pequeñas variaciones en la temperatura o la humedad introducen desviaciones respecto al modelo LTI perfecto. \cite{Kuttruff2016} No obstante, la aproximación LTI sigue siendo extremadamente útil porque permite describir la respuesta acústica con una función impulsional única y estable, suficientemente precisa para muchos fines de simulación y aprendizaje automático.
+En recintos reales, la transición desde el régimen temprano hacia la reverberación tardía rara vez es perfectamente idealizada. Factores como la absorción frecuencial de los materiales, la dispersión de las superficies, la geometría del recinto y pequeñas variaciones en la temperatura o la humedad introducen desviaciones respecto al modelo LTI perfecto.  No obstante, la aproximación LTI sigue siendo extremadamente útil porque permite describir la respuesta acústica con una función impulsional única y estable, suficientemente precisa para muchos fines de simulación y aprendizaje automático.\cite{Kuttruff2016}
 
 \subsection{Hipótesis y limitaciones del marco físico}
 
@@ -70,7 +70,7 @@ Para interpretar correctamente los resultados, es necesario explicitar las hipó
 \begin{itemize}
 \item Cuasi-invariancia temporal del recinto durante la adquisición y el uso del modelo. Esta hipótesis exige que la relación entrada-salida permanezca aproximadamente estable durante la medida, de modo que el sistema de aprendizaje pueda identificar regularidades consistentes. Si las condiciones del recinto cambiasen de forma continua, la RIR dejaría de representar un patrón estacionario y la capacidad de generalización del modelo se vería comprometida.
 \item Posiciones de fuente y receptor fijas para cada RIR. Una RIR está asociada a una configuración espacial concreta entre emisor y micrófono; pequeñas variaciones de posición modifican tiempos de llegada, interferencias y balance energético. Por ello, asumir geometría fija por muestra es clave para que la extrapolación de la cola sea físicamente coherente.
-\item Campo tardío aproximadamente difuso a partir de un umbral temporal de mezcla. Bajo esta hipótesis, la cola reverberante se describe mejor mediante propiedades estadísticas globales (por ejemplo, la EDC) que mediante la predicción determinista de cada reflexión individual. Si el campo tardío no presentara ese carácter difuso, la estructura fina de la fase y de las trayectorias sería más determinista y, en consecuencia, más difícil de inferir a partir del segmento temprano.
+\item Campo tardío aproximadamente difuso a partir de un umbral temporal de mezcla. Bajo esta hipótesis, la cola reverberante se describe mejor mediante propiedades estadísticas globales (por ejemplo, la EDC) que mediante la predicción de cada reflexión individual. Si el campo tardío no presentara ese carácter difuso, la estructura fina de la fase y de las trayectorias sería más determinista y, en consecuencia, más difícil de inferir a partir del segmento temprano.
 \item Representatividad del contenido temprano para inferir propiedades estadísticas de la cola. Esta es la hipótesis central del trabajo: en la ventana inicial se asume codificada la información dominante sobre geometría, absorción y escala temporal del decaimiento. En términos prácticos, implica que el tramo temprano contiene suficientes pistas para estimar la dinámica energética de la parte tardía con precisión útil.
 \end{itemize}
 
@@ -103,15 +103,13 @@ Esta perspectiva también justifica el uso de funciones de pérdida que no se li
 
 El modelado de audio en bruto es complejo debido a la alta dimensionalidad de las señales temporales y a su sensibilidad a las variaciones de fase. Para abordar esto, en el aprendizaje profundo se emplean espacios latentes que actúan como representaciones comprimidas de las características esenciales de los datos \cite{Goodfellow2016}. 
 
-%% ecuacion de un espacio latente       
- 
 En este trabajo, el problema se formula como una inferencia condicional de cola reverberante a partir del segmento temprano:
 
 \begin{equation}
 p\left(\mathbf{h}_{tail}\mid\mathbf{h}_{head}\right).
 \end{equation}
 
-La aproximación implementada es determinista y se expresa mediante una arquitectura codificador-decodificador, donde el codificador extrae una representación latente y el decodificador reconstruye la parte tardía estimada.
+La aproximación implementada se expresa mediante una arquitectura codificador-decodificador, donde el codificador extrae una representación latente y el decodificador reconstruye la parte tardía estimada.
 
 Bajo esta formulación, un codificador ($ \mathcal{E} $) mapea la señal de entrada $\mathbf{x}$ a un espacio compacto de menor dimensión:
 

@@ -1,6 +1,6 @@
 % !TeX root = ../main.tex
 
-\chapter{Diseño y Arquitectura del Modelo }
+\chapter{Diseño y Arquitectura del Modelo}
 
 Este capítulo presenta la formulación matemática y el diseño arquitectónico del modelo DECOR \cite{Lin25}, concebido como una solución eficiente para la extrapolación de respuestas al impulso de recinto a partir de observaciones parciales de corta duración.
 
@@ -38,7 +38,7 @@ Cola Sintetizada (Salida) & $\hat{\mathbf{y}}$ & $(1 \times 45600)$ \\
 \end{table}
 
 \section{El Codificador}
-El codificador $\mathcal{E}_{\psi}$ tiene la función de extraer una representación latente de la información acústica contenida en la cabeza de la RIR. El diseño es una adaptación eficiente de la arquitectura del modelo FINS\cite{Steinmetz2021FiNS}, diseñada específicamente para analizar el segmento inicial de una respuesta al impulso en recintos (RIR). En lugar de procesar varios segundos de audio continuo, este modelo se enfoca de manera exclusiva en los primeros 50 milisegundos de la señal para capturar las reflexiones tempranas críticas. 
+El codificador $\mathcal{E}_{\psi}$ tiene la función de extraer una representación latente de la información acústica contenida en la cabeza de la RIR. El diseño es una adaptación eficiente de la arquitectura del modelo FiNS\cite{Steinmetz2021FiNS}, diseñada específicamente para analizar el segmento inicial de una respuesta al impulso en recintos (RIR). En lugar de procesar varios segundos de audio continuo, este modelo se enfoca de manera exclusiva en los primeros 50 milisegundos de la señal para capturar las reflexiones tempranas críticas. 
 
 La unidad elemental del codificador corresponde a un bloque convolucional residual. Para una entrada $\mathbf{h}_{in}$, la salida del bloque se define como
 
@@ -108,12 +108,13 @@ Las envolventes en el dominio del tiempo $\mathbf{Y}$ pueden expresarse en notac
 donde $\mathbf{A} \in \mathbb{R}^{M \times N}$ son las amplitudes iniciales de las envolventes de decaimiento exponencial $\mathbf{E}$ para $N$ tasas de decaimiento $\mathbf{b} \in \mathbb{R}^{N}$ a lo largo de la secuencia temporal $\mathbf{n} \in \mathbb{R}^{T}$, es decir:
 
 \begin{equation}
+\label{eq:envolvente_E}
 \mathbf{E} := e^{-\mathbf{b}\mathbf{n}^\intercal} \in \mathbb{R}^{N \times T}.
 \end{equation}
 
 El decodificador propuesto construye las envolventes en el dominio del tiempo $\mathbf{Y}$ prediciendo los valores de amplitud de la envolvente de decaimiento $\mathbf{A}$ y multiplicándolos por las envolventes de decaimiento exponencial $\mathbf{E}$.
 
-Un Perceptrón Multicapa (MLP) multicabeza con siete capas ocultas toma el vector latente $\mathbf{z}$ y emite dos matrices $\mathbf{A}'$ y $\mathbf{C}'$. El producto elemento a elemento de $\mathbf{A}'$ y la máscara $\mathbf{C} = \sigma(\mathbf{C}')$ da como resultado la matriz de amplitudes de la envolvente de decaimiento:
+Un Perceptrón Multicapa (MLP) con siete capas ocultas toma el vector latente $\mathbf{z}$ y emite dos matrices $\mathbf{A}'$ y $\mathbf{C}'$. El producto elemento a elemento de $\mathbf{A}'$ y la máscara $\mathbf{C} = \sigma(\mathbf{C}')$ da como resultado la matriz de amplitudes de la envolvente de decaimiento:
 
 \begin{equation}
 \mathbf{A} = \mathbf{A}' \odot \sigma(\mathbf{C}'),
@@ -123,13 +124,13 @@ donde $\sigma(\cdot)$ es la función sigmoide y $\mathbf{C} = \sigma(\mathbf{C}'
 
 Se determinó que aprender una representación lineal $\mathbf{A}'$ y una máscara sigmoide logra mejores resultados que aprender $\mathbf{A}$ directamente. La predicción separada de $\mathbf{C}'$ y la aplicación de la función sigmoide generan una máscara que fuerza amplitudes cercanas a cero para los decaimientos inactivos. Esta estrategia resulta de utilidad para imponer dispersión en $\mathbf{A}$.
 
-Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen posteriormente a partir de $\mathbf{b}$ y $\mathbf{n}$ utilizando la Ecuación 4.9. El parámetro aprendible $\mathbf{b} = \{b_j \mid b_j = \ln(10^{-3})/T_j\} \in \mathbb{R}^{N}$ se inicializa antes del entrenamiento y se mantiene fijo durante la inferencia, siendo $T_j$ el tiempo de decaimiento $T_{60}$ de la $j$-ésima pendiente. En el modelo final, se inicializan $N = 20$ tiempos de decaimiento, muestreados logarítmicamente en el rango de $0.05$ a $3.0$ s.
+Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen posteriormente a partir de $\mathbf{b}$ y $\mathbf{n}$ utilizando la Ecuación~\ref{eq:envolvente_E}. El parámetro  $\mathbf{b} = \{b_j \mid b_j = -\ln(10^{-3})/T_j\} \in \mathbb{R}^{N}$ se inicializa antes del entrenamiento y se mantiene fijo durante la inferencia, siendo $T_j$ el tiempo de decaimiento $T_{60}$ de la $j$-ésima pendiente. En el modelo final, se inicializan $N = 20$ tiempos de decaimiento, muestreados logarítmicamente en el rango de $0.05$ a $3.0$ s.
 
 La matriz de envolventes $\mathbf{E}$ se calcula para una secuencia temporal de $950$ ms correspondiente a la cola de la RIR, es decir, $\mathbf{n} = [0.05, 0.05 + 1/f_s, \dots, 1.0] \in \mathbb{R}^{T}$, con una longitud de secuencia $T = 45600$ a una tasa de muestreo de $48$ kHz.
 
-Adoptando un enfoque de ruido filtrado similar al de FiNS \cite{Steinmetz2021FiNS}, se construye un banco de filtros compuesto por $M$ filtros FIR aprendibles que procesa una señal de ruido blanco gaussiano $\mathbf{w} \in \mathbb{R}^{T}$ en $M$ señales de ruido filtrado $\mathbf{S} = [\mathbf{s}_1, \mathbf{s}_2, \dots, \mathbf{s}_M]$. 
+Adoptando un enfoque de ruido filtrado similar al de FiNS \cite{Steinmetz2021FiNS}, se construye un banco de filtros compuesto por $M$ filtros FIR parametrizados que procesan una señal de ruido blanco gaussiano $\mathbf{w} \in \mathbb{R}^{T}$ en $M$ señales de ruido filtrado $\mathbf{S} = [\mathbf{s}_1, \mathbf{s}_2, \dots, \mathbf{s}_M]$. 
 
-Dicho banco de filtros aprendible se inicializa con $M = 10$ filtros FIR de banda de octava de orden $P = 1023$. Finalmente, la señal RIR se construye a partir del producto elemento a elemento de las envolventes en el dominio del tiempo y las señales de ruido filtrado,
+Dicho banco de filtros parametrizado se inicializa con $M = 10$ filtros FIR de banda de octava de orden $P = 1023$. Finalmente, la señal RIR se construye a partir del producto elemento a elemento de las envolventes en el dominio del tiempo y las señales de ruido filtrado,
 \begin{equation}
 \mathbf{H} = \mathbf{S} \odot \mathbf{Y}
 \end{equation}
@@ -141,7 +142,7 @@ donde las filas de $\mathbf{H} \in \mathbb{R}^{M \times T}$ son señales de ruid
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.6\textwidth]{Figures/arquitectura_decoder.png}
-\caption[Decodificador DECOR]{Esquema de la arquitectura del decodificador. El vector latente $\mathbf{z}$ se procesa a través de un MLP multicabeza para generar las matrices $\mathbf{A}'$ y $\mathbf{C}'$, que se combinan para formar la matriz de amplitudes $\mathbf{A}$. Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen a partir de los tiempos de decaimiento aprendidos. Un banco de filtros FIR aprende a procesar una señal de ruido blanco para generar las señales de ruido filtrado $\mathbf{S}$, que se combinan con las envolventes para sintetizar la cola RIR predicha $\hat{\mathbf{h}}_{tail}$.}
+\caption[Decodificador DECOR]{Esquema de la arquitectura del decodificador propuesta en \cite{Lin25}. El vector latente $\mathbf{z}$ se procesa a través de un MLP para generar las matrices $\mathbf{A}'$ y $\mathbf{C}'$, que se combinan para formar la matriz de amplitudes $\mathbf{A}$. Las envolventes de decaimiento exponencial $\mathbf{E}$ se construyen a partir de los tiempos de decaimiento aprendidos. Un banco de filtros FIR aprende a procesar una señal de ruido blanco para generar las señales de ruido filtrado $\mathbf{S}$, que se combinan con las envolventes para sintetizar la cola RIR predicha $\hat{\mathbf{h}}_{tail}$.}
 \label{fig:decoder}     
 \end{figure}
 
@@ -163,10 +164,10 @@ donde el término de convergencia espectral se expresa como
 y el término logarítmico se define como
 
 \begin{equation}
-\mathcal{L}_{\mathrm{sm}}(\hat{h}, h)=\left\|\log\left(\left|\mathrm{STFT}_{r}(\hat{h})\right|+\epsilon\right)-\log\left(\left|\mathrm{STFT}_{r}(h)\right|+\epsilon\right)\right\|_{1}.
+\mathcal{L}_{\mathrm{sm}}(\hat{h}, h)=\left\|\log\left(\left|\mathrm{STFT}_{r}(\hat{h})\right|+\epsilon\right)-\log\left(\left|\mathrm{STFT}_{r}(h)\right|+\epsilon\right)\right\|_{1},
 \end{equation}
 
-donde $\|\cdot\|_{F}$ denota la norma de Frobenius y $\|\cdot\|_{1}$ la norma $L_{1}$. Durante el entrenamiento se emplearon $R=4$ resoluciones, con tamaños de ventana $W\in\{64,512,2048,8192\}$, saltos $H\in\{32,256,1024,4096\}$ y ventana de Hann.
+donde $\|\cdot\|_{F}$ denota la norma de Frobenius y $\|\cdot\|_{1}$ la norma $L_{1}$. Además, $\epsilon$ representa una constante de pequeña magnitud introducida para garantizar la estabilidad numérica (evitando divisiones por cero o el cálculo de logaritmos nulos). Durante el entrenamiento se emplearon $R=4$ resoluciones, con tamaños de ventana $W\in\{64,512,2048,8192\}$, saltos $H\in\{32,256,1024,4096\}$ y ventana de Hann.
 
 
 
